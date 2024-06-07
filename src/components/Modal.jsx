@@ -33,7 +33,7 @@ export default function Modal({ width = 30, title, children, open, onClose }) {
                         &#10005;
                       </button>
                     </div>
-                    <div className="px-6 py-4">{children}</div>
+                    <div className="px-12 py-6">{children}</div>
                   </div>
                 </div>
               </div>

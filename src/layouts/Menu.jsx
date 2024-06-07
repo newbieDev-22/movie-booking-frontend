@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import MenuItem from "./MenuItem";
+import useAuth from "../hooks/useAuth";
 
 const menuList = [
   { id: 1, title: "Home", to: "/" },
@@ -12,12 +13,13 @@ const menuList = [
 
 export default function Menu() {
   const { pathName } = useLocation();
-  const isUser = false;
-  const isAdmin = true;
+  const { authUser } = useAuth();
+  const isUser = authUser ? true : false;
+  const isAdmin = authUser?.isAdmin ? true : false;
   return (
     <>
       {isUser && (
-        <nav className="flex justify-center gap-4 h-full">
+        <nav className="flex justify-center gap-4 h-full px-20">
           {menuList.map((el) => {
             if (isAdmin === el.isUser) {
               return;

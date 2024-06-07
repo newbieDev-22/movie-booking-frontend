@@ -23,6 +23,7 @@ export default function LandingPage() {
           open={registerOpen}
           title="REGISTER FORM"
           onClose={() => setRegisterOpen(false)}
+          width="40"
         >
           <RegisterForm onSuccess={() => setRegisterOpen(false)} />
         </Modal>

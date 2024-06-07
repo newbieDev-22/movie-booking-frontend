@@ -1,8 +1,9 @@
 import { lazy } from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import ProtectedRoute from "../features/authentication/components/ProtectedRoute";
+import RedirectIfLogged from "../features/authentication/components/RedirectIfLogged";
 
 const LandingPage = lazy(() => import("../pages/LandingPage"));
-const LoginPage = lazy(() => import("../pages/LoginPage"));
 const HomePage = lazy(() => import("../pages/HomePage"));
 const UpcomingPage = lazy(() => import("../pages/UpcomingPage"));
 const ShowtimePage = lazy(() => import("../pages/ShowtimePage"));
@@ -14,7 +15,11 @@ const MainContainer = lazy(() => import("../layouts/MainContainer"));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainContainer />,
+    element: (
+      <ProtectedRoute>
+        <MainContainer />
+      </ProtectedRoute>
+    ),
     children: [
       { path: "/", element: <HomePage /> },
       { path: "upcoming", element: <UpcomingPage /> },
@@ -26,12 +31,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/landing",
-    element: <MainContainer />,
+    element: (
+      <RedirectIfLogged>
+        <MainContainer />
+      </RedirectIfLogged>
+    ),
     children: [{ path: "/landing", element: <LandingPage /> }],
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
   },
   { path: "*", element: <Navigate to="/" /> },
 ]);

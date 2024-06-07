@@ -10,7 +10,7 @@ export default function Input({
     <>
       <input
         type={type}
-        className={`w-full px-3 py-4 border rounded-md focus:outline-none focus:ring-2 text-lg ${
+        className={`w-full px-3 py-3 border rounded-md focus:outline-none focus:ring-2 text-lg ${
           error
             ? "border-[#CF6679] focus:ring-[#CF6679/80]"
             : "border-[#121212] focus:border-[#BB86FC] focus:ring-[#DBB2FF]"
@@ -20,7 +20,9 @@ export default function Input({
         value={value}
         onChange={onChange}
       />
-      {error ? <small className="text-[#CF6679]">{error}</small> : null}
+      {error ? (
+        <small className="text-[#CF6679] text-md font-semibold">{error}</small>
+      ) : null}
     </>
   );
 }

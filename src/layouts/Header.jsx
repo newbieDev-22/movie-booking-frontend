@@ -4,6 +4,7 @@ import { LogoIcon } from "../icons";
 import { RIGHT_MENU_ITEM } from "../constants";
 import GusetMenuItem from "./GusetMenuItem";
 import UserMenuItem from "./UserMenuItem";
+import useAuth from "../hooks/useAuth";
 
 const rightMenuMapping = {
   [RIGHT_MENU_ITEM.GUEST]: <GusetMenuItem />,
@@ -11,7 +12,9 @@ const rightMenuMapping = {
 };
 
 export default function Header() {
-  const isUser = RIGHT_MENU_ITEM.GUEST;
+  const { authUser } = useAuth();
+  const isUser = authUser ? RIGHT_MENU_ITEM.USER : RIGHT_MENU_ITEM.GUEST;
+  console.log(isUser);
 
   return (
     <header className="grid grid-cols-8 bg-black text-white px-2 justify-between ">

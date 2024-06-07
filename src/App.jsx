@@ -1,5 +1,16 @@
+import { Suspense } from "react";
+import Router from "./routes";
+import Spinner from "./components/Spinner";
+import AuthContextProvider from "./contexts/AuthContext";
+
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <Suspense fallback={<Spinner />}>
+      <AuthContextProvider>
+        <Router />
+      </AuthContextProvider>
+    </Suspense>
+  );
 }
 
 export default App;

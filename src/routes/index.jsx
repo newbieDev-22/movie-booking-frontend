@@ -5,11 +5,9 @@ import RedirectIfLogged from "../features/authentication/components/RedirectIfLo
 
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const HomePage = lazy(() => import("../pages/HomePage"));
-const UpcomingPage = lazy(() => import("../pages/UpcomingPage"));
 const ShowtimePage = lazy(() => import("../pages/ShowtimePage"));
 const BookingHistortyPage = lazy(() => import("../pages/BookingHistortyPage"));
-const EditMoviePage = lazy(() => import("../pages/EditMoviePage"));
-const EditShowtimePage = lazy(() => import("../pages/EditShowtimePage"));
+const AdminPanel = lazy(() => import("../pages/AdminPanel"));
 const MainContainer = lazy(() => import("../layouts/MainContainer"));
 
 const router = createBrowserRouter([
@@ -24,8 +22,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "showtime", element: <ShowtimePage /> },
       { path: "booking-history", element: <BookingHistortyPage /> },
-      { path: "edit-movie", element: <EditMoviePage /> },
-      { path: "edit-showtime", element: <EditShowtimePage /> },
+      { path: "/admin-panel", element: <AdminPanel /> },
     ],
   },
   {

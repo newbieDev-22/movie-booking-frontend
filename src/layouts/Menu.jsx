@@ -4,10 +4,9 @@ import useAuth from "../hooks/useAuth";
 
 const menuList = [
   { id: 1, title: "Home", to: "/" },
-  { id: 3, title: "Showtime", to: "/showtime" },
+  { id: 3, title: "Showtimes", to: "/showtime" },
   { id: 4, title: "Booking Histories", to: "/booking-history", isUser: true },
-  { id: 5, title: "Edit Movies", to: "/edit-movie", isUser: false },
-  { id: 6, title: "Edit Showtimes", to: "/edit-showtime", isUser: false },
+  { id: 5, title: "Admin Panel", to: "/admin-panel", isUser: false },
 ];
 
 export default function Menu() {

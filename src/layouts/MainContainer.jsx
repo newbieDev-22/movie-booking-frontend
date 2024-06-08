@@ -3,7 +3,7 @@ import Header from "./Header";
 
 export default function MainContainer() {
   return (
-    <div className="max-h-screen max-w-screen box-border">
+    <div>
       <Header />
       <Outlet />
     </div>

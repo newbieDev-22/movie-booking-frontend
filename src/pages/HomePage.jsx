@@ -1,4 +1,5 @@
 import Carousal from "../components/Carousal";
+import MovieSelectionContainer from "../features/movieSelection/components/MovieSelectionContainer";
 
 const homePageCarousalImage = [
   "https://media.wired.com/photos/64790f5a0b67c709cbcaa9b5/master/pass/Spider-Man-Across-The-Spider-Verse-Monitor-Culture.jpg",
@@ -13,7 +14,7 @@ const homePageCarousalImage = [
 
 export default function HomePage() {
   return (
-    <div className="bg-[#121212] min-h-[calc(100vh-5rem)]">
+    <div className="bg-[#121212] min-h-[calc(100vh-5rem)] min-w-[1075px]">
       <div className="flex flex-col w-full">
         <div className=" w-full h-[400px] flex flex-col">
           <div className="flex justify-evenly h-full">
@@ -21,20 +22,21 @@ export default function HomePage() {
               {homePageCarousalImage.map((el, index) => {
                 const splitName = el.split("/");
                 const key = splitName[splitName.length - 1];
-                // <img key={key} src={el} alt="landing" className="min-w-full" />
                 return (
                   <div key={index} className="min-w-full relative">
-                    <div className=" absolute bg-gradient-to-r from-black from-5% via-[#030303] via-20% to-transparent w-1/2 h-full">
-                      <div className="pl-28 pt-12 pr-36">
+                    <div className=" absolute bg-gradient-to-r from-black from-10% via-[#030303] via-40% to-transparent w-1/2 h-full">
+                      <div className="pl-24 pt-10 pr-48 min-w-[800px]">
                         <div className="flex flex-col gap-8">
-                          <div className="flex flex-col gap-4">
+                          <div className="flex flex-col gap-6">
                             <div className="flex gap-4">
                               <div className="text-[#DBD9DD]">Action</div>
                               <div className="text-[#DBD9DD]">Fantasy</div>
                             </div>
-                            <h1 className="text-white text-5xl font-bold">Spider-man</h1>
+                            <h1 className="text-white text-3xl font-bold">
+                              Spider-Man: Across the Spider-Verse
+                            </h1>
                           </div>
-                          <div className="flex flex-col gap-8">
+                          <div className="flex flex-col gap-4">
                             <p className="text-white text-sm indent-8 text-justify">
                               {`Miles Morales catapults across the multiverse, 
                               where he encounters a team of Spider-People charged with protecting its very existence. 
@@ -48,24 +50,15 @@ export default function HomePage() {
                         </div>
                       </div>
                     </div>
-                    <img src={el} alt="landing" />
+                    <img src={el} alt="landing" className="min-w-[800px]" />
                   </div>
                 );
               })}
             </Carousal>
           </div>
         </div>
-        <div className="text-white text-3xl font-bold text-left mt-2">
-          Movie On Show Now!
-        </div>
-        <div className=" w-full flex flex-col h-96">
-          <div className="flex justify-evenly p-2 gap-2 h-full">
-            <div className="bg-green-500 min-w-64"></div>
-            <div className="bg-green-500 min-w-64"></div>
-            <div className="bg-green-500 min-w-64"></div>
-            <div className="bg-green-500 min-w-64"></div>
-            <div className="bg-green-500 min-w-64"></div>
-          </div>
+        <div className="mt-8">
+          <MovieSelectionContainer />
         </div>
       </div>
     </div>

@@ -14,11 +14,10 @@ const rightMenuMapping = {
 export default function Header() {
   const { authUser } = useAuth();
   const isUser = authUser ? RIGHT_MENU_ITEM.USER : RIGHT_MENU_ITEM.GUEST;
-  console.log(isUser);
 
   return (
-    <header className="bg-[#DC2026] h-[72px]">
-      <div className="flex text-white px-2 justify-between bg-gradient-to-b from-black to-[#000]/50 h-[72px]">
+    <header className="bg-[#DC2026] min-w-[1075px] max-h-[72px]">
+      <div className="flex text-white px-2 justify-between bg-gradient-to-b from-black to-[#000]/50 min-w-[1075px] max-h-[72px]">
         <button className="flex items-center px-10">
           <div className="h-[72px] flex justify-center items-center">
             <Link to="/">

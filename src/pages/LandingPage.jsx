@@ -14,8 +14,8 @@ export default function LandingPage() {
   const { loginOpen, setLoginOpen, registerOpen, setRegisterOpen } = useAuth();
   return (
     <>
-      <div className="bg-black">
-        <div className="min-w-screen min-h-[calc(100vh_-_72px)] box-border">
+      <div className="bg-black ">
+        <div className="min-w-[1075px] min-h-[calc(100vh_-_72px)] box-border">
           <Carousal autoSlide={true} autoSlideInterval={2000}>
             {imagePathList.map((el) => {
               const splitName = el.split("/");

@@ -20,8 +20,8 @@ export default function HomePage() {
           <div className="flex justify-evenly h-full">
             <Carousal autoSlide={false}>
               {homePageCarousalImage.map((el, index) => {
-                const splitName = el.split("/");
-                const key = splitName[splitName.length - 1];
+                // const splitName = el.split("/");
+                // const key = splitName[splitName.length - 1];
                 return (
                   <div key={index} className="min-w-full relative">
                     <div className=" absolute bg-gradient-to-r from-black from-10% via-[#030303] via-40% to-transparent w-1/2 h-full">

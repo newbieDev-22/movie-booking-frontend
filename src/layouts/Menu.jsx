@@ -12,14 +12,12 @@ const menuList = [
 export default function Menu() {
   const { pathName } = useLocation();
   const { authUser } = useAuth();
-  const isUser = authUser ? true : false;
-  const isAdmin = authUser?.isAdmin ? true : false;
   return (
     <>
-      {isUser && (
+      {authUser ? (
         <nav className="flex justify-center gap-4 h-full px-20 ">
           {menuList.map((el) => {
-            if (isAdmin === el.isUser) {
+            if (authUser?.isAdmin === el.isUser) {
               return;
             }
             return (
@@ -32,7 +30,7 @@ export default function Menu() {
             );
           })}
         </nav>
-      )}
+      ) : null}
     </>
   );
 }

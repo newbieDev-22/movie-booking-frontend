@@ -5,7 +5,7 @@ const imagePath = "https://posterspy.com/wp-content/uploads/2023/06/Spiderverse.
 export default function MovieCard() {
   return (
     <button>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 hover:scale-105 active:scale-100 transition-all">
         <div className="overflow-hidden rounded-md shadow-md">
           <img src={imagePath} alt="movie" />
         </div>

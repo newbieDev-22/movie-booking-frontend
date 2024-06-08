@@ -17,13 +17,15 @@ const initialInputError = {
   password: "",
 };
 
+const textColor = "text-[#DBD9DD]";
+
 export default function LoginForm() {
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleChangeInput = (e) => {
+  const handleInputChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
@@ -56,28 +58,38 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmitForm}>
-      <div className="grid gap-4 p-2">
-        <div>
+      <div className="grid p-1">
+        <label className="form-control w-full">
+          <div className="label">
+            <span className={`label-text ${textColor} `}>Email Address</span>
+          </div>
           <Input
             placeholder="Email Address"
             name="email"
             value={input.email}
-            onChange={handleChangeInput}
+            onChange={handleInputChange}
             error={inputError.email}
           />
-        </div>
-        <div>
-          <Input
-            placeholder="Password"
-            type="password"
-            name="password"
-            value={input.password}
-            onChange={handleChangeInput}
-            error={inputError.password}
-          />
-        </div>
-        <div>
-          <Button>
+        </label>
+
+        <label className="form-control w-full">
+          <div className="label">
+            <span className={`label-text ${textColor} `}>Password</span>
+          </div>
+          <div>
+            <Input
+              placeholder="Password"
+              type="password"
+              name="password"
+              value={input.password}
+              onChange={handleInputChange}
+              error={inputError.password}
+            />
+          </div>
+        </label>
+
+        <div className="pt-6">
+          <Button color="white">
             <div className="text-xl font-bold">LOG IN</div>
           </Button>
         </div>

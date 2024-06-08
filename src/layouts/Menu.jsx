@@ -4,9 +4,8 @@ import useAuth from "../hooks/useAuth";
 
 const menuList = [
   { id: 1, title: "Home", to: "/" },
-  { id: 2, title: "Upcoming Movies", to: "/upcoming" },
   { id: 3, title: "Showtime", to: "/showtime" },
-  { id: 4, title: "Booking History", to: "/booking-history" },
+  { id: 4, title: "Booking Histories", to: "/booking-history", isUser: true },
   { id: 5, title: "Edit Movies", to: "/edit-movie", isUser: false },
   { id: 6, title: "Edit Showtimes", to: "/edit-showtime", isUser: false },
 ];
@@ -19,7 +18,7 @@ export default function Menu() {
   return (
     <>
       {isUser && (
-        <nav className="flex justify-center gap-4 h-full px-20">
+        <nav className="flex justify-center gap-4 h-full px-20 ">
           {menuList.map((el) => {
             if (isAdmin === el.isUser) {
               return;

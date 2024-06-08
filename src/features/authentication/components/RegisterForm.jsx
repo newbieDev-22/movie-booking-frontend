@@ -6,6 +6,8 @@ import authApi from "../../../apis/auth";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 
+const textColor = "text-[#DBD9DD]";
+
 export default function RegisterForm({ onSuccess }) {
   const initialInput = {
     email: "",
@@ -66,8 +68,11 @@ export default function RegisterForm({ onSuccess }) {
 
   return (
     <form onSubmit={handleSumbitForm}>
-      <div className="grid gap-4 p-2">
-        <div>
+      <div className="grid grid-cols-2 p-1 gap-x-4">
+        <label className="form-control w-full col-span-2">
+          <div className="label">
+            <span className={`label-text ${textColor} `}>Email</span>
+          </div>
           <Input
             placeholder="Email Address"
             name="email"
@@ -75,8 +80,12 @@ export default function RegisterForm({ onSuccess }) {
             onChange={handleInputChange}
             error={inputError.email}
           />
-        </div>
-        <div>
+        </label>
+
+        <label className="form-control w-full">
+          <div className="label">
+            <span className={`label-text ${textColor} `}>Name</span>
+          </div>
           <Input
             placeholder="Name"
             name="name"
@@ -84,8 +93,12 @@ export default function RegisterForm({ onSuccess }) {
             onChange={handleInputChange}
             error={inputError.name}
           />
-        </div>
-        <div>
+        </label>
+
+        <label className="form-control w-full">
+          <div className="label">
+            <span className={`label-text ${textColor} `}>Phone Number</span>
+          </div>
           <Input
             placeholder="Phone Number"
             name="phone"
@@ -93,8 +106,12 @@ export default function RegisterForm({ onSuccess }) {
             onChange={handleInputChange}
             error={inputError.phone}
           />
-        </div>
-        <div>
+        </label>
+
+        <label className="form-control w-full">
+          <div className="label">
+            <span className={`label-text ${textColor} `}>Password</span>
+          </div>
           <Input
             placeholder="Password"
             type="password"
@@ -103,8 +120,12 @@ export default function RegisterForm({ onSuccess }) {
             onChange={handleInputChange}
             error={inputError.password}
           />
-        </div>
-        <div>
+        </label>
+
+        <label className="form-control w-full">
+          <div className="label">
+            <span className={`label-text ${textColor} `}>Confirm Password</span>
+          </div>
           <Input
             placeholder="Confirm Password"
             type="password"
@@ -113,10 +134,11 @@ export default function RegisterForm({ onSuccess }) {
             onChange={handleInputChange}
             error={inputError.confirmPassword}
           />
-        </div>
-        <div>
-          <Button>
-            <div className="text-xl font-bold">REGISTER</div>
+        </label>
+
+        <div className="col-span-2 pt-6">
+          <Button color="white">
+            <div className="text-xl font-bold">SIGN UP</div>
           </Button>
         </div>
       </div>

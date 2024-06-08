@@ -1,5 +1,5 @@
 const bgMap = {
-  primary: "bg-[#BB86FC] hover:bg-[#985EFF] active:bg-[#7F39FB]",
+  primary: "bg-[#DC2026]  hover:bg-[#A30500] active:brightness-90",
 };
 
 const colorMap = {

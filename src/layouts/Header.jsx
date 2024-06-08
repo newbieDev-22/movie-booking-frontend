@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
-import { LogoIcon } from "../icons";
+import { LogoImage } from "../icons";
 import { RIGHT_MENU_ITEM } from "../constants";
-import GusetMenuItem from "./GusetMenuItem";
+import GuestMenuItem from "./GuestMenuItem";
 import UserMenuItem from "./UserMenuItem";
 import useAuth from "../hooks/useAuth";
 
 const rightMenuMapping = {
-  [RIGHT_MENU_ITEM.GUEST]: <GusetMenuItem />,
+  [RIGHT_MENU_ITEM.GUEST]: <GuestMenuItem />,
   [RIGHT_MENU_ITEM.USER]: <UserMenuItem />,
 };
 
@@ -17,20 +17,22 @@ export default function Header() {
   console.log(isUser);
 
   return (
-    <header className="grid grid-cols-8 bg-black text-white px-2 justify-between ">
-      <button className="flex items-center ml-8">
-        <div className="h-20">
-          <Link to="/">
-            <LogoIcon />
-          </Link>
+    <header className="bg-[#DC2026] h-[72px]">
+      <div className="flex text-white px-2 justify-between bg-gradient-to-b from-black to-[#000]/50 h-[72px]">
+        <button className="flex items-center px-10">
+          <div className="h-[72px] flex justify-center items-center">
+            <Link to="/">
+              <LogoImage />
+            </Link>
+          </div>
+        </button>
+        <div className="flex-1">
+          <Menu />
         </div>
-      </button>
-      <div className=" col-span-6 grid-flow-row px-8 mx-4 items-center justify-evenly">
-        <Menu />
+        <button className="flex justify-end items-center px-2">
+          {rightMenuMapping[isUser]}
+        </button>
       </div>
-      <button className="flex justify-end items-center mr-8 ">
-        {rightMenuMapping[isUser]}
-      </button>
     </header>
   );
 }

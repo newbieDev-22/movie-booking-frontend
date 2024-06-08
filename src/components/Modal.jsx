@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
+import { CloseIcon } from "../icons";
 
 export default function Modal({ width = 30, title, children, open, onClose }) {
   useEffect(() => {
@@ -17,23 +18,26 @@ export default function Modal({ width = 30, title, children, open, onClose }) {
       {open
         ? createPortal(
             <>
-              <div className="fixed inset-0 bg-[#121212]/40 z-30"></div>
+              <div className="fixed inset-0 bg-[#000000]/45 z-30"></div>
               <div className="fixed inset-0 z-40" onClick={onClose}>
                 <div className="flex justify-center items-center min-h-screen">
                   <div
-                    className="bg-[#121212] rounded-lg shadow-lg"
+                    className="bg-[#0D0E11] rounded-lg shadow-lg"
                     style={{ width: `${width}rem` }}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <div className="flex justify-between items-center p-4">
-                      <h5 className="text-white flex-1 text-4xl font-medium text-center mx-2 p-2">
-                        {title}
-                      </h5>
-                      <button className="text-lg text-white" onClick={onClose}>
-                        &#10005;
-                      </button>
+                    <div className="relative">
+                      <div className="flex justify-center items-center pt-8 pb-2 relative rounded-t-lg">
+                        <h5 className="text-white text-4xl font-bold ">{title}</h5>
+                      </div>
+                      <div className="relative ">
+                        <button className="absolute bottom-0 right-6" onClick={onClose}>
+                          <CloseIcon className />
+                        </button>
+                      </div>
                     </div>
-                    <div className="px-12 py-6">{children}</div>
+
+                    <div className="px-12 pb-6">{children}</div>
                   </div>
                 </div>
               </div>

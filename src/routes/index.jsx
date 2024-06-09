@@ -8,6 +8,7 @@ const ShowtimePage = lazy(() => import("../pages/ShowtimePage"));
 const BookingHistortyPage = lazy(() => import("../pages/BookingHistortyPage"));
 const AdminPanel = lazy(() => import("../pages/AdminPanel"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
+const MovieBookingPage = lazy(() => import("../pages/MovieBookingPage"));
 const MainContainer = lazy(() => import("../layouts/MainContainer"));
 
 const router = createBrowserRouter([
@@ -22,7 +23,8 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "showtime", element: <ShowtimePage /> },
       { path: "booking-history", element: <BookingHistortyPage /> },
-      { path: "/admin-panel", element: <AdminPanel /> },
+      { path: "admin-panel", element: <AdminPanel /> },
+      { path: "movie-booking", element: <MovieBookingPage /> },
     ],
   },
   {

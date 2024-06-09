@@ -1,5 +1,6 @@
 const bgMap = {
   primary: "bg-[#DC2026]  hover:bg-[#A30500]/80 transition-all active:scale-95",
+  nonActive: "bg-red-400  hover:bg-red-500  transition-all active:scale-95",
 };
 
 const colorMap = {
@@ -10,7 +11,6 @@ const colorMap = {
 const widthMap = {
   full: "w-full",
 };
-
 export default function Button({
   children,
   bg = "primary",

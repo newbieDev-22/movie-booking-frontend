@@ -58,7 +58,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmitForm}>
-      <div className="grid p-1">
+      <div className="grid">
         <label className="form-control w-full">
           <div className="label">
             <span className={`label-text ${textColor} `}>Email Address</span>
@@ -88,9 +88,9 @@ export default function LoginForm() {
           </div>
         </label>
 
-        <div className="pt-6">
+        <div className="pt-4">
           <Button color="white">
-            <div className="text-xl font-bold">LOG IN</div>
+            <div className="text-xl font-bold">Log in</div>
           </Button>
         </div>
       </div>

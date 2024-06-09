@@ -1,5 +1,5 @@
 const bgMap = {
-  primary: "bg-[#DC2026]  hover:bg-[#A30500] active:brightness-90",
+  primary: "bg-[#DC2026]  hover:bg-[#A30500]/80 transition-all active:scale-95",
 };
 
 const colorMap = {
@@ -20,7 +20,7 @@ export default function Button({
 }) {
   return (
     <button
-      className={`px-3 py-3 ${bgMap[bg]} ${colorMap[color]} ${widthMap[width]} focus:outline-none rounded-md`}
+      className={`px-3 py-3 ${bgMap[bg]} ${colorMap[color]} ${widthMap[width]} focus:outline-none rounded-md `}
       onClick={onClick}
     >
       {children}

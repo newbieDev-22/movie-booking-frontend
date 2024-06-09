@@ -1,7 +1,7 @@
 import React from "react";
 import useAuth from "../hooks/useAuth";
 
-export default function UserMenuItem() {
+export default function LogOutItem() {
   const { logout } = useAuth();
   return (
     <div className="flex h-full gap-2 ">

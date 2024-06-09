@@ -1,20 +1,9 @@
 import { Link } from "react-router-dom";
 import Menu from "./Menu";
 import { LogoImage } from "../icons";
-import { RIGHT_MENU_ITEM } from "../constants";
-import GuestMenuItem from "./GuestMenuItem";
-import UserMenuItem from "./UserMenuItem";
-import useAuth from "../hooks/useAuth";
-
-const rightMenuMapping = {
-  [RIGHT_MENU_ITEM.GUEST]: <GuestMenuItem />,
-  [RIGHT_MENU_ITEM.USER]: <UserMenuItem />,
-};
+import LogOutItem from "./LogOutItem";
 
 export default function Header() {
-  const { authUser } = useAuth();
-  const isUser = authUser ? RIGHT_MENU_ITEM.USER : RIGHT_MENU_ITEM.GUEST;
-
   return (
     <header className="bg-[#DC2026] min-w-[1075px] max-h-[72px]">
       <div className="flex text-white px-2 justify-between bg-gradient-to-b from-black to-[#000]/50 min-w-[1075px] max-h-[72px]">
@@ -29,7 +18,7 @@ export default function Header() {
           <Menu />
         </div>
         <button className="flex justify-end items-center px-2">
-          {rightMenuMapping[isUser]}
+          <LogOutItem />
         </button>
       </div>
     </header>

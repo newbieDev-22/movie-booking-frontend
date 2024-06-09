@@ -31,7 +31,10 @@ export default function Modal({ width = 30, title, children, open, onClose }) {
                         <h5 className="text-white text-4xl font-bold ">{title}</h5>
                       </div>
                       <div className="relative ">
-                        <button className="absolute bottom-0 right-6" onClick={onClose}>
+                        <button
+                          className="absolute bottom-0 right-6 transition-all hover:scale-110"
+                          onClick={onClose}
+                        >
                           <CloseIcon className />
                         </button>
                       </div>

@@ -21,29 +21,29 @@ export default function Carousal({
   return (
     <div className="overflow-hidden relative">
       <div
-        className="flex transition-transform ease-out duration-500"
+        className="flex transition-transform ease-out duration-500 "
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {children}
       </div>
       <div className="absolute inset-0 flex items-center justify-between p-4">
         <button
-          className="p-1 rounded-full shadow bg-white/80
+          className="p-1 rounded-full shadow bg-white/40
          text-gray-800 hover:bg-white"
           onClick={prev}
         >
-          <ChevronLeft size={40} />
+          <ChevronLeft size={30} />
         </button>
         <button
-          className="p-1 rounded-full shadow bg-white/80
+          className="p-1 rounded-full shadow bg-white/40
          text-gray-800 hover:bg-white"
           onClick={next}
         >
-          <ChevronRight size={40} />
+          <ChevronRight size={30} />
         </button>
       </div>
 
-      <div className="absolute bottom-4 right-0 left-0">
+      <div className="absolute bottom-2 right-0 left-0">
         <div className="flex items-center justify-center gap-2">
           {children.map((_, i) => (
             <div

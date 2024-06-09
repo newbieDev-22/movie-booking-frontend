@@ -7,7 +7,7 @@ export default function ProtectedRoute({ children }) {
   const { authUser, isAuthUserLoading } = useAuth();
 
   if (!authUser && !isAuthUserLoading) {
-    return <Navigate to="/landing" />;
+    return <Navigate to="/login" />;
   }
 
   return (

@@ -3,11 +3,11 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 import ProtectedRoute from "../features/authentication/components/ProtectedRoute";
 import RedirectIfLogged from "../features/authentication/components/RedirectIfLogged";
 
-const LandingPage = lazy(() => import("../pages/LandingPage"));
 const HomePage = lazy(() => import("../pages/HomePage"));
 const ShowtimePage = lazy(() => import("../pages/ShowtimePage"));
 const BookingHistortyPage = lazy(() => import("../pages/BookingHistortyPage"));
 const AdminPanel = lazy(() => import("../pages/AdminPanel"));
+const LoginPage = lazy(() => import("../pages/LoginPage"));
 const MainContainer = lazy(() => import("../layouts/MainContainer"));
 
 const router = createBrowserRouter([
@@ -26,13 +26,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/landing",
+    path: "/login",
     element: (
       <RedirectIfLogged>
-        <MainContainer />
+        <LoginPage />
       </RedirectIfLogged>
     ),
-    children: [{ path: "/landing", element: <LandingPage /> }],
   },
   { path: "*", element: <Navigate to="/" /> },
 ]);

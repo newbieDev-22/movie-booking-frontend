@@ -1,3 +1,9 @@
+import Button from "../../../components/Button";
+
 export default function PaymentQRCodeConfirm() {
-  return <div>PaymentQRCodeConfirm</div>;
+  return (
+    <div>
+      <Button>Complete Payment</Button>
+    </div>
+  );
 }

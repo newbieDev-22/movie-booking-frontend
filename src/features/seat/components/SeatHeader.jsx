@@ -1,7 +1,7 @@
 export default function SeatHeader() {
   return (
     <div className=" flex justify-between items-center px-8 py-1">
-      <div className="flex gap-4 text-2xl">
+      <div className="flex gap-4 text-xl">
         <div className="flex flex-col text-[#DBD9DD]">
           <div>Movie</div>
           <div>Theater</div>
@@ -19,7 +19,7 @@ export default function SeatHeader() {
       <div className="flex gap-2">
         <div className=" bg-[#0D0E11] px-12 py-4 rounded-lg text-white">
           <div className="p-1">Date</div>
-          <select className="outline-none bg-[#0D0E11] pr-4 py-3">
+          <select className="outline-none bg-[#0D0E11] pr-4 py-2">
             <option>Sun 21 Oct, 2023</option>
             <option>Sun 21 Oct, 2023</option>
             <option>Sun 21 Oct, 2023</option>
@@ -31,7 +31,7 @@ export default function SeatHeader() {
         </div>
         <div className=" bg-[#0D0E11] px-12 py-4 rounded-lg text-white">
           <div className="p-1">Time</div>
-          <select className="outline-none bg-[#0D0E11] pr-4 py-3">
+          <select className="outline-none bg-[#0D0E11] pr-4 py-2">
             <option>10:00 - 12:00</option>
             <option>10:00 - 12:00</option>
             <option>10:00 - 12:00</option>

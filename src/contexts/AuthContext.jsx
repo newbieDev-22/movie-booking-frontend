@@ -55,8 +55,6 @@ export default function AuthContextProvider({ children }) {
     setRegisterOpen,
   };
 
-  console.log("authUser", authUser);
-
   return <AuthContext.Provider value={sharedValue}>{children}</AuthContext.Provider>;
 }
 

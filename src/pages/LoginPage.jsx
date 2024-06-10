@@ -27,14 +27,14 @@ export default function LoginPage() {
             </Carousal>
           </div>
         </div>
-        <div className=" w-2/5 px-16 my-auto flex flex-col min-w-[400px]">
-          <div className="text-4xl py-4 font-bold text-center text-[#DBD9DD]">
+        <div className=" w-2/5 px-28 my-auto flex flex-col min-w-[400px]">
+          <div className="text-6xl py-6 font-bold text-center text-[#DBD9DD]">
             Welcome
           </div>
-          <div className="py-1">
+          <div className="py-">
             <LoginForm onSuccess={() => setRegisterOpen(false)} />
           </div>
-          <div className="py-2">
+          <div className="py-4">
             <div className="border border-b border-[#D9D9D9]/50 my-2 mx-4"></div>
             <div className="relative pt-2">
               <div className="absolute text-[#DBD9DD] bottom-1/2 left-1/2 -translate-x-2/4 bg-black px-4 font-bold">

@@ -2,6 +2,9 @@ import { lazy } from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import ProtectedRoute from "../features/authentication/components/ProtectedRoute";
 import RedirectIfLogged from "../features/authentication/components/RedirectIfLogged";
+import RedirectIfNotAdmin from "../features/authentication/components/RedirectIfNotAdmin";
+import RedirectIfNotUser from "../features/authentication/components/RedirectIfNotUser";
+import SeatSelectionPage from "../pages/SeatSelectionPage";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 const ShowtimePage = lazy(() => import("../pages/ShowtimePage"));
@@ -22,9 +25,30 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "showtime", element: <ShowtimePage /> },
-      { path: "booking-history", element: <BookingHistortyPage /> },
-      { path: "admin-panel", element: <AdminPanel /> },
-      { path: "movie-booking", element: <MovieBookingPage /> },
+      {
+        path: "booking-history",
+        element: (
+          <RedirectIfNotUser>
+            <BookingHistortyPage />
+          </RedirectIfNotUser>
+        ),
+      },
+      {
+        path: "admin-panel",
+        element: (
+          <RedirectIfNotAdmin>
+            <AdminPanel />
+          </RedirectIfNotAdmin>
+        ),
+      },
+      {
+        path: "movie-booking",
+        element: <MovieBookingPage />,
+      },
+      {
+        path: "seat-selection",
+        element: <SeatSelectionPage />,
+      },
     ],
   },
   {

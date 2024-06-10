@@ -11,9 +11,9 @@ export default function TheaterAccordion() {
     <div className="border border-white p-8 rounded-lg">
       <div className="flex justify-between">
         <div className="text-white text-xl font-semibold">Theater A</div>
-        <div className={isOpen ? "" : "-rotate-90"} onClick={handleAccodionOpen}>
+        <button className={isOpen ? "" : "-rotate-90"} onClick={handleAccodionOpen}>
           <DropdownAccordionIcon className={"fill-white"} />
-        </div>
+        </button>
       </div>
       {isOpen && (
         <div className="grid grid-cols-10 gap-4 text-white font-semibold pt-6 pb-2 ">

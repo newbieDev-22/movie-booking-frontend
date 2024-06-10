@@ -45,7 +45,7 @@ export default function SeatSummary() {
           </Button>
         </div>
       </div>
-      <Modal
+      {/* <Modal
         title="Payment"
         open={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
@@ -65,15 +65,15 @@ export default function SeatSummary() {
         width={40}
       >
         <QRCodePopup />
-      </Modal>
-      {/* <Modal
+      </Modal> */}
+      <Modal
         title="Ticket"
         open={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
         width={50}
       >
         <Ticket />
-      </Modal> */}
+      </Modal>
     </div>
   );
 }

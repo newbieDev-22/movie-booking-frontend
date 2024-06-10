@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import {
   getAccessToken,
   removeAccessToken,
   setAccessToken,
 } from "../utils/local-storage";
 import authApi from "../apis/auth";
-import { useEffect } from "react";
 
 const AuthContext = createContext();
 

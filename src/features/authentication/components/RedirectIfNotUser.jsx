@@ -5,7 +5,7 @@ import Spinner from "../../../components/Spinner";
 export default function RedirectIfNotUser({ children }) {
   const { authUser, isAuthUserLoading } = useAuth();
 
-  if (!(authUser?.user?.isAdmin === 0)) {
+  if (authUser?.isAdmin !== false) {
     return <Navigate to="/" />;
   }
 

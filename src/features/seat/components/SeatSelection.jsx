@@ -21,8 +21,8 @@ export default function SeatSelection() {
           return <SeatsRow key={el} rowName={el} />;
         })}
       </div>
-      <div className="flex justify-center items-center mt-12 gap-56">
-        <div className="h-12 flex justify-center gap-24 text-lg font-bold text-white">
+      <div className="flex justify-center items-center mt-12 gap-40">
+        <div className="h-12 flex justify-center gap-16 text-lg font-bold text-white">
           <div className="flex justify-center items-center gap-3 p-1">
             <div className="h-full rounded-full  bg-white">
               <AvailableSeatIcon className={"h-full p-1"} />
@@ -42,7 +42,7 @@ export default function SeatSelection() {
             <div>Unavailable</div>
           </div>
         </div>
-        <div className="flex gap-4 text-lg font-bold text-white">
+        <div className="flex gap-12 text-lg font-bold text-white">
           <div className="flex items-center gap-4">
             <ChairIcon className={"h-12"} />
             <div>Normal</div>

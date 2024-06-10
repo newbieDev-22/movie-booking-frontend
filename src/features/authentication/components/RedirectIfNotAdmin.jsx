@@ -5,7 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 export default function RedirectIfNotAdmin({ children }) {
   const { authUser, isAuthUserLoading } = useAuth();
 
-  if (!(authUser?.user?.isAdmin === 1)) {
+  if (authUser?.isAdmin !== true) {
     return <Navigate to="/" />;
   }
 

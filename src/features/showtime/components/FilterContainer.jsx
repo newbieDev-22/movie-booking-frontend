@@ -27,7 +27,7 @@ export default function FilterContainer() {
       </div>
       <div className="flex first:text-black/42">
         <select className="w-full h-full text-center text-lg font-bold rounded-lg focus:outline-none appearance-none">
-          <option selected>Choose a Movie</option>
+          <option defaultValue>Choose a Movie</option>
           <option>Spider-Man: Across the Spider-Verse</option>
           <option>Spider-Man: Across the Spider-Verse</option>
           <option>Spider-Man: Across the Spider-Verse</option>

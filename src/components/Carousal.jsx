@@ -29,18 +29,22 @@ export default function Carousal({
       <div className="absolute inset-0 flex items-center justify-between p-4">
         <button
           className="p-1 rounded-full shadow bg-white/40
-         text-gray-800 hover:bg-white"
+         text-gray-800 hover:bg-white z-10"
           onClick={prev}
         >
           <ChevronLeft size={30} />
         </button>
         <button
           className="p-1 rounded-full shadow bg-white/40
-         text-gray-800 hover:bg-white"
+         text-gray-800 hover:bg-white z-10"
           onClick={next}
         >
           <ChevronRight size={30} />
         </button>
+      </div>
+      <div className="absolute inset-0 flex items-center justify-between">
+        <button className=" bg-transparent w-1/2 h-full" onClick={prev}></button>
+        <button className=" bg-transparent w-1/2 h-full" onClick={next}></button>
       </div>
 
       <div className="absolute bottom-2 right-0 left-0">

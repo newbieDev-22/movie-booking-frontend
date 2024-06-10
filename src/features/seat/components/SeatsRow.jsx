@@ -1,20 +1,23 @@
 import React from "react";
-import { ChairIcon } from "../../../icons";
+import Chair from "../../../components/Chair";
 
-export default function SeatsRow({ rowName, color }) {
+export default function SeatsRow({ rowName }) {
+  const color = ["A", "B"].includes(rowName) ? "#985EFF" : "#DC2026";
   return (
-    <div className="relative">
-      <div className="flex justify-center items-center flex-1">
-        <div className="flex h-9 gap-16 justify-center">
-          <ChairIcon fill={color} />
-          <ChairIcon fill={color} />
-          <ChairIcon fill={color} />
-          <ChairIcon fill={color} />
-          <ChairIcon fill={color} />
-          <ChairIcon fill={color} />
-          <ChairIcon fill={color} />
-          <ChairIcon fill={color} />
-          <h1 className="text-white text-2xl ">{rowName}</h1>
+    <div>
+      <div className="flex justify-center items-center ml-8">
+        <div className="flex h-9 gap-12 justify-center">
+          <Chair color={color} isBooked={true} />
+          <Chair color={color} isUnavailable={true} />
+          <Chair color={color} />
+          <Chair color={color} />
+          <Chair color={color} />
+          <Chair color={color} />
+          <Chair color={color} />
+          <Chair color={color} />
+          <div className="w-8 flex justify-center shrink-0">
+            <h1 className="text-white text-2xl ">{rowName}</h1>
+          </div>
         </div>
       </div>
     </div>

@@ -22,7 +22,7 @@ export default function Modal({ width = 30, title, children, open, onClose }) {
               <div className="fixed inset-0 z-40" onClick={onClose}>
                 <div className="flex justify-center items-center min-h-screen">
                   <div
-                    className="bg-[#0D0E11] rounded-lg shadow-lg"
+                    className="bg-[#030303] rounded-lg shadow-lg"
                     style={{ width: `${width}rem` }}
                     onClick={(e) => e.stopPropagation()}
                   >
@@ -35,7 +35,7 @@ export default function Modal({ width = 30, title, children, open, onClose }) {
                           className="absolute bottom-0 right-6 transition-all hover:scale-110"
                           onClick={onClose}
                         >
-                          <CloseIcon className />
+                          <CloseIcon />
                         </button>
                       </div>
                     </div>

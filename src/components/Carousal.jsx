@@ -49,11 +49,11 @@ export default function Carousal({
 
       <div className="absolute bottom-2 right-0 left-0">
         <div className="flex items-center justify-center gap-2">
-          {children.map((_, i) => (
+          {children.map((el, index) => (
             <div
-              key={i}
-              className={`transition-all w-3 h-3 bg-white rounded-full 
-                ${current === i ? "p-2" : "bg-opacity-50"}`}
+              key={index}
+              className={`transition-all w-3 h-3 rounded-full
+                ${current === index ? "bg-[#DC2026] p-2" : " bg-[#CDCDCD] p-1"}`}
             />
           ))}
         </div>

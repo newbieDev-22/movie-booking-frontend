@@ -3,19 +3,19 @@ import MenuItem from "./MenuItem";
 import useAuth from "../hooks/useAuth";
 
 const menuList = [
-  { id: 1, title: "Home", to: "/" },
-  { id: 3, title: "Showtimes", to: "/showtime" },
-  { id: 4, title: "Booking Histories", to: "/booking-history", isUser: true },
-  { id: 5, title: "Admin Panel", to: "/admin-panel", isUser: false },
+  { id: 1, title: "HOME", to: "/" },
+  { id: 2, title: "SHOWTIMES", to: "/showtime" },
+  { id: 3, title: "BOOKING HISTORIES", to: "/booking-history", isUser: true },
+  { id: 4, title: "ADMIN PANEL", to: "/admin-panel", isUser: false },
 ];
 
 export default function Menu() {
-  const { pathName } = useLocation();
+  const { pathname } = useLocation();
   const { authUser } = useAuth();
   return (
     <>
       {authUser ? (
-        <nav className="flex justify-center gap-4 h-full px-20 ">
+        <nav className="flex justify-center gap-4 h-full px-20 transition-all">
           {menuList.map((el) => {
             if (authUser?.isAdmin === el.isUser) {
               return;
@@ -25,7 +25,7 @@ export default function Menu() {
                 key={el.id}
                 title={el.title}
                 to={el.to}
-                isActive={pathName === el.to}
+                isActive={pathname === el.to}
               />
             );
           })}

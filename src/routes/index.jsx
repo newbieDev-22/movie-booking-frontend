@@ -4,7 +4,6 @@ import ProtectedRoute from "../features/authentication/components/ProtectedRoute
 import RedirectIfLogged from "../features/authentication/components/RedirectIfLogged";
 import RedirectIfNotAdmin from "../features/authentication/components/RedirectIfNotAdmin";
 import RedirectIfNotUser from "../features/authentication/components/RedirectIfNotUser";
-import SeatSelectionPage from "../pages/SeatSelectionPage";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 const ShowtimePage = lazy(() => import("../pages/ShowtimePage"));
@@ -12,6 +11,8 @@ const BookingHistortyPage = lazy(() => import("../pages/BookingHistortyPage"));
 const AdminPanel = lazy(() => import("../pages/AdminPanel"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const MovieBookingPage = lazy(() => import("../pages/MovieBookingPage"));
+const SeatSelectionPage = lazy(() => import("../pages/SeatSelectionPage"));
+
 const MainContainer = lazy(() => import("../layouts/MainContainer"));
 
 const router = createBrowserRouter([

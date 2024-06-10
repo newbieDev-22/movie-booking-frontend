@@ -1,8 +1,7 @@
 import ReactPlayer from "react-player";
 import Spinner from "../../../components/Spinner";
 
-const imagePath =
-  "https://posterspy.com/wp-content/uploads/2023/06/Spiderverse.jpg" || null;
+const imagePath = "https://posterspy.com/wp-content/uploads/2023/06/Spiderverse.jpg";
 
 const Wrapper = ({ children }) => (
   <div className="w-full aspect-[853/480] p-8">{children}</div>

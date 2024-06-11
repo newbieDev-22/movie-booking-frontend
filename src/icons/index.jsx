@@ -242,17 +242,18 @@ export function AvailableSeatIcon({ className }) {
   );
 }
 
-export function PlusIcon({ className }) {
+export function PlusIcon({ className, color = "white" }) {
   return (
     <svg
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      color={color}
     >
       <path
         d="M6.85714 9.14286H0V6.85714H6.85714V0H9.14286V6.85714H16V9.14286H9.14286V16H6.85714V9.14286Z"
-        fill="white"
+        fill={color}
       />
     </svg>
   );

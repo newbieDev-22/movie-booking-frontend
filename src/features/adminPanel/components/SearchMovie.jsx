@@ -16,7 +16,7 @@ export default function SearchMovie() {
           </Button>
         </div>
       </div>
-      <div className="py-8 px-6 grid grid-cols-7 gap-6 ">
+      <div className="p-6 grid grid-cols-6 gap-6 ">
         <MovieEditCard />
         <MovieEditCard />
         <MovieEditCard />

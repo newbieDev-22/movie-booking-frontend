@@ -28,7 +28,7 @@ export default function ShowtimeSlot() {
         title="SELECT MOVIE"
         open={isAddMovieOpen}
         onClose={() => setIsAddMovieOpen(false)}
-        width={96}
+        width={75}
       >
         <SelectMovieDetail />
       </Modal>

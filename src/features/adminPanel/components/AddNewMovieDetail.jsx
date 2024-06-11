@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
-import { useRef } from "react";
 
 const initialInput = {
   movieName: "",
@@ -40,9 +39,20 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
   };
 
   return (
-    <div className="p-4 my-4">
-      <form onSubmit={handleSumbitForm}>
-        <div className="grid grid-cols-2 p-1 gap-3">
+    <div className="flex justify-evenly items-center gap-4 py-8">
+      <input
+        type="file"
+        placeholder="Poster image"
+        hidden
+        ref={fileEl}
+        onChange={(e) => {
+          if (e.target.files[0]) {
+            setFile(e.target.files[0]);
+          }
+        }}
+      ></input>
+      <form onSubmit={handleSumbitForm} className="w-1/2">
+        <div className="grid grid-cols-2 gap-3">
           <label className="form-control w-full">
             <div className="label">
               <span className={`label-text text-[#DBD9DD]`}>Movie Name</span>
@@ -99,22 +109,12 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
             <div className="label">
               <span className={`label-text text-[#DBD9DD]`}>Poster Image file</span>
             </div>
-            <input
-              type="file"
-              placeholder="Poster image"
-              hidden
-              ref={fileEl}
-              onChange={(e) => {
-                if (e.target.files[0]) {
-                  setFile(e.target.files[0]);
-                }
-              }}
-            ></input>
+
             <button
               className="bg-white w-full rounded-md text-lg p-2"
               onClick={() => fileEl.current.click()}
             >
-              Choose Poster Image File
+              Choose Image File
             </button>
           </label>
 
@@ -129,17 +129,6 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
               Genres
             </button>
           </label>
-          {file ? (
-            <div className="col-span-2 p-1">
-              <div className="label-text text-[#DBD9DD]">Image Preview</div>
-              <div className="flex flex-col justify-center items-center px-2 py-6">
-                <img
-                  src={URL?.createObjectURL(file)}
-                  className="h-64 aspect-auto rounded-xl"
-                />
-              </div>
-            </div>
-          ) : null}
 
           <div className="col-span-2 pt-2">
             <Button color="white">
@@ -148,6 +137,24 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
           </div>
         </div>
       </form>
+
+      {file ? (
+        <div className="w-1/2">
+          <div className="text-xl font-bold text-[#DBD9DD] text-center">
+            Image Preview
+          </div>
+          <div
+            className="flex flex-col justify-center items-center px-2 py-6"
+            onClick={() => fileEl.current.click()}
+          >
+            <img
+              src={URL?.createObjectURL(file)}
+              className="h-64 aspect-auto rounded-xl"
+              alt="preview"
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

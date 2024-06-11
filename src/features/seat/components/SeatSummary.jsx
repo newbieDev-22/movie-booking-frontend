@@ -4,7 +4,6 @@ import { ChairIcon } from "../../../icons";
 import PaymentModal from "../../payment/components/PaymentModal";
 import Modal from "../../../components/Modal";
 import QRCodePopup from "../../payment/components/QRCodePopup";
-import Ticket from "../../../components/Ticket";
 
 export default function SeatSummary() {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
@@ -45,7 +44,7 @@ export default function SeatSummary() {
           </Button>
         </div>
       </div>
-      {/* <Modal
+      <Modal
         title="Payment"
         open={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
@@ -65,14 +64,6 @@ export default function SeatSummary() {
         width={40}
       >
         <QRCodePopup />
-      </Modal> */}
-      <Modal
-        title="Ticket"
-        open={isPaymentOpen}
-        onClose={() => setIsPaymentOpen(false)}
-        width={45}
-      >
-        <Ticket />
       </Modal>
     </div>
   );

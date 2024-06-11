@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import Button from "../../../components/Button";
 
@@ -39,7 +38,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="ACTION"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Action
         </label>
@@ -55,7 +54,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="ANIMATION"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Animation
         </label>
@@ -71,7 +70,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="ADVENTURE"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Adventure
         </label>
@@ -87,7 +86,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="COMEDY"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Comedy
         </label>
@@ -103,7 +102,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="DRAMA"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Drama
         </label>
@@ -119,7 +118,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="THRILLER"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Thriller
         </label>
@@ -135,7 +134,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="ROMANCE"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Romance
         </label>
@@ -151,7 +150,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="HORROR"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Horror
         </label>
@@ -167,7 +166,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="FANTASY"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Fantasy
         </label>
@@ -183,7 +182,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="MUSICAL"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Musical
         </label>
@@ -199,7 +198,7 @@ export default function SelectGenresDetail() {
         />
         <label
           htmlFor="CRIME"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-white"
+          className="ms-2 text-sm font-medium dark:text-gray-300 text-white"
         >
           Crime
         </label>

@@ -10,7 +10,7 @@ export default function Input({
     <>
       <input
         type={type}
-        className={`w-full h-[42px] border rounded-md focus:outline-none focus:ring-2 text-md indent-3 ${
+        className={`w-full h-full border rounded-md focus:outline-none focus:ring-2 text-md indent-3 ${
           error
             ? "border-[#CF6679] focus:ring-[#CF6679/80]"
             : "border-[#121212] focus:border-[#BB86FC] focus:ring-[#DBB2FF]"

@@ -15,7 +15,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="flex h-screen bg-black gap-1 min-w-[1000px] overflow-hidden">
+      <div className="flex h-screen bg-black gap-1 min-w-[1275px] overflow-hidden">
         <div className="w-3/5 m-auto">
           <div className="h-full flex justify-center items-center p-3">
             <Carousal autoSlide={true} autoSlideInterval={4000}>

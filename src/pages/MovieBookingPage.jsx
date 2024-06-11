@@ -4,7 +4,7 @@ import SelectDate from "../features/booking/components/SelectDate";
 import TheaterAccordion from "../components/TheaterAccordion";
 export default function MovieBookingPage() {
   return (
-    <div className="bg-[#121212] min-h-[calc(100vh-5rem)] min-w-[1075px]">
+    <div className="bg-[#121212] min-h-[calc(100vh-5rem)] min-w-[1275px]">
       <div className="flex flex-col">
         <MovieDetail />
         <div className="px-10">

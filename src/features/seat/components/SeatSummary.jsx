@@ -14,10 +14,10 @@ export default function SeatSummary() {
     <div>
       <div className=" flex justify-between items-center px-8 pt-4">
         <div className="flex flex-col">
-          <div className="text-4xl text-[#DBD9DD] font-bold">SUMMARY</div>
+          <div className="text-2xl text-[#DBD9DD] font-bold">SUMMARY</div>
         </div>
 
-        <div className="flex gap-8 text-white px-8 shrink-0">
+        <div className="flex gap-8 text-white px-8">
           <div className="flex gap-4 justify-center items-center">
             <ChairIcon className={"h-14"} />
             <div className="flex flex-col gap-1">
@@ -34,7 +34,7 @@ export default function SeatSummary() {
           </div>
         </div>
 
-        <div className="shrink-0 px-8 py-1 rounded-lg text-white flex justify-center items-center gap-8">
+        <div className=" px-8 py-1 rounded-lg text-white flex justify-center items-center gap-8">
           <div className="text-xl">Total price : </div>
           <div className="text-5xl font-bold">900 &#x0E3F;</div>
         </div>
@@ -70,7 +70,7 @@ export default function SeatSummary() {
         title="Ticket"
         open={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
-        width={50}
+        width={45}
       >
         <Ticket />
       </Modal>

@@ -15,7 +15,7 @@ export default function Menu() {
   return (
     <>
       {authUser ? (
-        <nav className="flex justify-center gap-4 h-full px-20 transition-all">
+        <nav className="flex justify-center gap-8 h-full px-32 transition-all">
           {menuList.map((el) => {
             if (authUser?.isAdmin === el.isUser) {
               return;

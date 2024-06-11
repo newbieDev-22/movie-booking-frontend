@@ -6,7 +6,8 @@ const menuList = [
   { id: 1, title: "HOME", to: "/" },
   { id: 2, title: "SHOWTIMES", to: "/showtime" },
   { id: 3, title: "BOOKING HISTORIES", to: "/booking-history", isUser: true },
-  { id: 4, title: "ADMIN PANEL", to: "/admin-panel", isUser: false },
+  { id: 4, title: "EDIT MOVIE", to: "/edit-movie", isUser: false },
+  { id: 5, title: "EDIT THEATER", to: "/edit-theater", isUser: false },
 ];
 
 export default function Menu() {
@@ -15,7 +16,7 @@ export default function Menu() {
   return (
     <>
       {authUser ? (
-        <nav className="flex justify-center gap-24 h-full px-32 transition-all">
+        <nav className="flex justify-center gap-20 h-full px-28 transition-all">
           {menuList.map((el) => {
             if (authUser?.isAdmin === el.isUser) {
               return;

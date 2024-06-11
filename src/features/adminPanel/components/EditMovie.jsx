@@ -1,3 +1,3 @@
 export default function EditMovie() {
-  return <div>EditMovie</div>;
+  return <div className="text-white">EditMovie</div>;
 }

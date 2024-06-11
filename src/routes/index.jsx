@@ -8,10 +8,11 @@ import RedirectIfNotUser from "../features/authentication/components/RedirectIfN
 const HomePage = lazy(() => import("../pages/HomePage"));
 const ShowtimePage = lazy(() => import("../pages/ShowtimePage"));
 const BookingHistortyPage = lazy(() => import("../pages/BookingHistortyPage"));
-const AdminPanel = lazy(() => import("../pages/AdminPanel"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const MovieBookingPage = lazy(() => import("../pages/MovieBookingPage"));
 const SeatSelectionPage = lazy(() => import("../pages/SeatSelectionPage"));
+const AdminPanelEditMovie = lazy(() => import("../pages/AdminPanelEditMovie"));
+const AdminPanelEditTheater = lazy(() => import("../pages/AdminPanelEditTheater"));
 
 const MainContainer = lazy(() => import("../layouts/MainContainer"));
 
@@ -35,10 +36,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "admin-panel",
+        path: "edit-movie",
         element: (
           <RedirectIfNotAdmin>
-            <AdminPanel />
+            <AdminPanelEditMovie />
+          </RedirectIfNotAdmin>
+        ),
+      },
+      {
+        path: "edit-theater",
+        element: (
+          <RedirectIfNotAdmin>
+            <AdminPanelEditTheater />
           </RedirectIfNotAdmin>
         ),
       },
@@ -60,6 +69,7 @@ const router = createBrowserRouter([
       </RedirectIfLogged>
     ),
   },
+  { path: "/admin-panel", element: <Navigate to="/admin-panel/edit-movie" /> },
   { path: "*", element: <Navigate to="/" /> },
 ]);
 

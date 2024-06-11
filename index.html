@@ -2,9 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="./src/assets/logo_icon.svg" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie Booking Application</title>
+    <style>
+      input[type="time"] {
+        position: relative;
+      }
+
+      input[type="time"]::-webkit-calendar-picker-indicator {
+        display: block;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        background: transparent;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

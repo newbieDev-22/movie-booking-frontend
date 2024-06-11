@@ -20,7 +20,7 @@ export default function MovieEditCard() {
     <>
       <div className="flex flex-col gap-2">
         <div className="overflow-hidden rounded-md shadow-md">
-          <img src={imagePath} alt="movie" />
+          <img src={imagePath} alt="movie" className="object-cover aspect-[3/4]" />
         </div>
         <div className="flex flex-col px-1 gap-2">
           <div className="text-left text-lg text-white font-bold">

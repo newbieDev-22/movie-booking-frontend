@@ -18,8 +18,8 @@ export default function HighlightDetail() {
 
   return (
     <>
-      <div className="flex justify-between items-center gap-5 py-3">
-        <div className="w-1/2">
+      <div className="grid grid-cols-2">
+        <div className="p-4 content-center">
           <input
             type="file"
             placeholder="highlight image"
@@ -64,12 +64,12 @@ export default function HighlightDetail() {
         {file ? (
           <div
             role="button"
-            className="flex flex-col p-4 w-1/2"
+            className="p-4 content-center"
             onClick={() => fileEl.current.click()}
           >
             <img
               src={URL?.createObjectURL(file)}
-              className="h-full aspect-auto rounded-xl"
+              className="object-cover aspect-[16/9]"
               alt="preview"
             />
           </div>

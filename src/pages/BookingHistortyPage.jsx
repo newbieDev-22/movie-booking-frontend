@@ -5,7 +5,7 @@ export default function BookingHistortyPage() {
     <div className="bg-[#121212] min-h-[calc(100vh-5rem)] min-w-[1275px]">
       <div className="p-6">
         <div className="text-2xl font-bold text-white">BOOKING HISTORIES</div>
-        <div className="py-6 px-8">
+        <div className="py-6 px-2">
           <HistoriesTable />
         </div>
       </div>

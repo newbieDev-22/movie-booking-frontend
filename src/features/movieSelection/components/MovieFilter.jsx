@@ -17,8 +17,8 @@ const initBtnState = {
 };
 
 const btnBgColorMapping = {
-  true: "active",
-  false: "nonActive",
+  true: "isActiveBtn",
+  false: "isNonActiveBtn",
 };
 
 export default function MovieFilter() {
@@ -41,91 +41,91 @@ export default function MovieFilter() {
     setBtnState({ ...initBtnState, [name]: true });
   };
   return (
-    <div className="px-6 pt-8">
-      <div className="grid grid-cols-6 gap-4 gap-x-8">
+    <div className="px-8 pt-8">
+      <div className="grid grid-cols-6 gap-y-1 gap-x-8">
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.all]}
           onClick={() => handleFilter("all")}
         >
-          <div className="font-bold">ALL</div>
+          ALL
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.action]}
           onClick={() => handleFilter("action")}
         >
-          <div className="font-bold">ACTION</div>
+          ACTION
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.animation]}
           onClick={() => handleFilter("animation")}
         >
-          <div className="font-bold">ANIMATION</div>
+          ANIMATION
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.adventure]}
           onClick={() => handleFilter("adventure")}
         >
-          <div className="font-bold">ADVENTURE</div>
+          ADVENTURE
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.comedy]}
           onClick={() => handleFilter("comedy")}
         >
-          <div className="font-bold">COMEDY</div>
+          COMEDY
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.drama]}
           onClick={() => handleFilter("drama")}
         >
-          <div className="font-bold">DRAMA</div>
+          DRAMA
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.thiller]}
           onClick={() => handleFilter("thiller")}
         >
-          <div className="font-bold">THRILLER</div>
+          THRILLER
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.romance]}
           onClick={() => handleFilter("romance")}
         >
-          <div className="font-bold">ROMANCE</div>
+          ROMANCE
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.horror]}
           onClick={() => handleFilter("horror")}
         >
-          <div className="font-bold">HORROR</div>
+          HORROR
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.fantasy]}
           onClick={() => handleFilter("fantasy")}
         >
-          <div className="font-bold">FANTASY</div>
+          FANTASY
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.musical]}
           onClick={() => handleFilter("musical")}
         >
-          <div className="font-bold">MUSICAL</div>
+          MUSICAL
         </Button>
         <Button
           color="white"
           bg={btnBgColorMapping[btnState.crime]}
           onClick={() => handleFilter("crime")}
         >
-          <div className="font-bold">CRIME</div>
+          CRIME
         </Button>
       </div>
     </div>

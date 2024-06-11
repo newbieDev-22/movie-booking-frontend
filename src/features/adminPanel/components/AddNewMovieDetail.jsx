@@ -35,11 +35,10 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
 
   const handleSumbitForm = (e) => {
     e.preventDefault();
-    console.log("submit");
   };
 
   return (
-    <div className="flex justify-evenly items-center gap-4 py-8">
+    <div className="grid grid-cols-3">
       <input
         type="file"
         placeholder="Poster image"
@@ -51,7 +50,7 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
           }
         }}
       ></input>
-      <form onSubmit={handleSumbitForm} className="w-1/2">
+      <form onSubmit={handleSumbitForm} className="col-span-2 p-4 content-center">
         <div className="grid grid-cols-2 gap-3">
           <label className="form-control w-full">
             <div className="label">
@@ -139,7 +138,7 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
       </form>
 
       {file ? (
-        <div className="w-1/2">
+        <div className="">
           <div className="text-xl font-bold text-[#DBD9DD] text-center">
             Image Preview
           </div>
@@ -149,7 +148,7 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
           >
             <img
               src={URL?.createObjectURL(file)}
-              className="h-64 aspect-auto rounded-xl"
+              className="object-cover aspect-[3/4]"
               alt="preview"
             />
           </div>

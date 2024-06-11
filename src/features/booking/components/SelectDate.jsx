@@ -47,11 +47,11 @@ export default function SelectDate() {
 
   return (
     <div>
-      <div className="text-2xl font-bold text-white">Showtime</div>
-      <div className="flex py-4 items-center gap-16 px-12">
+      <div className="text-2xl font-bold text-white px-4">Showtime</div>
+      <div className="flex py-6 items-center gap-16 px-12">
         <div>
-          <Button onClick={() => SetDateIsSelect(firstDateSeletion)}>
-            <div className="font-semibold text-white w-24">TODAY</div>
+          <Button color="white" onClick={() => SetDateIsSelect(firstDateSeletion)}>
+            TODAY
           </Button>
         </div>
 

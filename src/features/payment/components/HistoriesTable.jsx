@@ -21,10 +21,10 @@ export default function HistoriesTable() {
 
   return (
     <>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-right rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr className="text-lg">
+            <tr className="text-lg text-center">
               <th scope="col" className="px-6 py-3">
                 Booking Id
               </th>
@@ -48,7 +48,7 @@ export default function HistoriesTable() {
               </th>
             </tr>
           </thead>
-          <tbody className="text-lg text-right">
+          <tbody className="text-lg text-center">
             <Table data={data} />
             <Table data={data} />
             <Table data={data} />

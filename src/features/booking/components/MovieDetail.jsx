@@ -1,53 +1,39 @@
 import ReactPlayer from "react-player";
 import Spinner from "../../../components/Spinner";
-
-const imagePath = "https://posterspy.com/wp-content/uploads/2023/06/Spiderverse.jpg";
+import { mockData } from "../../../constants";
 
 const Wrapper = ({ children }) => (
-  <div className="w-full aspect-[853/480] p-8">{children}</div>
+  <div className="object-cover aspect-[16/9] p-8 ">{children}</div>
 );
+
+const dummyData = mockData[0];
+const dummyGenres = ["Action", "Animation"];
+const dummySynopsis =
+  "In his second year of fighting crime, Batman uncovers corruption in Gotham City linked to his own family while facing the serial killer known as the Riddler.";
 
 export default function MovieDetail() {
   return (
-    <div className="w-full flex px-6">
-      <div className="flex flex-col w-3/5 m-auto">
-        <div className="flex h-full justify-between p-2">
-          <div className="px-6 py-8 flex items-center">
-            <img src={imagePath} alt="poster" className="rounded-xl aspect-[3/4]" />
+    <div className="grid grid-cols-5 gap-2 px-6">
+      <div className="py-6 px-6 content-center">
+        <img src={dummyData?.posterImage} alt="poster" className="aspect-[3/4]" />
+      </div>
+      <div className="grid grid-row-3 gap-4 p-8 content-center col-span-2">
+        <div className="text-3xl text-white font-bold">{dummyData?.movieName}</div>
+        <div className="grid grid-cols-4 text-left gap-2">
+          <div className="text-[#ABABAF]">Genres :</div>
+          <div className="text-white font-bold text-left col-span-3">
+            {dummyGenres.join("|")}
           </div>
-
-          <div className="flex flex-col justify-center px-4 gap-1">
-            <div className="text-3xl text-white font-bold">
-              Spider-Man: Across the Spider-Verse
-            </div>
-
-            <div className="flex flex-col gap-1 pt-6">
-              <div className="flex items-center">
-                <div className="text-[#ABABAF]">Genres :</div>
-                <div className="pl-1 text-white font-bold">Action</div>
-                <div className="pl-1 text-white font-bold">Animation</div>
-              </div>
-
-              <div className="flex items-center">
-                <div className="text-[#ABABAF]">Duration : </div>
-                <div className="pl-1 text-white font-bold">105 Min</div>
-              </div>
-            </div>
-
-            <div className="pt-6">
-              <div className="text-[#ABABAF] ">Synopsis</div>
-              <p className="text-white pt-2 text-justify indent-12">
-                {`In the film, Miles goes on an adventure with Gwen Stacy / Spider-Woman
-      (Steinfeld) across the multiverse, where he meets a team of Spider-People
-      led by Miguel O'Hara / Spider-Man 2099 (Isaac) known as the
-      Spider-Society, but comes into conflict with them over handling a new
-      threat in the form of the Spot (Schwartzman).`}
-              </p>
-            </div>
-          </div>
+          <div className="text-[#ABABAF]">Duration : </div>
+          <div className="text-white font-bold col-span-3">{dummyData?.duration} Min</div>
+        </div>
+        <div>
+          <div className="text-[#ABABAF]">Synopsis :</div>
+          <p className="text-white pt-2 text-justify indent-12">{dummySynopsis}</p>
         </div>
       </div>
-      <div className="flex justify-center items-center w-2/5 max-w-[800px]">
+
+      <div className="content-center col-span-2">
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=shW9i6k8cB0`}
           fallback={<Spinner />}

@@ -30,7 +30,7 @@ export default function Chair({ color, isBooked = false, isUnavailable = false }
     );
   }
 
-  if (authUser.isAdmin === true) {
+  if (authUser?.isAdmin === true) {
     return (
       <button className="h-full w-full relative" onClick={handleUnavailableSelectSeat}>
         <ChairIcon fill={color} className={"h-full"} />

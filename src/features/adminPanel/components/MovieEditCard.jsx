@@ -1,9 +1,12 @@
+import { useState } from "react";
 import Button from "../../../components/Button";
+import ConfirmDetail from "../../../components/ConfirmDetail";
 import Modal from "../../../components/Modal";
 
 const imagePath = "https://posterspy.com/wp-content/uploads/2023/06/Spiderverse.jpg";
 
 export default function MovieEditCard() {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   return (
     <>
       <div className="flex flex-col gap-2">
@@ -16,16 +19,24 @@ export default function MovieEditCard() {
           </div>
           <div className="grid grid-cols-2 gap-2">
             <Button color="white" bg="editBtn">
-              <div className="font-bold">Highlight</div>
+              <div className="font-bold flex justify-center items-center">Highlight</div>
             </Button>
             <Button color="white" bg="editBtn">
-              <div className="font-bold">Movie Status</div>
+              <div className="font-bold flex justify-center items-center">
+                Movie Status
+              </div>
             </Button>
             <Button color="white" bg="editBtn">
-              <div className="font-bold">Movie Info</div>
+              <div className="font-bold flex justify-center items-center">Movie Info</div>
             </Button>
-            <Button color="white" bg="deleteBtn">
-              <div className="font-bold">Delete Movie</div>
+            <Button
+              color="white"
+              bg="deleteBtn"
+              onClick={() => setIsConfirmModalOpen(true)}
+            >
+              <div className="font-bold flex justify-center items-center">
+                Delete Movie
+              </div>
             </Button>
           </div>
         </div>
@@ -33,7 +44,14 @@ export default function MovieEditCard() {
       <Modal></Modal>
       <Modal></Modal>
       <Modal></Modal>
-      <Modal></Modal>
+      <Modal
+        title="Delete Confirm?"
+        open={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        width={30}
+      >
+        <ConfirmDetail msg={"Do you want to delete this movie ?"} />
+      </Modal>
     </>
   );
 }

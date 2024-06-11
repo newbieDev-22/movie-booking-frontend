@@ -16,7 +16,7 @@ export default function SeatSelection() {
       <div className="flex justify-center pt-4">
         <ScreenIcon />
       </div>
-      <div className="px-4 flex flex-col gap-6 -mt-12">
+      <div className="px-4 flex flex-col gap-6 -mt-16">
         {reverseRowName.map((el) => {
           return <SeatsRow key={el} rowName={el} />;
         })}

@@ -171,9 +171,9 @@ export function ChairIcon({ className, fill = "#DC2026" }) {
   );
 }
 
-export function ScreenIcon() {
+export function ScreenIcon({ className }) {
   return (
-    <svg viewBox="0 0 1432 249" fill="none">
+    <svg viewBox="0 0 1432 249" fill="none" className={className}>
       <path
         d="M90 107.924L716.25 91L1342.5 107.571L1401 207L716.25 184.082L31 207L90 107.924Z"
         fill="url(#paint0_linear_1242_12298)"

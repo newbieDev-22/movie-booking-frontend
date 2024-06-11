@@ -2,8 +2,12 @@ import { useState } from "react";
 import Button from "../../../components/Button";
 import ShowtimeSlot from "./ShowtimeSlot";
 import Datepicker from "react-tailwindcss-datepicker";
+import Modal from "../../../components/Modal";
+import SeatSettingDetail from "./SeatSettingDetail";
 
 export default function TheaterCard() {
+  const [isSeatSettingOpen, setIsSeatSettingOpen] = useState(false);
+
   const [date, setDate] = useState({
     startDate: null,
   });
@@ -17,7 +21,7 @@ export default function TheaterCard() {
       <div className="bg-[#282828] rounded-lg">
         <div className="flex flex-col p-6">
           <div className="grid grid-cols-8 py-2">
-            <div className="font-bold text-white text-4xl flex items-center px-2">
+            <div className="font-bold text-white text-2xl flex items-center px-2">
               THEATER A
             </div>
             <div className="flex gap-2 text-xl col-span-7 pl-56">
@@ -35,7 +39,7 @@ export default function TheaterCard() {
               <Button color="white">
                 <div className="font-bold">Add Showtime</div>
               </Button>
-              <Button color="white">
+              <Button color="white" onClick={() => setIsSeatSettingOpen(true)}>
                 <div className="font-bold">Seat Setting</div>
               </Button>
               <Button color="white">
@@ -50,10 +54,17 @@ export default function TheaterCard() {
             <ShowtimeSlot />
             <ShowtimeSlot />
             <ShowtimeSlot />
-            <ShowtimeSlot />
           </div>
         </div>
       </div>
+      <Modal
+        title="SEAT SETTING"
+        open={isSeatSettingOpen}
+        onClose={() => setIsSeatSettingOpen(false)}
+        width={80}
+      >
+        <SeatSettingDetail />
+      </Modal>
     </div>
   );
 }

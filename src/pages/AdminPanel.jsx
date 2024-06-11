@@ -20,7 +20,7 @@ export default function AdminPanel() {
         <div className="text-2xl font-bold text-white">FIND MOVIES</div>
         <div className="py-8 px-6 grid grid-cols-6 gap-4">
           <div className="col-span-4">
-            <Input placeholder="Fill a movie name or genres" />
+            <Input placeholder="Fill a movie name or genres" height="full" />
           </div>
           <div>
             <Button color="white">

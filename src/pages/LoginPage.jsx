@@ -15,23 +15,21 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="flex h-screen bg-black gap-1 min-w-[1275px] overflow-hidden">
-        <div className="w-3/5 m-auto">
-          <div className="h-full flex justify-center items-center p-3">
+      <div className="flex h-screen bg-black gap-4 min-w-[1000px] overflow-hidden px-8">
+        <div className="w-3/5 m-auto p-4">
+          <div className="h-full flex justify-center items-center">
             <Carousal autoSlide={true} autoSlideInterval={4000}>
               {imagePathList.map((el) => {
                 const splitName = el.split("/");
                 const key = splitName[splitName.length - 1];
-                return <img key={key} src={el} alt="landing" className="rounded-xl" />;
+                return <img key={key} src={el} alt="landing" className="rounded-xl " />;
               })}
             </Carousal>
           </div>
         </div>
-        <div className=" w-2/5 px-28 my-auto flex flex-col min-w-[400px]">
-          <div className="text-6xl py-6 font-bold text-center text-[#DBD9DD]">
-            Welcome
-          </div>
-          <div className="py-">
+        <div className="w-2/5 ml-4 my-auto flex flex-col px-24">
+          <div className="text-6xl font-bold text-center text-[#DBD9DD]">Welcome</div>
+          <div className="py-2">
             <LoginForm onSuccess={() => setRegisterOpen(false)} />
           </div>
           <div className="py-4">

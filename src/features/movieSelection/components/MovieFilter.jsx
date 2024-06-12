@@ -1,19 +1,20 @@
 import { useState } from "react";
 import Button from "../../../components/Button";
+import { GENRE_MAPPING } from "../../../constants";
 
 const initBtnState = {
-  all: false,
-  action: false,
-  animation: false,
-  adventure: false,
-  comedy: false,
-  drama: false,
-  thiller: false,
-  romance: false,
-  horror: false,
-  fantasy: false,
-  musical: false,
-  crime: false,
+  ALL: false,
+  ACTION: false,
+  ANIMATION: false,
+  ADVENTURE: false,
+  COMEDY: false,
+  DRAMA: false,
+  THRILLER: false,
+  ROMANCE: false,
+  HORROR: false,
+  FANTASY: false,
+  MUSICAL: false,
+  CRIME: false,
 };
 
 const btnBgColorMapping = {
@@ -21,21 +22,42 @@ const btnBgColorMapping = {
   false: "isNonActiveBtn",
 };
 
-export default function MovieFilter() {
+const genreName = Object.keys(GENRE_MAPPING);
+
+export default function MovieFilter({
+  handleFilterMovieData,
+  handleSetFilterWithRawMovieData,
+}) {
   const [btnState, setBtnState] = useState({
-    all: true,
-    action: false,
-    animation: false,
-    adventure: false,
-    comedy: false,
-    drama: false,
-    thiller: false,
-    romance: false,
-    horror: false,
-    fantasy: false,
-    musical: false,
-    crime: false,
+    ALL: true,
+    ACTION: false,
+    ANIMATION: false,
+    ADVENTURE: false,
+    COMEDY: false,
+    DRAMA: false,
+    THRILLER: false,
+    ROMANCE: false,
+    HORROR: false,
+    FANTASY: false,
+    MUSICAL: false,
+    CRIME: false,
   });
+
+  function FilterBtn(genre) {
+    return (
+      <Button
+        key={genre}
+        color="white"
+        bg={btnBgColorMapping[btnState[genre]]}
+        onClick={() => {
+          handleFilter(genre);
+          handleFilterMovieData(genre);
+        }}
+      >
+        {genre}
+      </Button>
+    );
+  }
 
   const handleFilter = (name) => {
     setBtnState({ ...initBtnState, [name]: true });
@@ -45,88 +67,15 @@ export default function MovieFilter() {
       <div className="grid grid-cols-6 gap-y-1 gap-x-8">
         <Button
           color="white"
-          bg={btnBgColorMapping[btnState.all]}
-          onClick={() => handleFilter("all")}
+          bg={btnBgColorMapping[btnState.ALL]}
+          onClick={() => {
+            handleFilter("ALL");
+            handleSetFilterWithRawMovieData();
+          }}
         >
           ALL
         </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.action]}
-          onClick={() => handleFilter("action")}
-        >
-          ACTION
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.animation]}
-          onClick={() => handleFilter("animation")}
-        >
-          ANIMATION
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.adventure]}
-          onClick={() => handleFilter("adventure")}
-        >
-          ADVENTURE
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.comedy]}
-          onClick={() => handleFilter("comedy")}
-        >
-          COMEDY
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.drama]}
-          onClick={() => handleFilter("drama")}
-        >
-          DRAMA
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.thiller]}
-          onClick={() => handleFilter("thiller")}
-        >
-          THRILLER
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.romance]}
-          onClick={() => handleFilter("romance")}
-        >
-          ROMANCE
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.horror]}
-          onClick={() => handleFilter("horror")}
-        >
-          HORROR
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.fantasy]}
-          onClick={() => handleFilter("fantasy")}
-        >
-          FANTASY
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.musical]}
-          onClick={() => handleFilter("musical")}
-        >
-          MUSICAL
-        </Button>
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.crime]}
-          onClick={() => handleFilter("crime")}
-        >
-          CRIME
-        </Button>
+        {genreName.map((el) => FilterBtn(el))}
       </div>
     </div>
   );

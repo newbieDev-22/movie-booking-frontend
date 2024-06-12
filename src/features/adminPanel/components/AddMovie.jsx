@@ -3,11 +3,9 @@ import Button from "../../../components/Button";
 import Modal from "../../../components/Modal";
 import { PlusIcon } from "../../../icons";
 import AddNewMovieDetail from "./AddNewMovieDetail";
-import SelectGenresDetail from "./SelectGenresDetail";
 
 export default function AddMovie() {
   const [isAddNewMovieOpen, setIsAddNewMovieOpen] = useState(false);
-  const [isSelectGenresOpen, setIsSelectGenresOpen] = useState(false);
 
   return (
     <div className="pt-8 px-8 pb-4">
@@ -26,14 +24,7 @@ export default function AddMovie() {
         onClose={() => setIsAddNewMovieOpen(false)}
         width={64}
       >
-        <AddNewMovieDetail onOpenSelectGenres={() => setIsSelectGenresOpen(true)} />
-      </Modal>
-      <Modal
-        title="SELECT GENRES"
-        open={isSelectGenresOpen}
-        onClose={() => setIsSelectGenresOpen(false)}
-      >
-        <SelectGenresDetail />
+        <AddNewMovieDetail onClose={() => setIsAddNewMovieOpen(false)} />
       </Modal>
     </div>
   );

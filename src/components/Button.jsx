@@ -25,11 +25,13 @@ export default function Button({
   color = "black",
   width = "full",
   onClick,
+  type = "button",
 }) {
   return (
     <button
       className={`px-3 py-3 ${bgMap[bg]} ${colorMap[color]} ${widthMap[width]} outline-none focus:outline-none rounded-md font-bold`}
       onClick={onClick}
+      type={type}
     >
       {children}
     </button>

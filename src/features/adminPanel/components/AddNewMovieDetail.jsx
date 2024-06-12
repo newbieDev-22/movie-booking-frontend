@@ -1,16 +1,23 @@
 import { useState, useRef } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
+import movieApi from "../../../apis/movie";
+import validateAddMovie from "../validator/validator-add-movie";
+import { toast } from "react-toastify";
+import Modal from "../../../components/Modal";
+import SelectGenresDetail from "./SelectGenresDetail";
+import { SWAP_GENRE_MAPPING } from "../../../constants";
+import Spinner from "../../../components/Spinner";
+import getGenreNameBtn from "../../../utils/genre-name";
 
 const initialInput = {
   movieName: "",
   movieSynopsis: "",
-  genreId1: "",
-  genreId2: "",
-  genreId3: "",
-  movieImagePath: "",
+  genreId1: null,
+  genreId2: null,
+  genreId3: null,
   movieTrailerPath: "",
-  durationInMin: "",
+  durationInMin: 0,
 };
 
 const initialInputError = {
@@ -19,26 +26,60 @@ const initialInputError = {
   genreId1: "",
   genreId2: "",
   genreId3: "",
-  movieImagePath: "",
   movieTrailerPath: "",
   durationInMin: "",
 };
 
-export default function AddNewMovieDetail({ onOpenSelectGenres }) {
+export default function AddNewMovieDetail({ onClose }) {
   const fileEl = useRef();
   const [file, setFile] = useState(null);
   const [input, setInput] = useState(initialInput);
   const [inputError, setInputError] = useState(initialInputError);
+  const [isSelectGenresOpen, setIsSelectGenresOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) =>
     setInput({ ...input, [e.target.name]: e.target.value });
 
-  const handleSumbitForm = (e) => {
-    e.preventDefault();
+  const handleGenresChange = (data) => setInput({ ...input, ...data });
+
+  const handleSumbitForm = async (e) => {
+    try {
+      e.preventDefault();
+      setIsLoading(true);
+      const error = validateAddMovie(input);
+      if (error) {
+        return setInputError(error);
+      }
+
+      setInputError(initialInputError);
+      if (file) {
+        const formData = new FormData();
+        formData.append("movieImagePath", file);
+
+        for (const [key, value] of Object.entries(input)) {
+          if (value) {
+            formData.append(key, value);
+          }
+        }
+
+        await movieApi.createMovie(formData);
+      } else {
+        await movieApi.createMovie(input);
+      }
+      toast.success("Add Movie sucessfully!");
+      onClose();
+    } catch (err) {
+      console.log("err", err);
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="grid grid-cols-3">
+      {isLoading && <Spinner transparent />}
       <input
         type="file"
         placeholder="Poster image"
@@ -56,7 +97,7 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
           file ? "col-span-2 p-4 content-center" : "col-span-3 p-4 content-center"
         }
       >
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-3">
           <label className="form-control w-full">
             <div className="label">
               <span className={`label-text text-[#DBD9DD]`}>Movie Name</span>
@@ -77,6 +118,7 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
             <Input
               placeholder="duration"
               name="durationInMin"
+              type="number"
               value={input.durationInMin}
               onChange={handleInputChange}
               error={inputError.durationInMin}
@@ -117,6 +159,7 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
             <button
               className="bg-white w-full rounded-md text-lg p-2"
               onClick={() => fileEl.current.click()}
+              type="button"
             >
               Choose Image File
             </button>
@@ -128,14 +171,19 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
             </div>
             <button
               className="bg-white w-full rounded-md text-lg p-2"
-              onClick={onOpenSelectGenres}
+              onClick={() => setIsSelectGenresOpen(true)}
+              type="button"
             >
-              Genres
+              {SWAP_GENRE_MAPPING[input.genreId1] ||
+              SWAP_GENRE_MAPPING[input.genreId2] ||
+              SWAP_GENRE_MAPPING[input.genreId3]
+                ? getGenreNameBtn(input)
+                : "Genres"}
             </button>
           </label>
 
           <div className="col-span-2 pt-2">
-            <Button color="white">
+            <Button color="white" type="submit">
               <div className="text-xl font-bold">CONFIRM</div>
             </Button>
           </div>
@@ -159,6 +207,16 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
           </div>
         </div>
       ) : null}
+      <Modal
+        title="SELECT GENRES"
+        open={isSelectGenresOpen}
+        onClose={() => setIsSelectGenresOpen(false)}
+      >
+        <SelectGenresDetail
+          handleGenresChange={handleGenresChange}
+          onClose={() => setIsSelectGenresOpen(false)}
+        />
+      </Modal>
     </div>
   );
 }

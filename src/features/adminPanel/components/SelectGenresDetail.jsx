@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Button from "../../../components/Button";
+import { GENRE_KEYS, GENRE_MAPPING } from "../../../constants";
+import { toast } from "react-toastify";
 
 const initGenreState = {
   ACTION: false,
@@ -15,7 +17,13 @@ const initGenreState = {
   CRIME: false,
 };
 
-export default function SelectGenresDetail() {
+const resetGenreId = {
+  genreId1: null,
+  genreId2: null,
+  genreId3: null,
+};
+
+export default function SelectGenresDetail({ handleGenresChange, onClose }) {
   const [genreState, setGenreState] = useState(initGenreState);
 
   const handleCheckBoxChange = (e) => {
@@ -23,6 +31,28 @@ export default function SelectGenresDetail() {
       ...genreState,
       [e.target.name]: e.target.checked,
     });
+  };
+
+  const handleGenreSumbit = () => {
+    const values = Object.values(genreState);
+    const sumValues = values.reduce((acc, item) => {
+      return acc + item;
+    }, 0);
+
+    if (sumValues <= 3) {
+      const genreData = {};
+      let count = 0;
+      for (const [key, value] of Object.entries(genreState)) {
+        if (value) {
+          genreData[GENRE_KEYS[count]] = GENRE_MAPPING[key];
+          count++;
+        }
+        handleGenresChange({ ...resetGenreId, ...genreData });
+        onClose();
+      }
+    } else {
+      toast.error("Please select only 3 genres");
+    }
   };
 
   return (
@@ -205,8 +235,8 @@ export default function SelectGenresDetail() {
       </div>
 
       <div className="col-span-3">
-        <Button color="white">
-          <div className="font-bold">Confirm</div>
+        <Button color="white" onClick={handleGenreSumbit}>
+          <div className="font-bold">CONFIRM</div>
         </Button>
       </div>
     </div>

@@ -3,6 +3,36 @@ export const RIGHT_MENU_ITEM = {
   USER: "USER",
 };
 
+export const GENRE_KEYS = ["genreId1", "genreId2", "genreId3"];
+
+export const GENRE_MAPPING = {
+  ACTION: 1,
+  ANIMATION: 2,
+  ADVENTURE: 3,
+  COMEDY: 4,
+  DRAMA: 5,
+  THRILLER: 6,
+  ROMANCE: 7,
+  HORROR: 8,
+  FANTASY: 9,
+  MUSICAL: 10,
+  CRIME: 11,
+};
+
+export const SWAP_GENRE_MAPPING = {
+  1: "ACTION",
+  2: "ANIMATION",
+  3: "ADVENTURE",
+  4: "COMEDY",
+  5: "DRAMA",
+  6: "THRILLER",
+  7: "ROMANCE",
+  8: "HORROR",
+  9: "FANTASY",
+  10: "MUSICAL",
+  11: "CRIME",
+};
+
 export const mockData = [
   {
     id: 1,

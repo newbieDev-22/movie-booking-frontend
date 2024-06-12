@@ -52,7 +52,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "movie-booking",
+        path: "movie-booking/:movieId",
         element: <MovieBookingPage />,
       },
       {

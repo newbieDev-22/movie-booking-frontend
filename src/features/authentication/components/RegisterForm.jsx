@@ -64,7 +64,6 @@ export default function RegisterForm({ onSuccess }) {
       }
     }
   };
-  console.log("inputError", inputError);
 
   return (
     <form onSubmit={handleSumbitForm}>

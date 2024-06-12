@@ -4,15 +4,11 @@ import MovieSelectionContainer from "../features/movieSelection/components/Movie
 export default function HomePage() {
   return (
     <div className="bg-[#121212] min-h-[calc(100vh-5rem)] min-w-[1275px]">
-      <div className="flex flex-col w-full">
-        <div className=" w-full h-[450px] flex flex-col">
-          <div className="flex justify-evenly h-full">
-            <HomeCarousal />
-          </div>
+      <div className="flex flex-col gap-8">
+        <div className="flex h-[450px] w-full">
+          <HomeCarousal />
         </div>
-        <div className="mt-8">
-          <MovieSelectionContainer />
-        </div>
+        <MovieSelectionContainer />
       </div>
     </div>
   );

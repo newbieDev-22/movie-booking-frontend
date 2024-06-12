@@ -15,7 +15,7 @@ export default function HistoriesTable() {
     "A11, A12",
     "Success",
     <Button color="white" onClick={() => setIsTicketOpen(true)}>
-      E-ticket
+      Show
     </Button>,
   ];
 
@@ -44,7 +44,7 @@ export default function HistoriesTable() {
                 Payment Status
               </th>
               <th scope="col" className="px-6 py-3">
-                E-ticket
+                QRCode
               </th>
             </tr>
           </thead>

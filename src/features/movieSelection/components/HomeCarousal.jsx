@@ -3,7 +3,7 @@ import { homeMockData } from "../../../constants";
 
 export default function HomeCarousal() {
   return (
-    <Carousal>
+    <Carousal autoSlide={true} autoSlideInterval={4000}>
       {homeMockData.map((el) => {
         return (
           <div key={el.id} className="min-w-full relative">

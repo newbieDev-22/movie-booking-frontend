@@ -3,23 +3,21 @@ import { DropdownAccordionIcon } from "../icons";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 
-const timeMock = ["10:30", "12:30", "14:30", "18:30", "20:30"];
-
-export default function TheaterAccordion() {
+export default function TheaterAccordion({ theaterName, timeSlots }) {
   const [isOpen, setIsOpen] = useState(true);
   const handleAccodionOpen = () => setIsOpen(!isOpen);
   const navigate = useNavigate();
   return (
     <div className="border border-white p-8 rounded-lg">
       <div className="flex justify-between">
-        <div className="text-white text-xl font-semibold">Theater A</div>
+        <div className="text-white text-xl font-semibold">{theaterName}</div>
         <button className={isOpen ? "" : "-rotate-90"} onClick={handleAccodionOpen}>
           <DropdownAccordionIcon className={"fill-white"} />
         </button>
       </div>
       {isOpen && (
         <div className="grid grid-cols-10 gap-4 text-white font-semibold pt-6 pb-2 ">
-          {timeMock.map((el) => (
+          {timeSlots.map((el) => (
             <Button
               key={el}
               bg="isNonSelectDateBtn"

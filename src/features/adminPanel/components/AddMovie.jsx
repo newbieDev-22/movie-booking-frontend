@@ -16,7 +16,7 @@ export default function AddMovie() {
         <Button color="white" bg="addMovieBtn" onClick={() => setIsAddNewMovieOpen(true)}>
           <div className="h-20 flex justify-center items-center gap-6">
             <PlusIcon className={"h-8"} color="#6A6A6A" />
-            <div className="text-3xl  text-[#6A6A6A] font-bold">ADD NEW MOVIE</div>
+            <div className="text-3xl text-[#6A6A6A] font-bold">ADD NEW MOVIE</div>
           </div>
         </Button>
       </div>

@@ -32,38 +32,34 @@ export default function MovieEditCard() {
               bg="editBtn"
               onClick={() => setIsHighlightModalOpen(true)}
             >
-              <div className="font-bold flex justify-center items-center ">Highlight</div>
+              Highlight
             </Button>
             <Button
               color="white"
               bg="editBtn"
               onClick={() => setIsMovieStatusModalOpen(true)}
             >
-              <div className="font-bold flex justify-center items-center">
-                Movie Status
-              </div>
+              Movie Status
             </Button>
             <Button
               color="white"
               bg="editBtn"
               onClick={() => setIsMovieInfoModalOpen(true)}
             >
-              <div className="font-bold flex justify-center items-center">Movie Info</div>
+              Movie Info
             </Button>
             <Button
               color="white"
               bg="deleteBtn"
               onClick={() => setIsConfirmModalOpen(true)}
             >
-              <div className="font-bold flex justify-center items-center">
-                Delete Movie
-              </div>
+              Delete Movie
             </Button>
           </div>
         </div>
       </div>
       <Modal
-        title="Movie Status"
+        title="HIGHLIGHT"
         open={isHighlightModalOpen}
         onClose={() => setIsHighlightModalOpen(false)}
         width={56}
@@ -71,7 +67,7 @@ export default function MovieEditCard() {
         <HighlightDetail />
       </Modal>
       <Modal
-        title="Movie Status"
+        title="MOVIE STATUS"
         open={isMovieStatusModalOpen}
         onClose={() => setIsMovieStatusModalOpen(false)}
         width={30}
@@ -81,7 +77,7 @@ export default function MovieEditCard() {
         </div>
       </Modal>
       <Modal
-        title="Movie Info"
+        title="MOVIE INFO"
         open={isMovieInfoModalOpen}
         onClose={() => setIsMovieInfoModalOpen(false)}
         width={64}

@@ -50,7 +50,12 @@ export default function AddNewMovieDetail({ onOpenSelectGenres }) {
           }
         }}
       ></input>
-      <form onSubmit={handleSumbitForm} className="col-span-2 p-4 content-center">
+      <form
+        onSubmit={handleSumbitForm}
+        className={
+          file ? "col-span-2 p-4 content-center" : "col-span-3 p-4 content-center"
+        }
+      >
         <div className="grid grid-cols-2 gap-3">
           <label className="form-control w-full">
             <div className="label">

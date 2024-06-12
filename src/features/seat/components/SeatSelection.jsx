@@ -5,10 +5,26 @@ import {
   ScreenIcon,
   UnavailableSeatIcon,
 } from "../../../icons";
+import SeatSelectIconComponent from "./SeatSelectIconComponent";
 import SeatsRow from "./SeatsRow";
 
 const rowName = ["A", "B", "C", "D", "E", "F", "G", "H"];
 const reverseRowName = [...rowName].reverse();
+
+const selectionIconData = [
+  {
+    iconName: "Selected",
+    icon: <AvailableSeatIcon className={"h-full p-1"} />,
+  },
+  {
+    iconName: "Booked",
+    icon: <BookedIcon className={"h-full p-2"} />,
+  },
+  {
+    iconName: "Unavailable",
+    icon: <UnavailableSeatIcon className={"h-full p-1"} />,
+  },
+];
 
 export default function SeatSelection() {
   return (
@@ -23,25 +39,13 @@ export default function SeatSelection() {
       </div>
       <div className="flex justify-center items-center mt-12 gap-40">
         <div className="h-12 flex justify-center gap-16 text-lg font-bold text-white">
-          <div className="flex justify-center items-center gap-3 p-1">
-            <div className="h-full rounded-full  bg-white">
-              <AvailableSeatIcon className={"h-full p-1"} />
-            </div>
-            <div>Selected</div>
-          </div>
-          <div className="flex justify-center items-center gap-3 p-1">
-            <div className="h-full rounded-full  bg-white">
-              <BookedIcon className={"h-full p-2"} />
-            </div>
-            <div>Booked</div>
-          </div>
-          <div className="flex justify-center items-center gap-3 p-1">
-            <div className="h-full rounded-full bg-white">
-              <UnavailableSeatIcon className={"h-full p-1"} />
-            </div>
-            <div>Unavailable</div>
-          </div>
+          {selectionIconData.map((el) => (
+            <SeatSelectIconComponent key={el.iconName} iconName={el.iconName}>
+              {el.icon}
+            </SeatSelectIconComponent>
+          ))}
         </div>
+
         <div className="flex gap-12 text-lg font-bold text-white">
           <div className="flex items-center gap-4">
             <ChairIcon className={"h-12"} />

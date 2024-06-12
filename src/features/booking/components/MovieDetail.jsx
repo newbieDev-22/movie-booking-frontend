@@ -17,19 +17,19 @@ export default function MovieDetail() {
       <div className="py-6 px-6 content-center">
         <img src={dummyData?.posterImage} alt="poster" className="aspect-[3/4]" />
       </div>
-      <div className="grid grid-row-3 gap-4 p-8 content-center col-span-2">
+      <div className="flex flex-col justify-center gap-4 p-8 col-span-2">
         <div className="text-3xl text-white font-bold">{dummyData?.movieName}</div>
-        <div className="grid grid-cols-4 text-left gap-2">
+        <div className="grid grid-cols-4 text-left py-8 gap-y-2">
           <div className="text-[#ABABAF]">Genres :</div>
           <div className="text-white font-bold text-left col-span-3">
-            {dummyGenres.join("|")}
+            {dummyGenres.join(", ")}
           </div>
           <div className="text-[#ABABAF]">Duration : </div>
           <div className="text-white font-bold col-span-3">{dummyData?.duration} Min</div>
         </div>
         <div>
           <div className="text-[#ABABAF]">Synopsis :</div>
-          <p className="text-white pt-2 text-justify indent-12">{dummySynopsis}</p>
+          <p className="text-white pt-2 pr-4 text-justify indent-12">{dummySynopsis}</p>
         </div>
       </div>
 

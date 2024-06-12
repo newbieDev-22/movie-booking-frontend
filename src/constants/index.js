@@ -175,3 +175,11 @@ export const homeMockData = [
       "https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABWt87F7MhT5bDF25JlQOQ1oYIw1Q4XTicVtPHSwrcIFMe5wPZSa4bOsn5HR83X2kmjzytC-VAk5bmM93WgV8DDtmM3LRHbERAN83.jpg?r=589",
   },
 ];
+
+export const THEATER_DATA = [
+  { id: 1, theaterName: "Theater A" },
+  { id: 2, theaterName: "Theater B" },
+  { id: 3, theaterName: "Theater C" },
+  { id: 4, theaterName: "Theater D" },
+  { id: 5, theaterName: "Theater E" },
+];

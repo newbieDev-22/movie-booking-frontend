@@ -19,7 +19,7 @@ export default function HighlightDetail() {
   return (
     <>
       <div className="grid grid-cols-2">
-        <div className="p-4 content-center">
+        <div className={file ? "p-4 content-center" : "p-4 content-center col-span-2"}>
           <input
             type="file"
             placeholder="highlight image"

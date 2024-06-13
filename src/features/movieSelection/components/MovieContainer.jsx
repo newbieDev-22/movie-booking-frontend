@@ -15,9 +15,9 @@ export default function MovieContainer({ filterMovieData }) {
         >
           <MovieCard
             movieName={el.movieName}
-            posterImage={el.movieImagePath}
-            date={dayjs(el.createdAt).format("DD-MMM-YYYY")}
-            duration={el.durationInMin}
+            posterImage={el?.movieImagePath || null}
+            date={dayjs(el?.createdAt).format("DD-MMM-YYYY") || null}
+            duration={el?.durationInMin || null}
           />
         </div>
       ))}

@@ -33,6 +33,11 @@ export const SWAP_GENRE_MAPPING = {
   11: "CRIME",
 };
 
+export const filterBtnBgColorMapping = {
+  true: "isActiveBtn",
+  false: "isNonActiveBtn",
+};
+
 export const mockData = [
   {
     id: 1,

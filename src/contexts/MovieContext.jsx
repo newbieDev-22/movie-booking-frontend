@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { createContext } from "react";
+import { useEffect, useState, createContext } from "react";
 import movieApi from "../apis/movie";
 
 const MovieContext = createContext();
@@ -23,7 +21,13 @@ export default function MovieContextProvider({ children }) {
     fetchMovie();
   }, []);
 
-  const sharedValue = { movieData, isMovieLoading };
+  const handleAddMovie = (newMovieObj) => {
+    if (movieData) {
+      setMovieData([...movieData, newMovieObj]);
+    }
+  };
+
+  const sharedValue = { movieData, isMovieLoading, handleAddMovie };
 
   return <MovieContext.Provider value={sharedValue}>{children}</MovieContext.Provider>;
 }

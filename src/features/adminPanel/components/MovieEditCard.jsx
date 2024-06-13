@@ -7,9 +7,7 @@ import AddNewMovieDetail from "./AddNewMovieDetail";
 import RadioButton from "../../../components/RadioButton";
 import HighlightDetail from "./HighlightDetail";
 
-const imagePath = "https://posterspy.com/wp-content/uploads/2023/06/Spiderverse.jpg";
-
-export default function MovieEditCard() {
+export default function MovieEditCard({ data }) {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isMovieInfoModalOpen, setIsMovieInfoModalOpen] = useState(false);
   const [isMovieStatusModalOpen, setIsMovieStatusModalOpen] = useState(false);
@@ -18,21 +16,25 @@ export default function MovieEditCard() {
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <div className="overflow-hidden rounded-md shadow-md">
-          <img src={imagePath} alt="movie" className="object-cover aspect-[3/4]" />
+      <div className="flex flex-col justify-between gap-2">
+        <div className="rounded-md shadow-md">
+          <img
+            src={data?.movieImagePath}
+            alt="movie"
+            className="object-cover aspect-[3/4] w-full"
+          />
         </div>
-        <div className="flex flex-col px-1 gap-2">
-          <div className="text-left text-lg text-white font-bold">
-            Spider-Man: Across the Spider-Verse
-          </div>
+        <div className="text-lg text-white font-bold content-center text-center py-1">
+          {data.movieName}
+        </div>
+        <div className="px-1 gap-2">
           <div className="grid grid-cols-2 gap-2">
             <Button
               color="white"
               bg="editBtn"
               onClick={() => setIsHighlightModalOpen(true)}
             >
-              Highlight
+              HL Status
             </Button>
             <Button
               color="white"

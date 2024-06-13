@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Button from "../../../components/Button";
 import { GENRE_MAPPING } from "../../../constants";
+import FilterBtn from "./FilterBtn";
 
 const initBtnState = {
   ALL: false,
@@ -15,11 +15,6 @@ const initBtnState = {
   FANTASY: false,
   MUSICAL: false,
   CRIME: false,
-};
-
-const btnBgColorMapping = {
-  true: "isActiveBtn",
-  false: "isNonActiveBtn",
 };
 
 const genreName = Object.keys(GENRE_MAPPING);
@@ -43,21 +38,12 @@ export default function MovieFilter({
     CRIME: false,
   });
 
-  function FilterBtn(genre) {
-    return (
-      <Button
-        key={genre}
-        color="white"
-        bg={btnBgColorMapping[btnState[genre]]}
-        onClick={() => {
-          handleFilter(genre);
-          handleFilterMovieData(genre);
-        }}
-      >
-        {genre}
-      </Button>
-    );
-  }
+  const handleBtn = (genre) => {
+    return () => {
+      handleFilter(genre);
+      handleFilterMovieData(genre);
+    };
+  };
 
   const handleFilter = (name) => {
     setBtnState({ ...initBtnState, [name]: true });
@@ -65,17 +51,19 @@ export default function MovieFilter({
   return (
     <div className="px-8 pt-8">
       <div className="grid grid-cols-6 gap-y-1 gap-x-8">
-        <Button
-          color="white"
-          bg={btnBgColorMapping[btnState.ALL]}
-          onClick={() => {
+        <FilterBtn
+          key={"ALL"}
+          genre={"ALL"}
+          btnState={btnState}
+          cb={() => {
             handleFilter("ALL");
             handleSetFilterWithRawMovieData();
           }}
-        >
-          ALL
-        </Button>
-        {genreName.map((el) => FilterBtn(el))}
+        />
+
+        {genreName.map((el) => (
+          <FilterBtn key={el.id} genre={el} btnState={btnState} cb={handleBtn(el)} />
+        ))}
       </div>
     </div>
   );

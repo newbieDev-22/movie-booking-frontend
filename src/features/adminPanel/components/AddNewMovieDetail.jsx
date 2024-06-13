@@ -9,6 +9,7 @@ import SelectGenresDetail from "./SelectGenresDetail";
 import { SWAP_GENRE_MAPPING } from "../../../constants";
 import Spinner from "../../../components/Spinner";
 import getGenreNameBtn from "../../../utils/genre-name";
+import useMovie from "../../../hooks/useMovie";
 
 const initialInput = {
   movieName: "",
@@ -31,6 +32,7 @@ const initialInputError = {
 };
 
 export default function AddNewMovieDetail({ onClose }) {
+  const { handleAddMovie } = useMovie();
   const fileEl = useRef();
   const [file, setFile] = useState(null);
   const [input, setInput] = useState(initialInput);
@@ -63,9 +65,11 @@ export default function AddNewMovieDetail({ onClose }) {
           }
         }
 
-        await movieApi.createMovie(formData);
+        const result = await movieApi.createMovie(formData);
+        handleAddMovie(result.data.movieData);
       } else {
-        await movieApi.createMovie(input);
+        const result = await movieApi.createMovie(input);
+        handleAddMovie(result.data.movieData);
       }
       toast.success("Add Movie sucessfully!");
       onClose();
@@ -215,6 +219,7 @@ export default function AddNewMovieDetail({ onClose }) {
         <SelectGenresDetail
           handleGenresChange={handleGenresChange}
           onClose={() => setIsSelectGenresOpen(false)}
+          input={input}
         />
       </Modal>
     </div>

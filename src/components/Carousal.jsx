@@ -49,7 +49,7 @@ export default function Carousal({
 
       <div className="absolute bottom-2 right-0 left-0">
         <div className="flex items-center justify-center gap-2">
-          {children.map((el, index) => (
+          {children?.map((el, index) => (
             <div
               key={index}
               className={`transition-all w-3 h-3 rounded-full

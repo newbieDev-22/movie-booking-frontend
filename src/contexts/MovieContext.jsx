@@ -1,6 +1,7 @@
 import { useEffect, useState, createContext } from "react";
 import movieApi from "../apis/movie";
 import movieSelectionApi from "../apis/movie-selection";
+import highlightApi from "../apis/highlight";
 
 const MovieContext = createContext();
 
@@ -8,7 +9,7 @@ export default function MovieContextProvider({ children }) {
   const [movieData, setMovieData] = useState(null);
   const [isMovieLoading, setIsMovieLoading] = useState(true);
   const [movieSelectionData, setMovieSelectionData] = useState(null);
-
+  const [highlightData, setHighlightData] = useState(null);
   useEffect(() => {
     const fetchMovie = async () => {
       try {
@@ -19,6 +20,11 @@ export default function MovieContextProvider({ children }) {
           ({ id, ...keepAttrs }) => keepAttrs
         );
         setMovieSelectionData(dummyMovieSelection);
+        const highlightResult = await highlightApi.getHighlight();
+        const dummyHighlight = highlightResult.data.highlightList.map(
+          ({ id, ...keepAttrs }) => keepAttrs
+        );
+        setHighlightData(dummyHighlight);
       } catch (err) {
         console.log(err);
       } finally {
@@ -80,6 +86,31 @@ export default function MovieContextProvider({ children }) {
     }
   };
 
+  const handleCreateHighlight = (data) => {
+    if (highlightData) {
+      setHighlightData([...highlightData, data]);
+    }
+  };
+
+  const handleUpdateHighlight = (movieId, data) => {
+    if (highlightData) {
+      const founedMovieId = highlightData.findIndex((el) => el.movieId === movieId);
+
+      if (founedMovieId !== -1) {
+        const newMovieHighlightData = [...highlightData];
+        newMovieHighlightData[founedMovieId] = data;
+        setHighlightData(newMovieHighlightData);
+      }
+    }
+  };
+
+  const handleDeleteHighlight = (movieId) => {
+    if (highlightData) {
+      const remainHighlightData = highlightData.filter((el) => el.movieId !== movieId);
+      setHighlightData(remainHighlightData);
+    }
+  };
+
   const sharedValue = {
     movieData,
     isMovieLoading,
@@ -90,6 +121,10 @@ export default function MovieContextProvider({ children }) {
     handleCreateMovieSelection,
     handleUpdateMovieSelection,
     handleDeleteMovieSelection,
+    highlightData,
+    handleCreateHighlight,
+    handleUpdateHighlight,
+    handleDeleteHighlight,
   };
 
   return <MovieContext.Provider value={sharedValue}>{children}</MovieContext.Provider>;

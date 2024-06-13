@@ -1,8 +1,11 @@
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
+import useMovie from "../../../hooks/useMovie";
 import SelectMovieCard from "./SelectMovieCard";
 
 export default function SelectMovieDetail() {
+  const { movieData } = useMovie();
+
   return (
     <div>
       <div className="pt-2 px-8 pb-4">
@@ -17,13 +20,13 @@ export default function SelectMovieDetail() {
           </div>
         </div>
         <div className="py-8 px-6 grid grid-cols-7 gap-6 ">
-          <SelectMovieCard />
-          <SelectMovieCard />
-          <SelectMovieCard />
-          <SelectMovieCard />
-          <SelectMovieCard />
-          <SelectMovieCard />
-          <SelectMovieCard />
+          {movieData?.map((el) => (
+            <SelectMovieCard
+              key={el.id}
+              movieName={el.movieName}
+              movieImagePage={el.movieImagePath}
+            />
+          ))}
         </div>
       </div>
     </div>

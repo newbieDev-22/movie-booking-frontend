@@ -9,6 +9,7 @@ const bgMap = {
   editBtn: "bg-[#5E5E62] hover:scale-[105%] transition-all active:scale-100",
   noBtn: "bg-white hover:bg-white/80 transition-all active:scale-95",
   addMovieBtn: "bg-[#D7D5D5] hover:scale-[102%] transition-all active:scale-100 ",
+  deleteHLBtn: "bg-[#5E5E62] hover:bg-[#5E5E62]/80 transition-all active:scale-95",
 };
 
 const colorMap = {

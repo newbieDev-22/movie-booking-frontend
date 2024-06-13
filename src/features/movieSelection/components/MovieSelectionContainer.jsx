@@ -22,7 +22,7 @@ export default function MovieSelectionContainer() {
       .map((el) => el.movieId);
 
     const selectionMovieBySelection = movieData?.filter((el) =>
-      getAllMovieId.includes(el.id)
+      getAllMovieId?.includes(el.id)
     );
     setSelectionMovie(selectionMovieBySelection);
   }, [selectionStatus, movieData, movieSelectionData]);

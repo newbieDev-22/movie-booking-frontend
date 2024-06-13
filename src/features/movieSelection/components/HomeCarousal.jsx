@@ -1,10 +1,45 @@
+import { useState } from "react";
 import Carousal from "../../../components/Carousal";
-import { homeMockData } from "../../../constants";
+import { SWAP_GENRE_MAPPING } from "../../../constants";
+import useMovie from "../../../hooks/useMovie";
+import { useEffect } from "react";
 
 export default function HomeCarousal() {
+  const { movieData, highlightData } = useMovie();
+  const [showHighlightData, setShowHighlightData] = useState([]);
+  console.log(highlightData);
+  useEffect(() => {
+    const getHighlightId = highlightData?.map((el) => el.movieId);
+    const highlightMovie = movieData?.filter((el) => getHighlightId?.includes(el.id));
+    const combineHighlightData = highlightMovie?.map((el) => {
+      const newData = {};
+      newData.id = el.id;
+      newData.movieName = el.movieName;
+      newData.movieSynopsis = el.movieSynopsis;
+      const genres = [];
+      if (el.genreId1) {
+        genres.push(el.genreId1);
+      }
+      if (el.genreId2) {
+        genres.push(el.genreId2);
+      }
+      if (el.genreId3) {
+        genres.push(el.genreId3);
+      }
+      newData.genres = genres;
+      const foundedHighlight = highlightData?.filter((item) => item.movieId === el.id);
+      newData.coverImagePath = foundedHighlight[0].coverImagePath;
+      newData.highlightWord = foundedHighlight[0].highlightWord;
+      return newData;
+    });
+    setShowHighlightData(combineHighlightData);
+  }, [movieData, highlightData]);
+
+  console.log(showHighlightData);
+
   return (
     <Carousal autoSlide={true} autoSlideInterval={4000}>
-      {homeMockData.map((el) => {
+      {showHighlightData?.map((el) => {
         return (
           <div key={el.id} className="min-w-full relative">
             <div className="grid grid-cols-6">
@@ -14,7 +49,7 @@ export default function HomeCarousal() {
                     <div className="flex gap-4">
                       {el.genres.map((genre) => (
                         <span key={genre} className="text-[#DBD9DD] text-lg font-bold">
-                          {genre.toUpperCase()}
+                          {SWAP_GENRE_MAPPING[genre]}
                         </span>
                       ))}
                     </div>
@@ -33,7 +68,7 @@ export default function HomeCarousal() {
               <div className="col-span-4">
                 <div className="bg-gradient-to-r from-black from-0% via-[#030303] via-10% to-transparent w-1/5 h-[450px] absolute z-10"></div>
                 <img
-                  src={el.imagePath}
+                  src={el.coverImagePath}
                   alt="landing"
                   className="object-cover aspect-[16/9]"
                 />

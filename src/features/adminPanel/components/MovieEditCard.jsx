@@ -74,7 +74,7 @@ export default function MovieEditCard({ data }) {
         onClose={() => setIsHighlightModalOpen(false)}
         width={56}
       >
-        <HighlightDetail />
+        <HighlightDetail data={data} onClose={() => setIsHighlightModalOpen(false)} />
       </Modal>
       <Modal
         title="MOVIE STATUS"

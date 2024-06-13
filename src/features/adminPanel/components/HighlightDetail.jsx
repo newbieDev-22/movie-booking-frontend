@@ -3,21 +3,102 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import Modal from "../../../components/Modal";
 import SelectMovieDetail from "./SelectMovieDetail";
+import Spinner from "../../../components/Spinner";
+import highlightApi from "../../../apis/highlight";
+import { toast } from "react-toastify";
+import useMovie from "../../../hooks/useMovie";
+import ConfirmDetail from "../../../components/ConfirmDetail";
 
-export default function HighlightDetail() {
+export default function HighlightDetail({ data, onClose }) {
+  const {
+    highlightData,
+    handleCreateHighlight,
+    handleUpdateHighlight,
+    handleDeleteHighlight,
+  } = useMovie();
   const fileEl = useRef();
   const [file, setFile] = useState(null);
-  const [input, setInput] = useState("");
+
+  const filterMovie = highlightData?.filter((el) => el.movieId === data.id);
+  console.log("highlightData", highlightData);
+  console.log("filterMovie", filterMovie);
+
+  const initInput = filterMovie.length > 0 ? filterMovie[0].highlightWord : "";
+
+  const [input, setInput] = useState(initInput);
   const [isAddMovieOpen, setIsAddMovieOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const handleInputChange = (e) => setInput(e.target.value);
 
-  const handleSumbit = () => {
-    console.log("submit");
+  const handleDeleteHighlightEachMovie = async () => {
+    await highlightApi.deleteHighlight(data.id);
+    handleDeleteHighlight(data.id);
+    onClose();
+    toast.success("Delete highlight sucessfully!");
+  };
+
+  const handleSumbit = async () => {
+    try {
+      setIsLoading(true);
+      if (filterMovie.length === 0) {
+        if (file) {
+          const formData = new FormData();
+          formData.append("coverImagePath", file);
+          formData.append("movieId", data.id);
+          formData.append("highlightWord", input);
+
+          const result = await highlightApi.createHighlight(formData);
+          const dummyResult = { ...result.data.highlightData };
+          delete dummyResult.id;
+          console.log(result, "result");
+          handleCreateHighlight(dummyResult);
+          toast.success("Add highlight sucessfully!");
+          onClose();
+        } else {
+          toast.error("No highlight image");
+          onClose();
+        }
+      } else {
+        if (file) {
+          const formData = new FormData();
+          formData.append("coverImagePath", file);
+          if (input.trim() !== "") {
+            formData.append("highlightWord", input);
+          }
+          const result = await highlightApi.updateHighlight(data.id, formData);
+
+          console.log("sssss", result);
+          const dummyResult = { ...result.data.highlightData };
+          delete dummyResult.id;
+          handleUpdateHighlight(data.id, dummyResult);
+          toast.success("Update highlight sucessfully!");
+          onClose();
+        } else {
+          await highlightApi.updateHighlight(data.id, {
+            highlightWord: input,
+          });
+
+          handleUpdateHighlight(data.id, {
+            movieId: data.id,
+            coverImagePath: filterMovie[0].coverImagePath,
+            highlightWord: input,
+          });
+          toast.success("Update highlight sucessfully!");
+          onClose();
+        }
+      }
+    } catch (err) {
+      console.log("err", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <>
+      {isLoading && <Spinner transparent />}
       <div className="grid grid-cols-2">
         <div className={file ? "p-4 content-center" : "p-4 content-center col-span-2"}>
           <input
@@ -31,30 +112,35 @@ export default function HighlightDetail() {
               }
             }}
           ></input>
-          <div className="grid grid-cols-3 gap-3">
-            <div className="text-white font-bold flex items-center">MOVIE</div>
-            <div className="col-span-2">
-              <Button bg="addMovieBtn" onClick={() => setIsAddMovieOpen(true)}>
-                <div className="font-bold">Selete Movie</div>
-              </Button>
-            </div>
+          <div className="grid grid-cols-2 gap-3">
             <div className="text-white font-bold flex items-center">HIGHLIGHT IMAGE</div>
-            <div className="col-span-2">
+            <div className="">
               <Button bg="addMovieBtn" onClick={() => fileEl.current.click()}>
-                <div className="font-bold">Selete Image</div>
+                <div className="font-bold">SELECT IMAGE</div>
               </Button>
             </div>
             <div className="text-white font-bold flex items-center">
               HIGHLIGHT CAPTION
             </div>
-            <div className="col-span-2">
+
+            <div className="">
               <Input
                 placeholder="Highlight Caption"
                 value={input}
                 onChange={handleInputChange}
               />
             </div>
-            <div className="col-span-3 pt-2">
+
+            <div className="pt-2">
+              <Button
+                color="white"
+                bg="deleteHLBtn"
+                onClick={() => setIsConfirmModalOpen(true)}
+              >
+                <div className="font-bold">DELETE HIGHLIGHT</div>
+              </Button>
+            </div>
+            <div className=" pt-2">
               <Button color="white" onClick={handleSumbit}>
                 <div className="font-bold">CONFIRM</div>
               </Button>
@@ -82,6 +168,21 @@ export default function HighlightDetail() {
         width={75}
       >
         <SelectMovieDetail />
+      </Modal>
+      <Modal
+        title="Delete Confirm?"
+        open={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        width={30}
+      >
+        <ConfirmDetail
+          msg={"Do you want to delete this highlight ?"}
+          onClose={() => setIsConfirmModalOpen(false)}
+          onClick={() => {
+            handleDeleteHighlightEachMovie();
+            setIsConfirmModalOpen(false);
+          }}
+        />
       </Modal>
     </>
   );

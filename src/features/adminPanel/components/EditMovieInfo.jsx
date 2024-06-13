@@ -72,7 +72,7 @@ export default function EditMovieInfo({ data, onClose }) {
       toast.success("Update Movie sucessfully!");
       onClose();
     } catch (err) {
-      console.log("err", err);
+      console.log(err);
       toast.error(err.message);
     } finally {
       setIsLoading(false);

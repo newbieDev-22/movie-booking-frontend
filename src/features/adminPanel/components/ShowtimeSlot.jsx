@@ -3,14 +3,21 @@ import TimePicker from "../../../components/TimePicker";
 import { CloseIcon, PlusIcon } from "../../../icons";
 import Modal from "../../../components/Modal";
 import SelectMovieDetail from "./SelectMovieDetail";
+import getNext7DaysUsingToday from "../../../utils/get-7-next-day";
 
-export default function ShowtimeSlot() {
+export default function ShowtimeSlot({ index, handleDeleteShowtime }) {
   const [isAddMovieOpen, setIsAddMovieOpen] = useState(false);
+
+  const dateList = getNext7DaysUsingToday();
+  console.log(dateList);
 
   return (
     <>
       <div className="bg-[#0D0E11] flex flex-col pb-4 rounded-xl">
-        <div className="flex justify-end pt-1">
+        <div
+          className="flex justify-end pt-1"
+          onClick={() => handleDeleteShowtime(index)}
+        >
           <CloseIcon color="white" className={"h-10"} />
         </div>
         <div className="flex flex-col px-4 gap-4 pb-2">

@@ -1,21 +1,8 @@
 import { useState } from "react";
 import Button from "../../../components/Button";
 import DateItem from "../../../components/DateItem";
-
-const getNext7DaysUsingToday = () => {
-  const today = new Date();
-  const dateList = [];
-  const dummyDate = new Date();
-  for (let i = 0; i < 7; i++) {
-    const updateDate = new Date(dummyDate.setDate(today.getDate() + i));
-    const dateSplit = String(updateDate).split(" ");
-    const dateName = dateSplit[0];
-    const dateNum = dateSplit[2];
-    const dateObj = { dateName, dateNum };
-    dateList.push(dateObj);
-  }
-  return dateList;
-};
+import dayjs from "dayjs";
+import getNext7DaysUsingToday from "../../../utils/get-7-next-day";
 
 const initialDateSelection = {
   0: false,
@@ -37,10 +24,20 @@ const firstDateSeletion = {
   6: false,
 };
 
-export default function SelectDate() {
-  const dateList = getNext7DaysUsingToday();
-  const [dateIsSelect, SetDateIsSelect] = useState(firstDateSeletion);
+function formatDateForMovieBooking(dataList) {
+  const formatData = dataList.map((el) => {
+    const dateDict = {};
+    dateDict.dateName = dayjs(el).format("ddd").toUpperCase();
+    dateDict.dateNum = dayjs(el).format("DD");
+    return dateDict;
+  });
+  return formatData;
+}
 
+export default function SelectDate() {
+  const dateList = formatDateForMovieBooking(getNext7DaysUsingToday());
+  const [dateIsSelect, SetDateIsSelect] = useState(firstDateSeletion);
+  console.log(dateList);
   const handleDateSelection = (selectDate) => {
     SetDateIsSelect({ ...initialDateSelection, [selectDate]: true });
   };

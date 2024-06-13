@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export default function HomeCarousal() {
   const { movieData, highlightData } = useMovie();
   const [showHighlightData, setShowHighlightData] = useState([]);
-  console.log(highlightData);
+
   useEffect(() => {
     const getHighlightId = highlightData?.map((el) => el.movieId);
     const highlightMovie = movieData?.filter((el) => getHighlightId?.includes(el.id));
@@ -34,8 +34,6 @@ export default function HomeCarousal() {
     });
     setShowHighlightData(combineHighlightData);
   }, [movieData, highlightData]);
-
-  console.log(showHighlightData);
 
   return (
     <Carousal autoSlide={true} autoSlideInterval={4000}>

@@ -74,7 +74,7 @@ export default function AddNewMovieDetail({ onClose }) {
       toast.success("Add Movie sucessfully!");
       onClose();
     } catch (err) {
-      console.log("err", err);
+      console.log(err);
       toast.error(err.message);
     } finally {
       setIsLoading(false);

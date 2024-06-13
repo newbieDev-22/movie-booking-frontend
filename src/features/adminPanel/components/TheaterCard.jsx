@@ -5,18 +5,36 @@ import Datepicker from "react-tailwindcss-datepicker";
 import Modal from "../../../components/Modal";
 import SeatSettingDetail from "./SeatSettingDetail";
 import { DropdownAccordionIcon } from "../../../icons";
+import dayjs from "dayjs";
+import getNext7DaysUsingToday from "../../../utils/get-7-next-day";
+
+const initShowtimeData = { startTime: "", endTime: "", movieName: "" };
+
+function formatDateForShowtime(dataList) {
+  const formatData = dataList.map((el) => {
+    const dateDict = {};
+    dateDict.dateName = dayjs(el).format("ddd DD MMM YYYY");
+    return dateDict;
+  });
+  return formatData;
+}
 
 export default function TheaterCard({ theaterName }) {
   const [isSeatSettingOpen, setIsSeatSettingOpen] = useState(false);
   const [isOpenCard, setIsOpenCard] = useState(false);
+  const [showtimeData, setShowtimeData] = useState([]);
   const handleAccodionOpen = () => setIsOpenCard(!isOpenCard);
+  const getNext7days = formatDateForShowtime(getNext7DaysUsingToday());
+  console.log(getNext7days);
 
-  const [date, setDate] = useState({
-    startDate: null,
-  });
+  const handleAddShowtime = () => {
+    setShowtimeData((prev) => [...prev, initShowtimeData]);
+  };
 
-  const handleValueChange = (newDate) => {
-    setDate(newDate);
+  const handleDeleteShowtime = (index) => {
+    const dummyShowtimeData = [...showtimeData];
+    dummyShowtimeData.splice(index, 1);
+    setShowtimeData(dummyShowtimeData);
   };
 
   return (
@@ -40,29 +58,29 @@ export default function TheaterCard({ theaterName }) {
           {isOpenCard ? (
             <>
               <div className="flex gap-6 text-xl">
-                <Datepicker
-                  inputClassName="w-full h-full border border-[#ABABAF] rounded-lg placeholder:text-black px-6 text-lg focus:outline-none"
-                  toggleClassName="absolute bg-[#DC2026] rounded-r-lg text-white right-0 h-full px-5 text-gray-400 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed"
-                  placeholder={"Select date"}
-                  useRange={false}
-                  asSingle={true}
-                  value={date}
-                  displayFormat={"ddd DD MMMM YYYY"}
-                  onChange={handleValueChange}
-                />
-                <Button color="white">ADD SHOWTIME</Button>
+                <select className="w-full rounded-lg text-center">
+                  <option disabled>Choose a date</option>
+                  {getNext7days.map((el, index) => (
+                    <option key={index}>{el.dateName}</option>
+                  ))}
+                </select>
+
+                <Button color="white" onClick={handleAddShowtime}>
+                  ADD SHOWTIME
+                </Button>
                 <Button color="white" onClick={() => setIsSeatSettingOpen(true)}>
                   SEAT SETTING
                 </Button>
                 <Button color="white">CONFIRM</Button>
               </div>
               <div className="grid grid-cols-6 gap-6 py-4">
-                <ShowtimeSlot />
-                <ShowtimeSlot />
-                <ShowtimeSlot />
-                <ShowtimeSlot />
-                <ShowtimeSlot />
-                <ShowtimeSlot />
+                {showtimeData.map((el, index) => (
+                  <ShowtimeSlot
+                    key={index}
+                    index={index}
+                    handleDeleteShowtime={handleDeleteShowtime}
+                  />
+                ))}
               </div>
             </>
           ) : null}

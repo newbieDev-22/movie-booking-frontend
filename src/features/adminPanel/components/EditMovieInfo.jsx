@@ -11,16 +11,6 @@ import getGenreNameBtn from "../../../utils/genre-name";
 import useMovie from "../../../hooks/useMovie";
 import validateMovie from "../validator/validator-movie";
 
-const initialInput = {
-  movieName: "",
-  movieSynopsis: "",
-  genreId1: null,
-  genreId2: null,
-  genreId3: null,
-  movieTrailerPath: "",
-  durationInMin: 0,
-};
-
 const initialInputError = {
   movieName: "",
   movieSynopsis: "",
@@ -31,11 +21,17 @@ const initialInputError = {
   durationInMin: "",
 };
 
-export default function AddNewMovieDetail({ onClose }) {
-  const { handleAddMovie } = useMovie();
+export default function EditMovieInfo({ data, onClose }) {
+  const initData = { ...data };
+  delete initData.id;
+  delete initData.createdAt;
+  delete initData.updatedAt;
+  delete initData.movieImagePath;
+
+  const { handleUpdateMovie } = useMovie();
   const fileEl = useRef();
   const [file, setFile] = useState(null);
-  const [input, setInput] = useState(initialInput);
+  const [input, setInput] = useState(initData);
   const [inputError, setInputError] = useState(initialInputError);
   const [isSelectGenresOpen, setIsSelectGenresOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,12 +45,14 @@ export default function AddNewMovieDetail({ onClose }) {
     try {
       e.preventDefault();
       setIsLoading(true);
+
       const error = validateMovie(input);
       if (error) {
         return setInputError(error);
       }
 
       setInputError(initialInputError);
+
       if (file) {
         const formData = new FormData();
         formData.append("movieImagePath", file);
@@ -65,13 +63,13 @@ export default function AddNewMovieDetail({ onClose }) {
           }
         }
 
-        const result = await movieApi.createMovie(formData);
-        handleAddMovie(result.data.movieData);
+        const result = await movieApi.updateMovieByMovieId(data.id, formData);
+        handleUpdateMovie(data.id, result.data.movieData);
       } else {
-        const result = await movieApi.createMovie(input);
-        handleAddMovie(result.data.movieData);
+        const result = await movieApi.updateMovieByMovieId(data.id, input);
+        handleUpdateMovie(data.id, result.data.movieData);
       }
-      toast.success("Add Movie sucessfully!");
+      toast.success("Update Movie sucessfully!");
       onClose();
     } catch (err) {
       console.log("err", err);

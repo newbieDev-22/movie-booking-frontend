@@ -2,17 +2,25 @@ import { useState } from "react";
 import Button from "../../../components/Button";
 import ConfirmDetail from "../../../components/ConfirmDetail";
 import Modal from "../../../components/Modal";
-import SelectGenresDetail from "./SelectGenresDetail";
-import AddNewMovieDetail from "./AddNewMovieDetail";
-import RadioButton from "../../../components/RadioButton";
+import RadioButton from "./RadioButton";
 import HighlightDetail from "./HighlightDetail";
+import movieApi from "../../../apis/movie";
+import { toast } from "react-toastify";
+import useMovie from "../../../hooks/useMovie";
+import EditMovieInfo from "./EditMovieInfo";
 
 export default function MovieEditCard({ data }) {
+  const { handleDeleteMovie } = useMovie();
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isMovieInfoModalOpen, setIsMovieInfoModalOpen] = useState(false);
   const [isMovieStatusModalOpen, setIsMovieStatusModalOpen] = useState(false);
   const [isHighlightModalOpen, setIsHighlightModalOpen] = useState(false);
-  const [isSelectGenresOpen, setIsSelectGenresOpen] = useState(false);
+
+  const handleDeleteMovieEachMovie = async () => {
+    await movieApi.deleteMovieByMovieId(data.id);
+    handleDeleteMovie(data.id);
+    toast.success("Delete Movie sucessfully!");
+  };
 
   return (
     <>
@@ -72,11 +80,9 @@ export default function MovieEditCard({ data }) {
         title="MOVIE STATUS"
         open={isMovieStatusModalOpen}
         onClose={() => setIsMovieStatusModalOpen(false)}
-        width={30}
+        width={45}
       >
-        <div>
-          <RadioButton />
-        </div>
+        <RadioButton data={data} onClose={() => setIsMovieStatusModalOpen(false)} />
       </Modal>
       <Modal
         title="MOVIE INFO"
@@ -84,7 +90,7 @@ export default function MovieEditCard({ data }) {
         onClose={() => setIsMovieInfoModalOpen(false)}
         width={64}
       >
-        <AddNewMovieDetail onOpenSelectGenres={() => setIsSelectGenresOpen(true)} />
+        <EditMovieInfo data={data} onClose={() => setIsMovieInfoModalOpen(false)} />
       </Modal>
       <Modal
         title="Delete Confirm?"
@@ -95,14 +101,11 @@ export default function MovieEditCard({ data }) {
         <ConfirmDetail
           msg={"Do you want to delete this movie ?"}
           onClose={() => setIsConfirmModalOpen(false)}
+          onClick={() => {
+            handleDeleteMovieEachMovie();
+            setIsConfirmModalOpen(false);
+          }}
         />
-      </Modal>
-      <Modal
-        title="SELECT GENRES"
-        open={isSelectGenresOpen}
-        onClose={() => setIsSelectGenresOpen(false)}
-      >
-        <SelectGenresDetail />
       </Modal>
     </>
   );

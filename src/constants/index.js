@@ -38,6 +38,24 @@ export const filterBtnBgColorMapping = {
   false: "isNonActiveBtn",
 };
 
+export const MovieSelectionStatus = {
+  "NOT SELECTED": 0,
+  CURRENTLY: 1,
+  UPCOMING: 2,
+};
+
+export const SwapMovieSelectionStatus = {
+  0: "NOT SELECTED",
+  1: "CURRENTLY",
+  2: "UPCOMING",
+};
+
+export const MovieSelectionName = {
+  NOTSELECTED: "NOT SELECTED",
+  CURRENTLY: "CURRENTLY",
+  UPCOMING: "UPCOMING",
+};
+
 export const mockData = [
   {
     id: 1,

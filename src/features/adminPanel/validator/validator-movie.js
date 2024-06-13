@@ -1,7 +1,7 @@
 import Joi from "joi";
 import validateWrapper from "../../../utils/validate-wrapper";
 
-const addMovieSchema = Joi.object({
+const movieSchema = Joi.object({
   movieName: Joi.string().required().messages({
     "string.empty": `Movie name is required.`,
   }),
@@ -13,6 +13,6 @@ const addMovieSchema = Joi.object({
   durationInMin: Joi.number().allow(null),
 });
 
-const validateAddMovie = (input) => validateWrapper(addMovieSchema, input);
+const validateMovie = (input) => validateWrapper(movieSchema, input);
 
-export default validateAddMovie;
+export default validateMovie;

@@ -17,8 +17,6 @@ const initBtnState = {
   CRIME: false,
 };
 
-const genreName = Object.keys(GENRE_MAPPING);
-
 export default function MovieFilter({
   handleFilterMovieData,
   handleSetFilterWithRawMovieData,
@@ -49,22 +47,20 @@ export default function MovieFilter({
     setBtnState({ ...initBtnState, [name]: true });
   };
   return (
-    <div className="px-8 pt-8">
-      <div className="grid grid-cols-6 gap-y-1 gap-x-8">
-        <FilterBtn
-          key={"ALL"}
-          genre={"ALL"}
-          btnState={btnState}
-          cb={() => {
-            handleFilter("ALL");
-            handleSetFilterWithRawMovieData();
-          }}
-        />
+    <div className="grid grid-cols-6 gap-y-1 gap-x-8">
+      <FilterBtn
+        key="ALL"
+        genre={"ALL"}
+        btnState={btnState}
+        cb={() => {
+          handleFilter("ALL");
+          handleSetFilterWithRawMovieData();
+        }}
+      />
 
-        {genreName.map((el) => (
-          <FilterBtn key={el.id} genre={el} btnState={btnState} cb={handleBtn(el)} />
-        ))}
-      </div>
+      {Object.keys(GENRE_MAPPING).map((el) => (
+        <FilterBtn key={el} genre={el} btnState={btnState} cb={handleBtn(el)} />
+      ))}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-export default function ConfirmDetail({ msg, onClose }) {
+export default function ConfirmDetail({ msg, onClose, onClick }) {
   return (
     <div className="flex flex-col p-2">
       <div className="pt-6 pb-8 text-lg text-white text-center">{msg}</div>
@@ -8,7 +8,7 @@ export default function ConfirmDetail({ msg, onClose }) {
         <Button bg="noBtn" onClick={onClose}>
           <div className="text-lg font-bold">No</div>
         </Button>
-        <Button color="white">
+        <Button color="white" onClick={onClick}>
           <div className="text-lg font-bold">Yes</div>
         </Button>
       </div>

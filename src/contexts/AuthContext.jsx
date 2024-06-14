@@ -13,7 +13,6 @@ export default function AuthContextProvider({ children }) {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [authUser, setAuthUser] = useState(null);
   const [isAuthUserLoading, setIsAuthUserLoading] = useState(true);
-  console.log(authUser);
   useEffect(() => {
     const fetchUser = async () => {
       try {

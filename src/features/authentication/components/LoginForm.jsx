@@ -89,7 +89,7 @@ export default function LoginForm() {
         </label>
 
         <div className="pt-4">
-          <Button color="white">
+          <Button color="white" type="submit">
             <div className="text-xl font-bold">Log in</div>
           </Button>
         </div>

@@ -8,7 +8,7 @@ export default function AdminPanelEditTheater() {
         <div className="text-2xl font-bold text-white">THEATER SETTNG</div>
         <div className="flex flex-col gap-8 py-6">
           {THEATER_DATA.map((el) => (
-            <TheaterCard key={el.id} theaterName={el.theaterName} />
+            <TheaterCard key={el.id} theaterName={el.theaterName} theaterId={el.id} />
           ))}
         </div>
       </div>

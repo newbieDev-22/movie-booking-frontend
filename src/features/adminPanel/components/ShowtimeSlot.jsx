@@ -23,14 +23,20 @@ export default function ShowtimeSlot({
           <CloseIcon color="white" className={"h-10"} />
         </div>
         <div className="flex flex-col px-4 gap-4 pb-2">
-          <TimePicker index={index} handleAddTime={handleAddTime} />
+          <TimePicker
+            data={data}
+            index={index}
+            handleAddTime={handleAddTime}
+            startMovieTime={data?.startMovieTime}
+            endMovieTime={data?.endMovieTime}
+          />
           <button
             className="bg-white flex justify-center items-center px-2 py-2 gap-2 rounded-xl 
        hover:scale-[105%] transition-all active:scale-100"
             onClick={() => setIsAddMovieOpen(true)}
           >
             {data?.movieName ? (
-              <div className="font-bold text-xl">{data?.movieName}</div>
+              <div className="font-bold text-xl">{data.movieName}</div>
             ) : (
               <>
                 <div className="bg-[#DC2026] rounded-full p-2">

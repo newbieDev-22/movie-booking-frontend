@@ -6,7 +6,6 @@ import RedirectIfNotAdmin from "../features/authentication/components/RedirectIf
 import RedirectIfNotUser from "../features/authentication/components/RedirectIfNotUser";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
-const ShowtimePage = lazy(() => import("../pages/ShowtimePage"));
 const BookingHistortyPage = lazy(() => import("../pages/BookingHistortyPage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const MovieBookingPage = lazy(() => import("../pages/MovieBookingPage"));
@@ -26,7 +25,6 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "/", element: <HomePage /> },
-      { path: "showtime", element: <ShowtimePage /> },
       {
         path: "booking-history",
         element: (

@@ -1,8 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../../components/Button";
 import ShowtimeSlot from "./ShowtimeSlot";
-import Modal from "../../../components/Modal";
-import SeatSettingDetail from "./SeatSettingDetail";
 import { DropdownAccordionIcon } from "../../../icons";
 import dayjs from "dayjs";
 import getNext7DaysUsingToday from "../../../utils/get-7-next-day";
@@ -10,135 +8,131 @@ import { toast } from "react-toastify";
 import timeCompareBetweenShowtime from "../../../utils/time-overlap-check";
 import showtimeApi from "../../../apis/showtime";
 import utc from "dayjs/plugin/utc";
+import useShowtime from "../../../hooks/useShowtime";
+import formatDateForShowtime from "../../../utils/date-format";
 
 dayjs.extend(utc);
 
-const initShowtimeData = {
-  id: "",
-  date: "",
-  startTime: "09:00",
-  endTime: "22:00",
-  movieId: "",
-  movieName: "",
-  theaterId: "",
-};
-
-function formatDateForShowtime(dataList) {
-  const formatData = dataList.map((el) => {
-    const dateDict = {};
-    dateDict.date = dayjs(el).format("ddd DD MMM YYYY");
-    return dateDict;
-  });
-  return formatData;
-}
-
-export default function TheaterCard({ theaterName }) {
-  initShowtimeData.theaterId = theaterName;
-  const getNext7days = formatDateForShowtime(getNext7DaysUsingToday());
+export default function TheaterCard({ theaterName, theaterId }) {
+  const { showtimeData } = useShowtime();
+  const getNext7days = formatDateForShowtime(getNext7DaysUsingToday(), "YYYY-MM-DD");
   getNext7days.shift();
+  const [selectDate, setSelectDate] = useState(new Date(getNext7days[0].date));
+  const initShowtimeData = {
+    date: selectDate,
+    startMovieTime: "",
+    endMovieTime: "",
+    theaterId: theaterId,
+    movieId: "",
+    movieName: "",
+  };
 
-  const [isSeatSettingOpen, setIsSeatSettingOpen] = useState(false);
   const [isOpenCard, setIsOpenCard] = useState(false);
-  const [showtimeData, setShowtimeData] = useState([]);
-  const [selectDate, setSelectDate] = useState(getNext7days[0]);
+  const [showtime, setShowtime] = useState(null);
+
+  useEffect(() => {
+    const mapShowtimeData = showtimeData?.map((el) => {
+      const mapData = {};
+      mapData.date = el.date;
+      mapData.startMovieTime = el.startMovieTime;
+      mapData.endMovieTime = el.endMovieTime;
+      mapData.theaterId = el.theaterId;
+      mapData.movieId = el.movieId;
+      mapData.movieName = el.movie.movieName;
+      return mapData;
+    });
+    console.log("mapShowtimeData", mapShowtimeData);
+    const filterTheaterData = mapShowtimeData?.filter((el) => el.theaterId === theaterId);
+    const filterDateData = filterTheaterData?.filter(
+      (el) =>
+        dayjs(el.date).format("YYYY-MM-DD") === dayjs(selectDate).format("YYYY-MM-DD")
+    );
+
+    setShowtime(filterDateData);
+  }, [showtimeData, selectDate]);
+
   const handleAccodionOpen = () => setIsOpenCard(!isOpenCard);
 
   const handleAddShowtime = () => {
-    if (showtimeData.length < 12) {
-      setShowtimeData((prev) => [...prev, { ...initShowtimeData }]);
+    if (showtime.length < 6) {
+      setShowtime((prev) => [...prev, { ...initShowtimeData }]);
     } else {
-      toast.error("Showtime should not exceed 12 rounds per day per theater");
+      toast.error("Showtime should not exceed 6 rounds per day per theater");
     }
   };
 
   const handleDeleteShowtime = (index) => {
-    const dummyShowtimeData = [...showtimeData];
+    const dummyShowtimeData = [...showtime];
     dummyShowtimeData.splice(index, 1);
-    setShowtimeData(dummyShowtimeData);
+    setShowtime(dummyShowtimeData);
   };
 
   const handleAddMovie = (index, updateData) => {
-    const tmp = [...showtimeData];
-    console.log(index, updateData);
-    console.log(tmp);
-    console.log(tmp[2]);
-    console.log(tmp[2]);
+    const tmp = [...showtime];
     tmp[index].movieId = updateData.movieId;
     tmp[index].movieName = updateData.movieName;
-
-    setShowtimeData(tmp);
+    setShowtime(tmp);
   };
 
   const handleAddTime = (index, updateData) => {
-    const tmp = [...showtimeData];
-    tmp[index].startTime = updateData.startTime;
-    tmp[index].endTime = updateData.endTime;
+    const tmp = [...showtime];
+    tmp[index].startMovieTime = updateData.startTime;
+    tmp[index].endMovieTime = updateData.endTime;
+    setShowtime(tmp);
+  };
 
-    setShowtimeData(tmp);
+  const prepareShowtiomData = (input, index) => {
+    if (!input.movieId) {
+      throw new Error("Miss Movie in some showtime");
+    } else if (input.startMovieTime > input.endMovieTime) {
+      throw new Error("End time > start Time in some showtime");
+    }
+
+    const dummyShowtimeData = [...showtime];
+    dummyShowtimeData.splice(index, 1);
+
+    dummyShowtimeData.forEach((subEl) => {
+      const isOverlapStartTime = timeCompareBetweenShowtime(
+        subEl.startMovieTime,
+        subEl.endMovieTime,
+        input.startMovieTime
+      );
+      const isOverlapEndTime = timeCompareBetweenShowtime(
+        subEl.startMovieTime,
+        subEl.endMovieTime,
+        input.endMovieTime
+      );
+      if (isOverlapStartTime || isOverlapEndTime) {
+        throw new Error("Miss some showtime is overlap");
+      }
+    });
+
+    const date = new Date(selectDate);
+    input.date = dayjs(date).utc().format("YYYY-MM-DD");
+
+    const dummyInput = { ...input };
+    delete dummyInput.movieName;
+    return dummyInput;
   };
 
   const handleSumbit = async () => {
     try {
-      for (let i = 0; i < showtimeData.length; i++) {
-        if (!showtimeData[i].movieName || !showtimeData[i].movieId) {
-          toast.error("Miss Movie in some showtime");
-          return;
-        } else if (showtimeData[i].startTime > showtimeData[i].endTime) {
-          toast.error("End time > start Time in some showtime");
-          return;
-        }
-
-        const dummyShowtimeData = [...showtimeData];
-        dummyShowtimeData.splice(i, 1);
-
-        dummyShowtimeData.forEach((subEl) => {
-          const isOverlapStartTime = timeCompareBetweenShowtime(
-            subEl.startTime,
-            subEl.endTime,
-            showtimeData[i].startTime
-          );
-          const isOverlapEndTime = timeCompareBetweenShowtime(
-            subEl.startTime,
-            subEl.endTime,
-            showtimeData[i].endTime
-          );
-          if (isOverlapStartTime || isOverlapEndTime) {
-            toast.error("Miss some showtime is overlap");
-            return;
-          }
-        });
-
-        const date = new Date(selectDate.date);
-        console.log(date);
-        console.log(dayjs(date).format("YYYY-MM-DD"));
-        showtimeData[i].date = dayjs(date).format("YYYY-MM-DD");
-
-        console.log(showtimeData[i].startTime);
-        console.log("ssss", `${selectDate.date} ${showtimeData[i].startTime}`);
-        const startDateTime = new Date(`${selectDate.date} ${showtimeData[i].startTime}`);
-        console.log("startDateTime", startDateTime);
-        console.log(dayjs(startDateTime).utc().format("HH:mm"));
-        showtimeData[i].startMovieTime = dayjs(startDateTime).utc().format("HH:mm");
-
-        console.log(showtimeData[i].endTime);
-        const endDateTime = new Date(`${selectDate.date} ${showtimeData[i].endTime}`);
-        console.log("endDateTime", endDateTime);
-        console.log(dayjs(endDateTime).utc().format("HH:mm"));
-        showtimeData[i].endMovieTime = dayjs(endDateTime).utc().format("HH:mm");
-
-        console.log("data", showtimeData[i]);
-        showtimeData[i].theaterId = 1;
-        delete showtimeData[i].endTime;
-        delete showtimeData[i].startTime;
-        delete showtimeData[i].movieName;
-        delete showtimeData[i].id;
-
-        await showtimeApi.createShowtime(showtimeData[i]);
+      const prepareInputList = [];
+      for (let i = 0; i < showtime.length; i++) {
+        const dummyInput = prepareShowtiomData(showtime[i], i);
+        console.log(dummyInput);
+        prepareInputList.push(dummyInput);
       }
-
-      toast.success("Update successfully");
+      if (prepareInputList.length === showtime.length) {
+        const date = dayjs(new Date(selectDate)).utc().format("YYYY-MM-DD");
+        await showtimeApi.deleteByDateAndTheater(date, theaterId);
+        prepareInputList.map(async (el) => {
+          await showtimeApi.createShowtime(el);
+        });
+        toast.success("Update successfully");
+      }
     } catch (err) {
-      console.log(err);
+      toast.error(err.message);
     }
   };
 
@@ -165,7 +159,9 @@ export default function TheaterCard({ theaterName }) {
               <div className="grid grid-cols-4 gap-x-4 text-xl">
                 <select
                   className="w-full rounded-lg text-center "
-                  onChange={(e) => setSelectDate(e.target.value)}
+                  onChange={(e) => {
+                    setSelectDate(new Date(e.target.value));
+                  }}
                 >
                   <option disabled>Choose a date</option>
                   {getNext7days.map((el, index) => (
@@ -185,7 +181,7 @@ export default function TheaterCard({ theaterName }) {
                 </Button>
               </div>
               <div className="grid grid-cols-6 gap-6 py-4">
-                {showtimeData.map((el, index) => (
+                {showtime?.map((el, index) => (
                   <ShowtimeSlot
                     key={index}
                     index={index}
@@ -200,14 +196,6 @@ export default function TheaterCard({ theaterName }) {
           ) : null}
         </div>
       </div>
-      <Modal
-        title="SEAT SETTING"
-        open={isSeatSettingOpen}
-        onClose={() => setIsSeatSettingOpen(false)}
-        width={80}
-      >
-        <SeatSettingDetail />
-      </Modal>
     </div>
   );
 }

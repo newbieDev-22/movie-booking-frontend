@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Carousal from "../../../components/Carousal";
 import { SWAP_GENRE_MAPPING } from "../../../constants";
 import useMovie from "../../../hooks/useMovie";
-import { useEffect } from "react";
 
 export default function HomeCarousal() {
   const { movieData, highlightData } = useMovie();

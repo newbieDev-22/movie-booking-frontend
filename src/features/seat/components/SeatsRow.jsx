@@ -1,5 +1,7 @@
 import React from "react";
 import Chair from "../../../components/Chair";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const sizeMapping = {
   9: "h-9",
@@ -11,30 +13,45 @@ const gapMapping = {
   8: "gap-8",
 };
 
-const seatStatusData = [
-  { id: 1, isBooked: true, isUnavailable: false },
-  { id: 2, isBooked: false, isUnavailable: true },
-  { id: 3, isBooked: false, isUnavailable: false },
-  { id: 4, isBooked: false, isUnavailable: false },
-  { id: 5, isBooked: false, isUnavailable: false },
-  { id: 6, isBooked: false, isUnavailable: false },
-  { id: 7, isBooked: false, isUnavailable: false },
-  { id: 8, isBooked: false, isUnavailable: false },
-];
-
-export default function SeatsRow({ rowName, size = 9, gap = 12 }) {
+export default function SeatsRow({
+  chairStatus,
+  rowName,
+  size = 9,
+  gap = 12,
+  handleSetChairStatus,
+}) {
   const color = ["A", "B"].includes(rowName) ? "#985EFF" : "#DC2026";
+  const initColStatus = chairStatus.filter((el) => el.rowName === rowName)[0].rowData;
+  const [colStatus, setColStatus] = useState(initColStatus);
+
+  const handleChairClick = (id, isSelect) => {
+    const mapData = colStatus.map((el) => {
+      if (el.id === id) {
+        el.isSelect = isSelect;
+        return el;
+      } else {
+        return el;
+      }
+    });
+    setColStatus(mapData);
+  };
+
+  useEffect(() => {
+    handleSetChairStatus(rowName, colStatus);
+  }, [colStatus]);
+
   return (
     <div>
       <div className="flex justify-center items-center ml-8">
         <div className="text-white"></div>
         <div className={`flex ${sizeMapping[size]} ${gapMapping[gap]} justify-center`}>
-          {seatStatusData.map((el) => (
+          {colStatus.map((el) => (
             <Chair
               key={el.id}
               color={color}
               isBooked={el.isBooked}
-              isUnavailable={el.isUnavailable}
+              handleChairClick={handleChairClick}
+              id={el.id}
             />
           ))}
           <div className="w-8 flex justify-center shrink-0">

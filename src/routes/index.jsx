@@ -4,6 +4,7 @@ import ProtectedRoute from "../features/authentication/components/ProtectedRoute
 import RedirectIfLogged from "../features/authentication/components/RedirectIfLogged";
 import RedirectIfNotAdmin from "../features/authentication/components/RedirectIfNotAdmin";
 import RedirectIfNotUser from "../features/authentication/components/RedirectIfNotUser";
+import PaymentPage from "../pages/PaymentPage";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 const BookingHistortyPage = lazy(() => import("../pages/BookingHistortyPage"));
@@ -54,7 +55,7 @@ const router = createBrowserRouter([
         element: <MovieBookingPage />,
       },
       {
-        path: "seat-selection",
+        path: "seat-selection/:showtimeId",
         element: <SeatSelectionPage />,
       },
     ],
@@ -65,6 +66,14 @@ const router = createBrowserRouter([
       <RedirectIfLogged>
         <LoginPage />
       </RedirectIfLogged>
+    ),
+  },
+  {
+    path: "/payment",
+    element: (
+      <ProtectedRoute>
+        <PaymentPage />
+      </ProtectedRoute>
     ),
   },
   { path: "/admin-panel", element: <Navigate to="/admin-panel/edit-movie" /> },

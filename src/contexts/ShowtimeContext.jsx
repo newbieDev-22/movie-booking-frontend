@@ -17,7 +17,6 @@ export default function ShowtimeContextProvider({ children }) {
         getNext7days[0].date,
         getNext7days[getNext7days.length - 1].date
       );
-      console.log("showtimeResult", showtimeResult);
       setShowtimeData(showtimeResult.data.showtimeData);
     } catch (err) {
       console.log(err);
@@ -30,7 +29,6 @@ export default function ShowtimeContextProvider({ children }) {
     fetchShowtime();
   }, []);
 
-  console.log(showtimeData);
   const sharedValue = { isShowtimeData, showtimeData, fetchShowtime };
   return (
     <ShowtimeContext.Provider value={sharedValue}>{children}</ShowtimeContext.Provider>

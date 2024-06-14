@@ -61,7 +61,10 @@ export default function MovieSelectionContainer() {
           handleSetFilterWithRawMovieData={handleSetFilterWithRawMovieData}
         />
       </div>
-      <MovieContainer filterMovieData={filterMovieData} />
+      <MovieContainer
+        filterMovieData={filterMovieData}
+        selectionStatus={selectionStatus}
+      />
     </div>
   );
 }

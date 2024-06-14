@@ -1,15 +1,7 @@
-import {
-  AvailableSeatIcon,
-  BookedIcon,
-  ChairIcon,
-  ScreenIcon,
-  UnavailableSeatIcon,
-} from "../../../icons";
+import { reverseRowName } from "../../../constants";
+import { AvailableSeatIcon, BookedIcon, ChairIcon, ScreenIcon } from "../../../icons";
 import SeatSelectIconComponent from "./SeatSelectIconComponent";
 import SeatsRow from "./SeatsRow";
-
-const rowName = ["A", "B", "C", "D", "E", "F", "G", "H"];
-const reverseRowName = [...rowName].reverse();
 
 const selectionIconData = [
   {
@@ -20,13 +12,9 @@ const selectionIconData = [
     iconName: "Booked",
     icon: <BookedIcon className={"h-full p-2"} />,
   },
-  {
-    iconName: "Unavailable",
-    icon: <UnavailableSeatIcon className={"h-full p-1"} />,
-  },
 ];
 
-export default function SeatSelection() {
+export default function SeatSelection({ handleSetChairStatus, chairStatus }) {
   return (
     <div className="flex flex-col p-4 pb-8">
       <div className="flex justify-center pt-4">
@@ -34,7 +22,14 @@ export default function SeatSelection() {
       </div>
       <div className="px-4 flex flex-col gap-6 -mt-16">
         {reverseRowName.map((el) => {
-          return <SeatsRow key={el} rowName={el} />;
+          return (
+            <SeatsRow
+              key={el}
+              rowName={el}
+              chairStatus={chairStatus}
+              handleSetChairStatus={handleSetChairStatus}
+            />
+          );
         })}
       </div>
       <div className="flex justify-center items-center mt-12 gap-40">

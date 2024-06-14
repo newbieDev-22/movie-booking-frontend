@@ -41,7 +41,6 @@ export default function TheaterCard({ theaterName, theaterId }) {
       mapData.movieName = el.movie.movieName;
       return mapData;
     });
-    console.log("mapShowtimeData", mapShowtimeData);
     const filterTheaterData = mapShowtimeData?.filter((el) => el.theaterId === theaterId);
     const filterDateData = filterTheaterData?.filter(
       (el) =>
@@ -120,15 +119,18 @@ export default function TheaterCard({ theaterName, theaterId }) {
       const prepareInputList = [];
       for (let i = 0; i < showtime.length; i++) {
         const dummyInput = prepareShowtiomData(showtime[i], i);
-        console.log(dummyInput);
         prepareInputList.push(dummyInput);
       }
+
       if (prepareInputList.length === showtime.length) {
         const date = dayjs(new Date(selectDate)).utc().format("YYYY-MM-DD");
         await showtimeApi.deleteByDateAndTheater(date, theaterId);
-        prepareInputList.map(async (el) => {
-          await showtimeApi.createShowtime(el);
-        });
+
+        const createShowtimePromises = prepareInputList.map((el) =>
+          showtimeApi.createShowtime(el)
+        );
+        await Promise.all(createShowtimePromises);
+
         toast.success("Update successfully");
       }
     } catch (err) {

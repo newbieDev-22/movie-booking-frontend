@@ -8,4 +8,9 @@ showtimeApi.getShowtimeByStartEndDate = (startDate, endDate) =>
 showtimeApi.deleteByDateAndTheater = (date, therterId) =>
   axios.delete(`/showtimes/date/${date}/theater/${therterId}`);
 
+showtimeApi.getShowtimeByMovieStartEndDate = (movieId, startDate, endDate) =>
+  axios.get(`showtimes/movie/${movieId}/startDate/${startDate}/endDate/${endDate}`);
+
+showtimeApi.getShowtimeById = (showtimeId) => axios.get(`showtimes/${showtimeId}/`);
+
 export default showtimeApi;

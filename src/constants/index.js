@@ -56,6 +56,19 @@ export const MovieSelectionName = {
   UPCOMING: "UPCOMING",
 };
 
+export const PaymentTypeId = {
+  PENDING: 1,
+  SUCCESS: 2,
+};
+
+export const rowName = ["A", "B", "C", "D", "E", "F", "G", "H"];
+export const reverseRowName = [...rowName].reverse();
+
+export const seatPrice = {
+  NORMAL: 200,
+  PREMIUM: 500,
+};
+
 export const mockData = [
   {
     id: 1,

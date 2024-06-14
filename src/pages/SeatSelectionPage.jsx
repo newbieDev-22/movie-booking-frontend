@@ -43,9 +43,15 @@ export default function SeatSelectionPage() {
   const fetchShowtime = async () => {
     try {
       const showtime = await showtimeApi.getShowtimeById(+showtimeId);
+      console.log("showtime", showtime);
       const bookingData = await bookingApi.getBookingByShowtimeId(+showtimeId);
-      setShowtime(showtime.data.showtimeData);
-      setBooking(bookingData.data.bookingDataList);
+      console.log("bookingData", bookingData);
+      if (showtime) {
+        setShowtime(showtime.data.showtimeData);
+      }
+      if (Object.keys(bookingData?.data).length !== 0) {
+        setBooking(bookingData.data.bookingDataList);
+      }
     } catch (err) {
       console.log(err);
       if (err instanceof AxiosError) {

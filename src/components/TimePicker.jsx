@@ -1,7 +1,5 @@
-import React from "react";
 import TimeInput from "./TimeInput";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 
 export default function TimePicker({

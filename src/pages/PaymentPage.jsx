@@ -1,7 +1,6 @@
 import Button from "../components/Button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import bookingApi from "../apis/booking";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PaymentTypeId } from "../constants";
 

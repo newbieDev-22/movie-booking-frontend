@@ -56,7 +56,11 @@ const router = createBrowserRouter([
       },
       {
         path: "seat-selection/:showtimeId",
-        element: <SeatSelectionPage />,
+        element: (
+          <RedirectIfNotUser>
+            <SeatSelectionPage />,
+          </RedirectIfNotUser>
+        ),
       },
     ],
   },

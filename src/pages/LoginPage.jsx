@@ -12,7 +12,6 @@ const imagePathList = [LoginImage1, LoginImage2, LoginImage3];
 
 export default function LoginPage() {
   const { registerOpen, setRegisterOpen } = useAuth();
-
   return (
     <>
       <div className="flex h-screen bg-black gap-4 min-w-[1000px] overflow-hidden px-8">

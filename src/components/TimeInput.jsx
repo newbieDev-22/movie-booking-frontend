@@ -1,19 +1,4 @@
-import { useState } from "react";
-
-const TimeMapping = { START: "09:00", END: "22:00" };
-
-export default function TimeInput({ title }) {
-  let initial = "09:00";
-  if (TimeMapping[title]) {
-    initial = TimeMapping[title];
-  }
-
-  const [time, setTime] = useState(initial);
-
-  const handleTime = (e) => {
-    setTime(e.target.value);
-  };
-
+export default function TimeInput({ title, time, setTime }) {
   return (
     <div className="flex flex-col gap-2 justify-center items-center">
       <label htmlFor={title} className="font-bold text-black text-base">
@@ -27,7 +12,7 @@ export default function TimeInput({ title }) {
         min="00:00"
         max="23:59"
         value={time}
-        onChange={handleTime}
+        onChange={(e) => setTime(e.target.value)}
         required
       />
     </div>

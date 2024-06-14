@@ -2,14 +2,16 @@ import { useState } from "react";
 import TimePicker from "../../../components/TimePicker";
 import { CloseIcon, PlusIcon } from "../../../icons";
 import Modal from "../../../components/Modal";
-import SelectMovieDetail from "./SelectMovieDetail";
-import getNext7DaysUsingToday from "../../../utils/get-7-next-day";
+import ShowtimeMovieDetail from "./ShowtimeMovieDetail";
 
-export default function ShowtimeSlot({ index, handleDeleteShowtime }) {
+export default function ShowtimeSlot({
+  index,
+  handleDeleteShowtime,
+  handleAddMovie,
+  data,
+  handleAddTime,
+}) {
   const [isAddMovieOpen, setIsAddMovieOpen] = useState(false);
-
-  const dateList = getNext7DaysUsingToday();
-  console.log(dateList);
 
   return (
     <>
@@ -21,16 +23,22 @@ export default function ShowtimeSlot({ index, handleDeleteShowtime }) {
           <CloseIcon color="white" className={"h-10"} />
         </div>
         <div className="flex flex-col px-4 gap-4 pb-2">
-          <TimePicker />
+          <TimePicker index={index} handleAddTime={handleAddTime} />
           <button
-            className="bg-white flex gap-2 justify-center items-center py-2 rounded-xl 
+            className="bg-white flex justify-center items-center px-2 py-2 gap-2 rounded-xl 
        hover:scale-[105%] transition-all active:scale-100"
             onClick={() => setIsAddMovieOpen(true)}
           >
-            <div className="bg-[#DC2026] rounded-full p-2">
-              <PlusIcon className={"h-4"} />
-            </div>
-            <div className="font-bold text-xl">ADD MOVIE</div>
+            {data?.movieName ? (
+              <div className="font-bold text-xl">{data?.movieName}</div>
+            ) : (
+              <>
+                <div className="bg-[#DC2026] rounded-full p-2">
+                  <PlusIcon className={"h-4"} />
+                </div>
+                <div className="font-bold text-xl">ADD MOVIE</div>
+              </>
+            )}
           </button>
         </div>
       </div>
@@ -40,7 +48,11 @@ export default function ShowtimeSlot({ index, handleDeleteShowtime }) {
         onClose={() => setIsAddMovieOpen(false)}
         width={75}
       >
-        <SelectMovieDetail />
+        <ShowtimeMovieDetail
+          index={index}
+          handleAddMovie={handleAddMovie}
+          onClose={() => setIsAddMovieOpen(false)}
+        />
       </Modal>
     </>
   );

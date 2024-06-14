@@ -1,6 +1,9 @@
-export default function SelectMovieCard({ movieName, movieImagePage }) {
+export default function SelectMovieCard({ movieName, movieImagePage, onClick }) {
   return (
-    <div className="flex flex-col gap-2 hover:scale-110 transition-all active:scale-100">
+    <div
+      className="flex flex-col gap-2 hover:scale-110 transition-all active:scale-100"
+      onClick={onClick}
+    >
       <div className="overflow-hidden rounded-md shadow-md">
         <img src={movieImagePage} alt="movie" className="object-cover aspect-[3/4]" />
       </div>

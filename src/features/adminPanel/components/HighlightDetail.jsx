@@ -20,9 +20,6 @@ export default function HighlightDetail({ data, onClose }) {
   const [file, setFile] = useState(null);
 
   const filterMovie = highlightData?.filter((el) => el.movieId === data.id);
-  console.log("highlightData", highlightData);
-  console.log("filterMovie", filterMovie);
-
   const initInput = filterMovie.length > 0 ? filterMovie[0].highlightWord : "";
 
   const [input, setInput] = useState(initInput);
@@ -52,7 +49,6 @@ export default function HighlightDetail({ data, onClose }) {
           const result = await highlightApi.createHighlight(formData);
           const dummyResult = { ...result.data.highlightData };
           delete dummyResult.id;
-          console.log(result, "result");
           handleCreateHighlight(dummyResult);
           toast.success("Add highlight sucessfully!");
           onClose();
@@ -69,7 +65,6 @@ export default function HighlightDetail({ data, onClose }) {
           }
           const result = await highlightApi.updateHighlight(data.id, formData);
 
-          console.log("sssss", result);
           const dummyResult = { ...result.data.highlightData };
           delete dummyResult.id;
           handleUpdateHighlight(data.id, dummyResult);

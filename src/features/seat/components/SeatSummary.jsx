@@ -15,6 +15,8 @@ export default function SeatSummary({
   handleSubmit,
 }) {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [paymentImage, setPaymentImage] = useState(null);
+  const [bookingId, setBookingId] = useState(null);
   const [isQRCodePaymentOpen, setIsQRCodePaymentOpen] = useState(false);
   const totalPrice = seatPrice.NORMAL * normalCount + seatPrice.PREMIUM * premiumCount;
   return (
@@ -70,9 +72,10 @@ export default function SeatSummary({
           time={time}
           total={totalPrice}
           onClick={async () => {
-            const pass = await handleSubmit();
-            console.log("pass", pass);
-            if (pass) {
+            const bookingData = await handleSubmit();
+            if (bookingData) {
+              setPaymentImage(bookingData.qrCodeImagePath);
+              setBookingId(bookingData.id);
               setIsPaymentOpen(false);
               setIsQRCodePaymentOpen(true);
             }
@@ -85,7 +88,7 @@ export default function SeatSummary({
         onClose={() => setIsQRCodePaymentOpen(false)}
         width={40}
       >
-        <QRCodePopup />
+        <QRCodePopup qrcodeImage={paymentImage} bookingId={bookingId} />
       </Modal>
     </div>
   );

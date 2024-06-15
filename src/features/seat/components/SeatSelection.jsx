@@ -20,7 +20,7 @@ export default function SeatSelection({ handleSetChairStatus, chairStatus }) {
       <div className="flex justify-center pt-4">
         <ScreenIcon />
       </div>
-      <div className="px-4 flex flex-col gap-6 -mt-16">
+      <div className="px-4 flex flex-col gap-6">
         {reverseRowName.map((el) => {
           return (
             <SeatsRow
@@ -32,7 +32,7 @@ export default function SeatSelection({ handleSetChairStatus, chairStatus }) {
           );
         })}
       </div>
-      <div className="flex justify-center items-center mt-12 gap-40">
+      <div className="flex justify-center items-center pt-12 gap-40">
         <div className="h-12 flex justify-center gap-16 text-lg font-bold text-white">
           {selectionIconData.map((el) => (
             <SeatSelectIconComponent key={el.iconName} iconName={el.iconName}>

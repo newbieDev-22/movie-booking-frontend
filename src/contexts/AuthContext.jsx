@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useMemo } from "react";
 import {
   getAccessToken,
   removeAccessToken,
@@ -13,6 +13,7 @@ export default function AuthContextProvider({ children }) {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [authUser, setAuthUser] = useState(null);
   const [isAuthUserLoading, setIsAuthUserLoading] = useState(true);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -30,10 +31,14 @@ export default function AuthContextProvider({ children }) {
   }, []);
 
   const login = async (credentials) => {
-    const res = await authApi.login(credentials);
-    setAccessToken(res.data.accessToken);
-    const resGetAuthUser = await authApi.getAuthUser();
-    setAuthUser(resGetAuthUser.data.user);
+    try {
+      const res = await authApi.login(credentials);
+      setAccessToken(res.data.accessToken);
+      const resGetAuthUser = await authApi.getAuthUser();
+      setAuthUser(resGetAuthUser.data.user);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const logout = () => {
@@ -41,16 +46,19 @@ export default function AuthContextProvider({ children }) {
     setAuthUser(null);
   };
 
-  const sharedValue = {
-    authUser,
-    isAuthUserLoading,
-    login,
-    logout,
-    loginOpen,
-    setLoginOpen,
-    registerOpen,
-    setRegisterOpen,
-  };
+  const sharedValue = useMemo(
+    () => ({
+      authUser,
+      isAuthUserLoading,
+      login,
+      logout,
+      loginOpen,
+      setLoginOpen,
+      registerOpen,
+      setRegisterOpen,
+    }),
+    [authUser, isAuthUserLoading, loginOpen, registerOpen]
+  );
 
   return <AuthContext.Provider value={sharedValue}>{children}</AuthContext.Provider>;
 }

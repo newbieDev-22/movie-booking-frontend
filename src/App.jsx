@@ -5,6 +5,7 @@ import AuthContextProvider from "./contexts/AuthContext";
 import { ToastContainer } from "react-toastify";
 import MovieContextProvider from "./contexts/MovieContext";
 import ShowtimeContextProvider from "./contexts/ShowtimeContext";
+import BookingContextProvider from "./contexts/BookingContext";
 
 function App() {
   return (
@@ -12,8 +13,10 @@ function App() {
       <AuthContextProvider>
         <MovieContextProvider>
           <ShowtimeContextProvider>
-            <Router />
-            <ToastContainer position="bottom-right" autoClose={2000} />
+            <BookingContextProvider>
+              <Router />
+              <ToastContainer position="bottom-right" autoClose={2000} />
+            </BookingContextProvider>
           </ShowtimeContextProvider>
         </MovieContextProvider>
       </AuthContextProvider>

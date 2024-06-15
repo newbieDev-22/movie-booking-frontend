@@ -46,7 +46,11 @@ export default function Table({ data, fetchHistory }) {
         onClose={() => setIsQRCodePaymentOpen(false)}
         width={40}
       >
-        <QRCodePopup qrcodeImage={tmp} fetchHistory={fetchHistory} />
+        <QRCodePopup
+          qrcodeImage={tmp}
+          fetchHistory={fetchHistory}
+          bookingId={dummyData.id}
+        />
       </Modal>
     </>
   );

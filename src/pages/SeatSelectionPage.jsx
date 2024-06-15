@@ -2,69 +2,41 @@ import { useState, useEffect } from "react";
 import SeatHeader from "../features/seat/components/SeatHeader";
 import SeatSelection from "../features/seat/components/SeatSelection";
 import SeatSummary from "../features/seat/components/SeatSummary";
-import { useParams, useNavigate } from "react-router-dom";
-import showtimeApi from "../apis/showtime";
-import { AxiosError } from "axios";
+import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
-import { rowName, seatPrice } from "../constants";
+import { seatPrice } from "../constants";
 import bookingApi from "../apis/booking";
 import { toast } from "react-toastify";
 import seatApi from "../apis/seat";
-import useAuth from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
-
-const seatStatusData = [
-  { id: 1, isBooked: false, isSelect: false },
-  { id: 2, isBooked: false, isSelect: false },
-  { id: 3, isBooked: false, isSelect: false },
-  { id: 4, isBooked: false, isSelect: false },
-  { id: 5, isBooked: false, isSelect: false },
-  { id: 6, isBooked: false, isSelect: false },
-  { id: 7, isBooked: false, isSelect: false },
-  { id: 8, isBooked: false, isSelect: false },
-];
-
-const initChairStatus = rowName.map((el) => {
-  return { rowName: el, rowData: seatStatusData.map((el) => ({ ...el })) };
-});
+import useShowtime from "../hooks/useShowtime";
+import useBooking from "../hooks/useBooking";
 
 export default function SeatSelectionPage() {
-  const { authUser } = useAuth();
-  const [showtime, setShowtime] = useState([]);
-  const [booking, setBooking] = useState([]);
-  const [chairStatus, setChairStatus] = useState(initChairStatus);
+  const { showtimeData } = useShowtime();
+  const { chairStatusList, fetchBooking, isSeatSelectionLoading } = useBooking();
+  const { showtimeId } = useParams();
+  const [showtime, setShowtime] = useState(null);
+  const [chairStatus, setChairStatus] = useState(
+    chairStatusList.filter((el) => el.showtimeId === +showtimeId)[0].bookedSeat
+  );
   const [normalCount, setNormalCount] = useState(0);
   const [premiumCount, setPremiumCount] = useState(0);
   const [selectSeatRowCol, setSelectSeatRowCol] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { showtimeId } = useParams();
-  const navigate = useNavigate();
 
-  const fetchShowtime = async () => {
-    try {
-      const showtime = await showtimeApi.getShowtimeById(+showtimeId);
-      console.log("showtime", showtime);
-      const bookingData = await bookingApi.getBookingByShowtimeId(+showtimeId);
-      console.log("bookingData", bookingData);
-      if (showtime) {
-        setShowtime(showtime.data.showtimeData);
-      }
-      if (Object.keys(bookingData?.data).length !== 0) {
-        setBooking(bookingData.data.bookingDataList);
-      }
-    } catch (err) {
-      console.log(err);
-      if (err instanceof AxiosError) {
-        if (err.response.status === 400) {
-          navigate("/");
-        }
-      }
-    }
-  };
+  useEffect(() => {
+    const filterShowtime = showtimeData.filter((el) => el.id === +showtimeId);
+    setShowtime(filterShowtime[0]);
+  }, [showtimeData]);
+
+  useEffect(() => {
+    const filterChair = chairStatusList.filter((el) => el.showtimeId === +showtimeId);
+    setChairStatus(filterChair[0].bookedSeat);
+  }, []);
 
   const handleSetChairStatus = (rowName, rowDate) => {
-    const dummyChairStatus = [...chairStatus];
-    const mapData = dummyChairStatus.map((el) => {
+    const mapData = chairStatus.map((el) => {
       if (el.rowName === rowName) {
         el.rowData = rowDate;
         return el;
@@ -74,57 +46,6 @@ export default function SeatSelectionPage() {
     });
     setChairStatus(mapData);
   };
-
-  useEffect(() => {
-    setNormalCount(0);
-    setPremiumCount(0);
-    setSelectSeatRowCol([]);
-    setChairStatus([]);
-    fetchShowtime();
-  }, []);
-
-  useEffect(() => {
-    setNormalCount(0);
-    setPremiumCount(0);
-    setSelectSeatRowCol([]);
-    setChairStatus([]);
-    const bookedSeat = booking.map((el) => {
-      const newData = [];
-      const seatData = el.bookingSeatsDetail;
-
-      if (seatData.seat1) {
-        newData.push({ row: seatData.seat1.row, col: +seatData.seat1.column });
-      }
-      if (seatData.seat2) {
-        newData.push({ row: seatData.seat2.row, col: +seatData.seat2.column });
-      }
-      if (seatData.seat3) {
-        newData.push({ row: seatData.seat3.row, col: +seatData.seat3.column });
-      }
-      return newData;
-    });
-    const dummyInitChairStatus = [...initChairStatus];
-    bookedSeat.forEach((person) => {
-      person.forEach((el) => {
-        const foundedRowIndex = dummyInitChairStatus?.findIndex(
-          (subEl) => subEl.rowName === el.row
-        );
-        if (foundedRowIndex !== -1) {
-          const foundedColIndex = dummyInitChairStatus[
-            foundedRowIndex
-          ].rowData?.findIndex((subEl) => subEl.id === el.col);
-
-          if (foundedRowIndex !== -1 && foundedColIndex !== -1) {
-            dummyInitChairStatus[foundedRowIndex].rowData[foundedColIndex][
-              "isBooked"
-            ] = true;
-          }
-        }
-      });
-    });
-
-    setChairStatus(dummyInitChairStatus);
-  }, [booking]);
 
   const getSeatIdList = async (selectSeatRowCol, theaterId) => {
     const seatIdPromises = selectSeatRowCol.map((el) => {
@@ -171,35 +92,31 @@ export default function SeatSelectionPage() {
       if (normalCount + premiumCount === 0) {
         throw Error("Please select your seat");
       }
-      console.log("selectSeatRowCol", selectSeatRowCol);
-
       const seatIdList = await getSeatIdList(selectSeatRowCol, showtime?.theaterId);
 
       const data = {
         showtimeId: +showtimeId,
-        userId: authUser.id,
         totalPrice: normalCount * seatPrice.NORMAL + premiumCount * seatPrice.PREMIUM,
-        paymentPath: "http://localhost:5173/payment",
         seatQuery: seatIdList,
       };
 
       const res = await bookingApi.createBooking(data);
-      console.log("res", res);
+      const bookingResult = res.data.booking;
       toast.success("Booking successfully");
-      return true;
+      return bookingResult;
     } catch (err) {
       console.log(err);
       toast.error(err.message);
     } finally {
       setIsLoading(false);
-      fetchShowtime();
+      fetchBooking();
     }
   };
 
   return (
     <>
-      {isLoading && <Spinner transparent />}
-      <div className="bg-[#121212] min-h-[calc(100vh-5rem)] min-w-[1275px] py-4 px-4">
+      {(isSeatSelectionLoading || isLoading) && <Spinner transparent />}
+      <div className="bg-[#121212] min-h-[calc(100vh-72px)] min-w-[1275px] py-4 px-4">
         <SeatHeader
           movie={showtime?.movie?.movieName}
           theater={showtime?.theater?.theaterName}

@@ -1,10 +1,5 @@
 import { lazy } from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import ProtectedRoute from "../features/authentication/components/ProtectedRoute";
-import RedirectIfLogged from "../features/authentication/components/RedirectIfLogged";
-import RedirectIfNotAdmin from "../features/authentication/components/RedirectIfNotAdmin";
-import RedirectIfNotUser from "../features/authentication/components/RedirectIfNotUser";
-import PaymentPage from "../pages/PaymentPage";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 const BookingHistortyPage = lazy(() => import("../pages/BookingHistortyPage"));
@@ -13,6 +8,19 @@ const MovieBookingPage = lazy(() => import("../pages/MovieBookingPage"));
 const SeatSelectionPage = lazy(() => import("../pages/SeatSelectionPage"));
 const AdminPanelEditMovie = lazy(() => import("../pages/AdminPanelEditMovie"));
 const AdminPanelEditTheater = lazy(() => import("../pages/AdminPanelEditTheater"));
+const PaymentPage = lazy(() => import("../pages/PaymentPage"));
+const ProtectedRoute = lazy(() =>
+  import("../features/authentication/components/ProtectedRoute")
+);
+const RedirectIfLogged = lazy(() =>
+  import("../features/authentication/components/RedirectIfLogged")
+);
+const RedirectIfNotAdmin = lazy(() =>
+  import("../features/authentication/components/RedirectIfNotAdmin")
+);
+const RedirectIfNotUser = lazy(() =>
+  import("../features/authentication/components/RedirectIfNotUser")
+);
 
 const MainContainer = lazy(() => import("../layouts/MainContainer"));
 
@@ -73,7 +81,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/payment",
+    path: "/payment/:paymentId",
     element: (
       <ProtectedRoute>
         <PaymentPage />
@@ -81,7 +89,7 @@ const router = createBrowserRouter([
     ),
   },
   { path: "/admin-panel", element: <Navigate to="/admin-panel/edit-movie" /> },
-  { path: "*", element: <Navigate to="/" /> },
+  // { path: "*", element: <Navigate to="/" /> },
 ]);
 
 export default function Router() {

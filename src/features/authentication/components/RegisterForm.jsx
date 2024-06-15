@@ -136,7 +136,7 @@ export default function RegisterForm({ onSuccess }) {
         </label>
 
         <div className="col-span-2 pt-6">
-          <Button color="white">
+          <Button color="white" type="sumbit">
             <div className="text-xl font-bold">SIGN UP</div>
           </Button>
         </div>

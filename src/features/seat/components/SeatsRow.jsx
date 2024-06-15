@@ -1,7 +1,5 @@
-import React from "react";
 import Chair from "../../../components/Chair";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const sizeMapping = {
   9: "h-9",

@@ -1,38 +1,46 @@
-import { useEffect, useState, createContext } from "react";
+import { useEffect, useState, createContext, useMemo } from "react";
 import movieApi from "../apis/movie";
 import movieSelectionApi from "../apis/movie-selection";
 import highlightApi from "../apis/highlight";
+import useAuth from "../hooks/useAuth";
 
 const MovieContext = createContext();
 
 export default function MovieContextProvider({ children }) {
+  const { authUser } = useAuth();
   const [movieData, setMovieData] = useState(null);
   const [isMovieLoading, setIsMovieLoading] = useState(true);
   const [movieSelectionData, setMovieSelectionData] = useState(null);
-  const [highlightData, setHighlightData] = useState(null);
-  useEffect(() => {
-    const fetchMovie = async () => {
-      try {
-        const movieResult = await movieApi.getAllMovie();
-        setMovieData(movieResult.data.movieDataList);
-        const movieSelectionResult = await movieSelectionApi.getAllMovieSelection();
-        const dummyMovieSelection = movieSelectionResult.data.movieDataList.map(
-          ({ id, ...keepAttrs }) => keepAttrs
-        );
-        setMovieSelectionData(dummyMovieSelection);
-        const highlightResult = await highlightApi.getHighlight();
+  const [highlightData, setHighlightData] = useState([]);
+
+  const fetchMovie = async () => {
+    try {
+      const movieResult = await movieApi.getAllMovie();
+      setMovieData(movieResult.data.movieDataList);
+      const movieSelectionResult = await movieSelectionApi.getAllMovieSelection();
+      const dummyMovieSelection = movieSelectionResult.data.movieDataList.map(
+        ({ id, ...keepAttrs }) => keepAttrs
+      );
+      setMovieSelectionData(dummyMovieSelection);
+      const highlightResult = await highlightApi.getHighlight();
+      if (highlightResult.data.highlightList.length !== 0) {
         const dummyHighlight = highlightResult.data.highlightList.map(
           ({ id, ...keepAttrs }) => keepAttrs
         );
         setHighlightData(dummyHighlight);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsMovieLoading(false);
       }
-    };
-    fetchMovie();
-  }, []);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsMovieLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (authUser) {
+      fetchMovie();
+    }
+  }, [authUser]);
 
   const handleAddMovie = (newMovieObj) => {
     if (movieData) {
@@ -111,21 +119,25 @@ export default function MovieContextProvider({ children }) {
     }
   };
 
-  const sharedValue = {
-    movieData,
-    isMovieLoading,
-    handleAddMovie,
-    handleDeleteMovie,
-    handleUpdateMovie,
-    movieSelectionData,
-    handleCreateMovieSelection,
-    handleUpdateMovieSelection,
-    handleDeleteMovieSelection,
-    highlightData,
-    handleCreateHighlight,
-    handleUpdateHighlight,
-    handleDeleteHighlight,
-  };
+  const sharedValue = useMemo(
+    () => ({
+      movieData,
+      isMovieLoading,
+      fetchMovie,
+      handleAddMovie,
+      handleDeleteMovie,
+      handleUpdateMovie,
+      movieSelectionData,
+      handleCreateMovieSelection,
+      handleUpdateMovieSelection,
+      handleDeleteMovieSelection,
+      highlightData,
+      handleCreateHighlight,
+      handleUpdateHighlight,
+      handleDeleteHighlight,
+    }),
+    [movieData, isMovieLoading, movieSelectionData, highlightData]
+  );
 
   return <MovieContext.Provider value={sharedValue}>{children}</MovieContext.Provider>;
 }

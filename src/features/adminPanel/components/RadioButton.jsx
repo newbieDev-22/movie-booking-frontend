@@ -16,6 +16,7 @@ export default function RadioButton({ data, onClose }) {
     handleCreateMovieSelection,
     handleUpdateMovieSelection,
     handleDeleteMovieSelection,
+    fetchMovie,
   } = useMovie();
 
   const filterSelection = movieSelectionData.filter((el) => el?.movieId === data.id);
@@ -46,6 +47,7 @@ export default function RadioButton({ data, onClose }) {
         } else {
           await movieSelectionApi.deleteMovieSelectionByMovieId(data.id);
           handleDeleteMovieSelection(data.id);
+          fetchMovie();
           toast.success("Remove movie selection type sucessfully!");
           onClose();
         }

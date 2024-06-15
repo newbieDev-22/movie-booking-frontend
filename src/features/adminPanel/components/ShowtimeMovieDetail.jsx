@@ -3,9 +3,11 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import useMovie from "../../../hooks/useMovie";
 import SelectMovieCard from "./SelectMovieCard";
+import { MovieSelectionStatus } from "../../../constants";
 
 export default function ShowtimeMovieDetail({ index, handleAddMovie, onClose }) {
   const { movieData } = useMovie();
+  const [filterSelection, setFilterSelection] = useState([]);
   const [input, setInput] = useState("");
   const [filterMovie, setFilterMovie] = useState(null);
 
@@ -17,8 +19,19 @@ export default function ShowtimeMovieDetail({ index, handleAddMovie, onClose }) 
   };
 
   useEffect(() => {
-    setFilterMovie(movieData);
+    const filterSelectionMovie = movieData?.filter((el) => {
+      if (el.movieSelections.length > 0) {
+        if (el.movieSelections[0].movieSelectTypeId === MovieSelectionStatus.CURRENTLY) {
+          return el;
+        }
+      }
+    });
+    setFilterSelection(filterSelectionMovie);
   }, [movieData]);
+
+  useEffect(() => {
+    setFilterMovie(filterSelection);
+  }, [filterSelection]);
 
   return (
     <div>

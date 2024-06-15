@@ -85,7 +85,7 @@ export default function HighlightDetail({ data, onClose }) {
         }
       }
     } catch (err) {
-      console.log("err", err);
+      console.log(err);
     } finally {
       setIsLoading(false);
     }

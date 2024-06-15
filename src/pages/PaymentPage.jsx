@@ -1,43 +1,17 @@
 import Button from "../components/Button";
-import { useEffect, useState } from "react";
 import bookingApi from "../apis/booking";
-import { useNavigate } from "react-router-dom";
-import { PaymentTypeId } from "../constants";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function PaymentPage() {
-  const [bookingIdList, setBookingIdList] = useState([]);
+  const { paymentId } = useParams();
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchBooking = async () => {
-      try {
-        const res = await bookingApi.getBookingListByUserId();
-        const bookingDataList = res.data.bookingDataList;
-        const paymentIdList = [];
-        bookingDataList.forEach((el) => {
-          if (el.paymentTypeId === PaymentTypeId.PENDING) {
-            paymentIdList.push(el.id);
-          }
-        });
-        if (paymentIdList.length === 0) {
-          navigate("/");
-        } else {
-          setBookingIdList(paymentIdList);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchBooking();
-  }, []);
 
-  const handleOnClick = () => {
+  const handleOnClick = async () => {
     try {
-      if (bookingIdList.length > 0) {
-        bookingIdList.forEach(async (el) => {
-          await bookingApi.successUpdate(el);
-        });
-        navigate("/");
-      }
+      await bookingApi.successUpdate(+paymentId);
+      navigate("/");
+      toast.success("Payment Success");
     } catch (err) {
       console.log(err);
     }

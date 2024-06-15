@@ -142,7 +142,7 @@ export default function AddNewMovieDetail({ onClose }) {
             />
           </label>
 
-          <label className="form-control w-full">
+          <label className="form-control w-full ">
             <div className="label">
               <span className={`label-text text-[#DBD9DD]`}>Movie Synopsis</span>
             </div>
@@ -151,7 +151,7 @@ export default function AddNewMovieDetail({ onClose }) {
               name="movieSynopsis"
               value={input.movieSynopsis}
               onChange={handleInputChange}
-              className="rounded-lg p-2 indent-2"
+              className="rounded-lg p-2 indent-2 w-full"
             ></textarea>
           </label>
 

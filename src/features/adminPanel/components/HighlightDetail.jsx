@@ -12,7 +12,6 @@ import ConfirmDetail from "../../../components/ConfirmDetail";
 export default function HighlightDetail({ data, onClose }) {
   const {
     highlightData,
-    fetchMovie,
     handleCreateHighlight,
     handleUpdateHighlight,
     handleDeleteHighlight,

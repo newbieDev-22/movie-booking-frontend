@@ -89,7 +89,7 @@ const router = createBrowserRouter([
     ),
   },
   { path: "/admin-panel", element: <Navigate to="/admin-panel/edit-movie" /> },
-  // { path: "*", element: <Navigate to="/" /> },
+  { path: "*", element: <Navigate to="/" /> },
 ]);
 
 export default function Router() {

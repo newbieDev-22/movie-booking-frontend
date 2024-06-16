@@ -83,7 +83,6 @@ export default function SeatSelectionPage() {
     setSelectSeatRowCol(seatRowColList);
   }, [chairStatus]);
 
-  console.log("chairStatus", chairStatus);
   const changeSelectToBookedSeat = () => {
     chairStatus.forEach((row) => {
       row.rowData.forEach((col) => {

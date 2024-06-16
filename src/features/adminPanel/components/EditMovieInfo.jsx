@@ -47,7 +47,16 @@ export default function EditMovieInfo({ data, onClose }) {
       e.preventDefault();
       setIsLoading(true);
 
-      const error = validateMovie(input);
+      const dummyInput = {
+        movieName: input.movieName,
+        movieSynopsis: input.movieSynopsis,
+        genreId1: input.genreId1,
+        genreId2: input.genreId2,
+        genreId3: input.genreId3,
+        movieTrailerPath: input.movieTrailerPath,
+        durationInMin: input.durationInMin,
+      };
+      const error = validateMovie(dummyInput);
       if (error) {
         return setInputError(error);
       }
@@ -58,7 +67,7 @@ export default function EditMovieInfo({ data, onClose }) {
         const formData = new FormData();
         formData.append("movieImagePath", file);
 
-        for (const [key, value] of Object.entries(input)) {
+        for (const [key, value] of Object.entries(dummyInput)) {
           if (value) {
             formData.append(key, value);
           }
@@ -67,7 +76,7 @@ export default function EditMovieInfo({ data, onClose }) {
         const result = await movieApi.updateMovieByMovieId(data.id, formData);
         handleUpdateMovie(data.id, result.data.movieData);
       } else {
-        const result = await movieApi.updateMovieByMovieId(data.id, input);
+        const result = await movieApi.updateMovieByMovieId(data.id, dummyInput);
         handleUpdateMovie(data.id, result.data.movieData);
       }
       toast.success("Update Movie sucessfully!");

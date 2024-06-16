@@ -8,6 +8,7 @@ import movieApi from "../../../apis/movie";
 import { toast } from "react-toastify";
 import useMovie from "../../../hooks/useMovie";
 import EditMovieInfo from "./EditMovieInfo";
+import { AxiosError } from "axios";
 
 export default function MovieEditCard({ data }) {
   const { handleDeleteMovie } = useMovie();
@@ -17,9 +18,16 @@ export default function MovieEditCard({ data }) {
   const [isHighlightModalOpen, setIsHighlightModalOpen] = useState(false);
 
   const handleDeleteMovieEachMovie = async () => {
-    await movieApi.deleteMovieByMovieId(data.id);
-    handleDeleteMovie(data.id);
-    toast.success("Delete Movie sucessfully!");
+    try {
+      await movieApi.deleteMovieByMovieId(data.id);
+      handleDeleteMovie(data.id);
+      toast.success("Delete Movie sucessfully!");
+    } catch (err) {
+      console.log(err);
+      if (err instanceof AxiosError) {
+        return toast.error("Cannot delete because the movie is on show");
+      }
+    }
   };
 
   return (

@@ -126,7 +126,6 @@ export default function TheaterCard({ theaterName, theaterId }) {
         const date = dayjs(new Date(selectDate)).utc().format("YYYY-MM-DD");
         await showtimeApi.deleteByDateAndTheater(date, theaterId);
 
-        console.log("prepareInputList", prepareInputList);
         const createShowtimePromises = prepareInputList.map((el) =>
           showtimeApi.createShowtime(el)
         );

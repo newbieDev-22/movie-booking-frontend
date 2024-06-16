@@ -42,23 +42,25 @@ export default function MovieBookingPage() {
     setDateIsSelect(newDataCollection);
   };
   const selectedMovie = movieData?.filter((el) => el.id === +movieId)[0];
-  const [showtimeRound, setShowtimeRound] = useState([]);
+  const [showtimeRound, setShowtimeRound] = useState(null);
 
+  const fetchShowtime = async () => {
+    try {
+      const res = await showtimeApi.getShowtimeByMovieStartEndDate(
+        +movieId,
+        getNext7days[0].date,
+        getNext7days[getNext7days.length - 1].date
+      );
+      setShowtimeRound(res.data.showtimeData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
-    const fetchShowtime = async () => {
-      try {
-        const res = await showtimeApi.getShowtimeByMovieStartEndDate(
-          +movieId,
-          getNext7days[0].date,
-          getNext7days[getNext7days.length - 1].date
-        );
-        setShowtimeRound(res.data.showtimeData);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchShowtime();
-  }, []);
+    if (movieData) {
+      fetchShowtime();
+    }
+  }, [movieData]);
 
   const [filterDateData, setFilterDateData] = useState([]);
   useEffect(() => {
@@ -87,7 +89,7 @@ export default function MovieBookingPage() {
               <TheaterAccordion
                 key={el.id}
                 theaterName={el.theaterName}
-                data={filterDateData.filter((subEl) => el.id === subEl.theaterId)}
+                data={filterDateData?.filter((subEl) => el.id === subEl.theaterId)}
               />
             ))}
           </div>

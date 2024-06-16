@@ -19,7 +19,7 @@ export default function SeatsRow({
   handleSetChairStatus,
 }) {
   const color = ["A", "B"].includes(rowName) ? "#985EFF" : "#DC2026";
-  const initColStatus = chairStatus.filter((el) => el.rowName === rowName)[0].rowData;
+  const initColStatus = chairStatus?.filter((el) => el.rowName === rowName)[0].rowData;
   const [colStatus, setColStatus] = useState(initColStatus);
 
   const handleChairClick = (id, isSelect) => {

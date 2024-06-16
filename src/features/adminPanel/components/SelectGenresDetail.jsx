@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "../../../components/Button";
-import { GENRE_KEYS, GENRE_MAPPING, SWAP_GENRE_MAPPING } from "../../../constants";
+import { GENRE_KEYS, GENRE_MAPPING, GENRE_ID_TO_NAME_MAPPING } from "../../../constants";
 import { toast } from "react-toastify";
 import GenreItem from "./GenreItem";
 
@@ -30,7 +30,7 @@ const getInitGenreState = (input) => {
     if (input[key]) {
       genreInitState = {
         ...genreInitState,
-        [SWAP_GENRE_MAPPING[input[key]]]: true,
+        [GENRE_ID_TO_NAME_MAPPING[input[key]]]: true,
       };
     }
   }

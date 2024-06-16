@@ -14,41 +14,65 @@ import formatDateForShowtime from "../../../utils/date-format";
 dayjs.extend(utc);
 
 export default function TheaterCard({ theaterName, theaterId }) {
-  const { showtimeData } = useShowtime();
+  const { showtimeDataForAllThearter, showtimeData } = useShowtime();
   const getNext7days = formatDateForShowtime(getNext7DaysUsingToday(), "YYYY-MM-DD");
   getNext7days.shift();
   const [selectDate, setSelectDate] = useState(new Date(getNext7days[0].date));
+  const [isOpenCard, setIsOpenCard] = useState(false);
+  const [showtime, setShowtime] = useState(null);
+  const [newShowtime, setNewShowtime] = useState([]);
+
+  useEffect(() => {
+    if (showtimeDataForAllThearter && showtimeData) {
+      console.log("+==============================");
+      console.log("+", theaterName, "+");
+      const filterTheaterAndDate = showtimeDataForAllThearter.filter(
+        (el) =>
+          el?.theaterId === theaterId &&
+          el.date === dayjs(selectDate).format("YYYY-MM-DD")
+      );
+      console.log("filterTheaterAndDate", filterTheaterAndDate);
+      console.log("eachShowtime", filterTheaterAndDate[0].showtimeData);
+      setShowtime(filterTheaterAndDate[0].showtimeData);
+    }
+  }, [showtimeDataForAllThearter, selectDate]);
+
   const initShowtimeData = {
+    id: "",
     date: selectDate,
     startMovieTime: "",
     endMovieTime: "",
     theaterId: theaterId,
     movieId: "",
     movieName: "",
+    bookings: [],
   };
+  const datecheck = dayjs(selectDate).format("YYYY-MM-DD");
+  console.log(
+    "Dateeee",
+    datecheck,
+    dayjs(new Date(selectDate)).utc().format("YYYY-MM-DD")
+  );
 
-  const [isOpenCard, setIsOpenCard] = useState(false);
-  const [showtime, setShowtime] = useState(null);
+  // useEffect(() => {
+  //   const mapShowtimeData = showtimeData?.map((el) => {
+  //     const mapData = {};
+  //     mapData.date = el.date;
+  //     mapData.startMovieTime = el.startMovieTime;
+  //     mapData.endMovieTime = el.endMovieTime;
+  //     mapData.theaterId = el.theaterId;
+  //     mapData.movieId = el.movieId;
+  //     mapData.movieName = el.movie.movieName;
+  //     return mapData;
+  //   });
+  //   const filterTheaterData = mapShowtimeData?.filter((el) => el.theaterId === theaterId);
+  //   const filterDateData = filterTheaterData?.filter(
+  //     (el) =>
+  //       dayjs(el.date).format("YYYY-MM-DD") === dayjs(selectDate).format("YYYY-MM-DD")
+  //   );
 
-  useEffect(() => {
-    const mapShowtimeData = showtimeData?.map((el) => {
-      const mapData = {};
-      mapData.date = el.date;
-      mapData.startMovieTime = el.startMovieTime;
-      mapData.endMovieTime = el.endMovieTime;
-      mapData.theaterId = el.theaterId;
-      mapData.movieId = el.movieId;
-      mapData.movieName = el.movie.movieName;
-      return mapData;
-    });
-    const filterTheaterData = mapShowtimeData?.filter((el) => el.theaterId === theaterId);
-    const filterDateData = filterTheaterData?.filter(
-      (el) =>
-        dayjs(el.date).format("YYYY-MM-DD") === dayjs(selectDate).format("YYYY-MM-DD")
-    );
-
-    setShowtime(filterDateData);
-  }, [showtimeData, selectDate]);
+  //   setShowtime(filterDateData);
+  // }, [showtimeData, selectDate]);
 
   const handleAccodionOpen = () => setIsOpenCard(!isOpenCard);
 

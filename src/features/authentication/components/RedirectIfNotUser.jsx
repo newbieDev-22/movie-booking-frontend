@@ -11,7 +11,7 @@ export default function RedirectIfNotUser({ children }) {
 
   return (
     <>
-      {isAuthUserLoading && <Spinner />}
+      {isAuthUserLoading && <Spinner transparent />}
       {children}
     </>
   );

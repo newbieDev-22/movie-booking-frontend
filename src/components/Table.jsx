@@ -2,7 +2,7 @@ import { useState } from "react";
 import QRCodePopup from "../features/payment/components/QRCodePopup";
 import Modal from "./Modal";
 import Ticket from "./Ticket";
-import { PaymentTypeId } from "../constants";
+import { PAYMENT_TYPE_ID_MAP } from "../constants";
 
 export default function Table({ data, fetchHistory }) {
   const [isTicketOpen, setIsTicketOpen] = useState(false);
@@ -22,7 +22,9 @@ export default function Table({ data, fetchHistory }) {
         <td
           className="px-6 py-4 text-2xl font-bold text-[#DC2026]"
           onClick={() => {
-            if (PaymentTypeId[dummyData.paymentStatus] === PaymentTypeId.SUCCESS) {
+            if (
+              PAYMENT_TYPE_ID_MAP[dummyData.paymentStatus] === PAYMENT_TYPE_ID_MAP.SUCCESS
+            ) {
               setIsTicketOpen(true);
             } else {
               setIsQRCodePaymentOpen(true);

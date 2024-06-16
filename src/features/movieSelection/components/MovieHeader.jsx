@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MOVIESELECTION_TYPE_NAME_TO_ID, MovieSelectionStatus } from "../../../constants";
+import { MOVIESELECTION_TYPE_NAME_TO_ID } from "../../../constants";
 
 const selectedMapping = {
   true: "text-2xl font-bold text-[#DC2026] underline underline-offset-8 transition-all",

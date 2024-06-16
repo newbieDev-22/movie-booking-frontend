@@ -19,20 +19,6 @@ export const GENRE_MAPPING = {
   CRIME: 11,
 };
 
-export const SWAP_GENRE_MAPPING = {
-  1: "ACTION",
-  2: "ANIMATION",
-  3: "ADVENTURE",
-  4: "COMEDY",
-  5: "DRAMA",
-  6: "THRILLER",
-  7: "ROMANCE",
-  8: "HORROR",
-  9: "FANTASY",
-  10: "MUSICAL",
-  11: "CRIME",
-};
-
 export const GENRE_ID_TO_NAME_MAPPING = {
   1: "ACTION",
   2: "ANIMATION",
@@ -47,7 +33,7 @@ export const GENRE_ID_TO_NAME_MAPPING = {
   11: "CRIME",
 };
 
-export const filterBtnBgColorMapping = {
+export const FILTER_BTN_COLOR_MAP = {
   true: "isActiveBtn",
   false: "isNonActiveBtn",
 };
@@ -58,13 +44,7 @@ export const MovieSelectionStatus = {
   UPCOMING: 2,
 };
 
-export const SwapMovieSelectionStatus = {
-  0: "NOT SELECTED",
-  1: "CURRENTLY",
-  2: "UPCOMING",
-};
-
-export const MovieSelectionName = {
+export const MOVIE_SELECTTION_NAME = {
   NOTSELECTED: "NOT SELECTED",
   CURRENTLY: "CURRENTLY",
   UPCOMING: "UPCOMING",
@@ -88,7 +68,7 @@ export const MOVIESELECTION_NAME = {
   UPCOMING: "UPCOMING",
 };
 
-export const PaymentTypeId = {
+export const PAYMENT_TYPE_ID_MAP = {
   PENDING: 1,
   SUCCESS: 2,
 };

@@ -5,7 +5,7 @@ import movieApi from "../../../apis/movie";
 import { toast } from "react-toastify";
 import Modal from "../../../components/Modal";
 import SelectGenresDetail from "./SelectGenresDetail";
-import { SWAP_GENRE_MAPPING } from "../../../constants";
+import { GENRE_ID_TO_NAME_MAPPING } from "../../../constants";
 import Spinner from "../../../components/Spinner";
 import getGenreNameBtn from "../../../utils/genre-name";
 import useMovie from "../../../hooks/useMovie";
@@ -177,9 +177,9 @@ export default function EditMovieInfo({ data, onClose }) {
               onClick={() => setIsSelectGenresOpen(true)}
               type="button"
             >
-              {SWAP_GENRE_MAPPING[input.genreId1] ||
-              SWAP_GENRE_MAPPING[input.genreId2] ||
-              SWAP_GENRE_MAPPING[input.genreId3]
+              {GENRE_ID_TO_NAME_MAPPING[input.genreId1] ||
+              GENRE_ID_TO_NAME_MAPPING[input.genreId2] ||
+              GENRE_ID_TO_NAME_MAPPING[input.genreId3]
                 ? getGenreNameBtn(input)
                 : "Genres"}
             </button>

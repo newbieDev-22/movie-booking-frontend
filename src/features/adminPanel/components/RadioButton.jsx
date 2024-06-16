@@ -4,7 +4,7 @@ import {
   MOVIESELECTION_NAME,
   MOVIESELECTION_TYPE_ID_TO_NAME,
   MOVIESELECTION_TYPE_NAME_TO_ID,
-  MovieSelectionName,
+  MOVIE_SELECTTION_NAME,
 } from "../../../constants";
 import RadioBtnItem from "./RadioBtnItem";
 import movieSelectionApi from "../../../apis/movie-selection";
@@ -76,7 +76,7 @@ export default function RadioButton({ data, onClose }) {
 
   return (
     <div className="grid grid-cols-4 py-4">
-      {Object.values(MovieSelectionName).map((el) => (
+      {Object.values(MOVIE_SELECTTION_NAME).map((el) => (
         <RadioBtnItem
           key={el}
           radioValue={radioValue}

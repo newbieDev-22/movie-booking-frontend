@@ -11,9 +11,9 @@ export default function ProtectedRoute({ children }) {
   }
 
   return (
-    <>
-      {isAuthUserLoading && <Spinner />}
+    <div>
+      {isAuthUserLoading && <Spinner transparent />}
       {children}
-    </>
+    </div>
   );
 }

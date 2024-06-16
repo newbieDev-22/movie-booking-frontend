@@ -9,6 +9,7 @@ export default function ConfirmDetail({ msg, onClose, handleDeleteMovieEachMovie
     try {
       setIsLoading(true);
       handleDeleteMovieEachMovie();
+      onClose();
     } catch (err) {
       console.log(err);
     } finally {

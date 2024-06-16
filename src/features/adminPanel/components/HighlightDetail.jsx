@@ -171,10 +171,7 @@ export default function HighlightDetail({ data, onClose }) {
         <ConfirmDetail
           msg={"Do you want to delete this highlight ?"}
           onClose={() => setIsConfirmModalOpen(false)}
-          onClick={() => {
-            handleDeleteHighlightEachMovie();
-            setIsConfirmModalOpen(false);
-          }}
+          handleDeleteMovieEachMovie={handleDeleteHighlightEachMovie}
         />
       </Modal>
     </>

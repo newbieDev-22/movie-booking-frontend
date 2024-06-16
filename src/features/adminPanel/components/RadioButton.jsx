@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Button from "../../../components/Button";
 import {
+  MOVIESELECTION_NAME,
+  MOVIESELECTION_TYPE_ID_TO_NAME,
+  MOVIESELECTION_TYPE_NAME_TO_ID,
   MovieSelectionName,
-  MovieSelectionStatus,
-  SwapMovieSelectionStatus,
 } from "../../../constants";
 import RadioBtnItem from "./RadioBtnItem";
 import movieSelectionApi from "../../../apis/movie-selection";
@@ -16,30 +17,34 @@ export default function RadioButton({ data, onClose }) {
     handleCreateMovieSelection,
     handleUpdateMovieSelection,
     handleDeleteMovieSelection,
-    fetchMovie,
   } = useMovie();
+  const filterSelection = movieSelectionData?.filter((el) => el.id === data.id)[0];
 
-  const filterSelection = movieSelectionData.filter((el) => el?.movieId === data.id);
   const initRadioValue =
-    filterSelection.length > 0
-      ? SwapMovieSelectionStatus[filterSelection[0].movieSelectTypeId]
-      : MovieSelectionName["NOTSELECTED"];
+    filterSelection?.movieSelections.length > 0
+      ? MOVIESELECTION_TYPE_ID_TO_NAME[
+          filterSelection.movieSelections[0].movieSelectTypeId
+        ]
+      : MOVIESELECTION_NAME["NOTSELECTED"];
   const [radioValue, setRadioValue] = useState(initRadioValue);
 
   const handleMovieSelectionStatus = async () => {
     try {
-      if (filterSelection.length > 0) {
-        if (radioValue !== MovieSelectionName["NOTSELECTED"]) {
-          if (MovieSelectionStatus[radioValue] === filterSelection[0].movieSelectTypeId) {
+      if (filterSelection?.movieSelections?.length > 0) {
+        if (radioValue !== MOVIESELECTION_NAME["NOTSELECTED"]) {
+          if (
+            MOVIESELECTION_TYPE_NAME_TO_ID[radioValue] ===
+            filterSelection.movieSelections[0].movieSelectTypeId
+          ) {
             onClose();
           } else {
             const radioData = {
-              movieSelectTypeId: MovieSelectionStatus[radioValue],
+              movieSelectTypeId: MOVIESELECTION_TYPE_NAME_TO_ID[radioValue],
             };
             await movieSelectionApi.updateMovieSelectionByMovieId(data.id, radioData);
             handleUpdateMovieSelection(data.id, {
               movieId: data.id,
-              movieSelectTypeId: MovieSelectionStatus[radioValue],
+              movieSelectTypeId: MOVIESELECTION_TYPE_NAME_TO_ID[radioValue],
             });
             toast.success("Update movie selection type sucessfully!");
             onClose();
@@ -47,18 +52,17 @@ export default function RadioButton({ data, onClose }) {
         } else {
           await movieSelectionApi.deleteMovieSelectionByMovieId(data.id);
           handleDeleteMovieSelection(data.id);
-          fetchMovie();
           toast.success("Remove movie selection type sucessfully!");
           onClose();
         }
       } else {
-        if (radioValue !== MovieSelectionName["NOTSELECTED"]) {
+        if (radioValue !== MOVIESELECTION_NAME["NOTSELECTED"]) {
           const radioData = {
             movieId: data.id,
-            movieSelectTypeId: MovieSelectionStatus[radioValue],
+            movieSelectTypeId: MOVIESELECTION_TYPE_NAME_TO_ID[radioValue],
           };
           await movieSelectionApi.createMovieSelection(radioData);
-          handleCreateMovieSelection(radioData);
+          handleCreateMovieSelection(data.id, radioData);
           toast.success("Add movie selection type sucessfully!");
           onClose();
         } else {

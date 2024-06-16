@@ -35,8 +35,8 @@ export default function AddNewMovieDetail({ onClose }) {
   const { handleAddMovie } = useMovie();
   const fileEl = useRef();
   const [file, setFile] = useState(null);
-  const [input, setInput] = useState(initialInput);
-  const [inputError, setInputError] = useState(initialInputError);
+  const [input, setInput] = useState({ ...initialInput });
+  const [inputError, setInputError] = useState({ ...initialInputError });
   const [isSelectGenresOpen, setIsSelectGenresOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 

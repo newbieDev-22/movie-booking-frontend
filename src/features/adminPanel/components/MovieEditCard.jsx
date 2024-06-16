@@ -101,10 +101,7 @@ export default function MovieEditCard({ data }) {
         <ConfirmDetail
           msg={"Do you want to delete this movie ?"}
           onClose={() => setIsConfirmModalOpen(false)}
-          onClick={() => {
-            handleDeleteMovieEachMovie();
-            setIsConfirmModalOpen(false);
-          }}
+          handleDeleteMovieEachMovie={handleDeleteMovieEachMovie}
         />
       </Modal>
     </>

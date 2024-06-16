@@ -14,11 +14,11 @@ import useBooking from "../hooks/useBooking";
 
 export default function SeatSelectionPage() {
   const { showtimeData } = useShowtime();
-  const { chairStatusList, fetchBooking, isSeatSelectionLoading } = useBooking();
+  const { chairStatusList, isSeatSelectionLoading } = useBooking();
   const { showtimeId } = useParams();
   const [showtime, setShowtime] = useState(null);
   const [chairStatus, setChairStatus] = useState(
-    chairStatusList.filter((el) => el.showtimeId === +showtimeId)[0].bookedSeat
+    chairStatusList.filter((el) => el.showtimeId === +showtimeId)[0]?.bookedSeat
   );
   const [normalCount, setNormalCount] = useState(0);
   const [premiumCount, setPremiumCount] = useState(0);
@@ -83,6 +83,18 @@ export default function SeatSelectionPage() {
     setSelectSeatRowCol(seatRowColList);
   }, [chairStatus]);
 
+  console.log("chairStatus", chairStatus);
+  const changeSelectToBookedSeat = () => {
+    chairStatus.forEach((row) => {
+      row.rowData.forEach((col) => {
+        if (col.isSelect === true) {
+          col.isBooked = true;
+          col.isSelect = false;
+        }
+      });
+    });
+  };
+
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
@@ -102,6 +114,7 @@ export default function SeatSelectionPage() {
 
       const res = await bookingApi.createBooking(data);
       const bookingResult = res.data.booking;
+      changeSelectToBookedSeat();
       toast.success("Booking successfully");
       return bookingResult;
     } catch (err) {
@@ -109,7 +122,8 @@ export default function SeatSelectionPage() {
       toast.error(err.message);
     } finally {
       setIsLoading(false);
-      fetchBooking();
+      setNormalCount(0);
+      setPremiumCount(0);
     }
   };
 

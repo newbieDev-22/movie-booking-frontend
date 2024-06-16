@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MovieSelectionStatus } from "../../../constants";
+import { MOVIESELECTION_TYPE_NAME_TO_ID, MovieSelectionStatus } from "../../../constants";
 
 const selectedMapping = {
   true: "text-2xl font-bold text-[#DC2026] underline underline-offset-8 transition-all",
@@ -14,7 +14,7 @@ export default function MovieHeader({ handleSelectionStatus }) {
         className={selectedMapping[isShowing]}
         onClick={() => {
           setIsShowing(true);
-          handleSelectionStatus(MovieSelectionStatus.CURRENTLY);
+          handleSelectionStatus(MOVIESELECTION_TYPE_NAME_TO_ID.CURRENTLY);
         }}
       >
         NOW SHOWING
@@ -23,7 +23,7 @@ export default function MovieHeader({ handleSelectionStatus }) {
         className={selectedMapping[!isShowing]}
         onClick={() => {
           setIsShowing(false);
-          handleSelectionStatus(MovieSelectionStatus.UPCOMING);
+          handleSelectionStatus(MOVIESELECTION_TYPE_NAME_TO_ID.UPCOMING);
         }}
       >
         COMING SOON

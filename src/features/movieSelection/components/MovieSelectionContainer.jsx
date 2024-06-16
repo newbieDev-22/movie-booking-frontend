@@ -3,42 +3,36 @@ import MovieContainer from "./MovieContainer";
 import MovieFilter from "./MovieFilter";
 import useMovie from "../../../hooks/useMovie";
 import { useState, useEffect } from "react";
-import { MovieSelectionStatus, SWAP_GENRE_MAPPING } from "../../../constants";
+import { MOVIESELECTION_TYPE_NAME_TO_ID } from "../../../constants";
 
 export default function MovieSelectionContainer() {
-  const { movieData, isMovieLoading, movieSelectionData } = useMovie();
-  const [selectionStatus, setSelectionStatus] = useState(MovieSelectionStatus.CURRENTLY);
-  const [selectionMovie, setSelectionMovie] = useState([]);
-  const filterDataInit = selectionMovie ? [...selectionMovie] : [];
-  const [filterMovieData, setFilterMovieData] = useState(filterDataInit);
+  const { movieSelectionData } = useMovie();
+  const [selectionStatus, setSelectionStatus] = useState(
+    MOVIESELECTION_TYPE_NAME_TO_ID.CURRENTLY
+  );
+  const [selectionMovie, setSelectionMovie] = useState(null);
+  const [filterMovieData, setFilterMovieData] = useState(null);
 
   const handleSelectionStatus = (state) => {
     setSelectionStatus(state);
   };
 
   useEffect(() => {
-    const getAllMovieId = movieSelectionData
-      ?.filter((el) => el.movieSelectTypeId === selectionStatus)
-      .map((el) => el.movieId);
-
-    const selectionMovieBySelection = movieData?.filter((el) =>
-      getAllMovieId?.includes(el.id)
-    );
-    setSelectionMovie(selectionMovieBySelection);
-  }, [selectionStatus, movieData, movieSelectionData]);
-
-  useEffect(() => {
-    if (selectionMovie) {
-      setFilterMovieData([...selectionMovie]);
+    if (movieSelectionData) {
+      const filterSelectionMovie = movieSelectionData.filter(
+        (el) => el.movieSelections[0]?.movieSelectTypeId === selectionStatus
+      );
+      setSelectionMovie(filterSelectionMovie);
+      setFilterMovieData(filterSelectionMovie);
     }
-  }, [selectionMovie, isMovieLoading]);
+  }, [movieSelectionData, selectionStatus]);
 
   const handleFilterMovieData = (genre) => {
     const filter = selectionMovie?.filter((el) => {
       if (
-        SWAP_GENRE_MAPPING[el.genreId1] === genre ||
-        SWAP_GENRE_MAPPING[el.genreId2] === genre ||
-        SWAP_GENRE_MAPPING[el.genreId3] === genre
+        el.genre1?.genreType === genre ||
+        el.genre2?.genreType === genre ||
+        el.genre3?.genreType === genre
       ) {
         return el;
       }
@@ -49,7 +43,7 @@ export default function MovieSelectionContainer() {
   };
 
   const handleSetFilterWithRawMovieData = () => {
-    setFilterMovieData(filterDataInit);
+    setFilterMovieData(selectionMovie);
   };
 
   return (

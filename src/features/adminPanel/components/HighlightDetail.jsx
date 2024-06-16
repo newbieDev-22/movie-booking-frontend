@@ -12,16 +12,16 @@ import ConfirmDetail from "../../../components/ConfirmDetail";
 export default function HighlightDetail({ data, onClose }) {
   const {
     highlightData,
+    fetchMovie,
     handleCreateHighlight,
     handleUpdateHighlight,
     handleDeleteHighlight,
   } = useMovie();
   const fileEl = useRef();
   const [file, setFile] = useState(null);
-
-  const filterMovie = highlightData?.filter((el) => el.movieId === data.id);
-  const initInput = filterMovie.length > 0 ? filterMovie[0].highlightWord : "";
-
+  const filterMovie = highlightData?.filter((el) => el.id === data.id)[0];
+  const initInput =
+    filterMovie?.highlights.length > 0 ? filterMovie.highlights[0].highlightWord : "";
   const [input, setInput] = useState(initInput);
   const [isAddMovieOpen, setIsAddMovieOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function HighlightDetail({ data, onClose }) {
   const handleSumbit = async () => {
     try {
       setIsLoading(true);
-      if (filterMovie.length === 0) {
+      if (!filterMovie) {
         if (file) {
           const formData = new FormData();
           formData.append("coverImagePath", file);
@@ -49,7 +49,7 @@ export default function HighlightDetail({ data, onClose }) {
           const result = await highlightApi.createHighlight(formData);
           const dummyResult = { ...result.data.highlightData };
           delete dummyResult.id;
-          handleCreateHighlight(dummyResult);
+          handleCreateHighlight(data.id, dummyResult);
           toast.success("Add highlight sucessfully!");
           onClose();
         } else {
@@ -74,10 +74,9 @@ export default function HighlightDetail({ data, onClose }) {
           await highlightApi.updateHighlight(data.id, {
             highlightWord: input,
           });
-
           handleUpdateHighlight(data.id, {
             movieId: data.id,
-            coverImagePath: filterMovie[0].coverImagePath,
+            coverImagePath: filterMovie.highlights[0].coverImagePath,
             highlightWord: input,
           });
           toast.success("Update highlight sucessfully!");

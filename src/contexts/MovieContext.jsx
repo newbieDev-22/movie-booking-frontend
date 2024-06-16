@@ -1,7 +1,5 @@
 import { useEffect, useState, createContext, useMemo } from "react";
 import movieApi from "../apis/movie";
-import movieSelectionApi from "../apis/movie-selection";
-import highlightApi from "../apis/highlight";
 import useAuth from "../hooks/useAuth";
 
 const MovieContext = createContext();
@@ -11,30 +9,35 @@ export default function MovieContextProvider({ children }) {
   const [movieData, setMovieData] = useState(null);
   const [isMovieLoading, setIsMovieLoading] = useState(true);
   const [movieSelectionData, setMovieSelectionData] = useState(null);
-  const [highlightData, setHighlightData] = useState([]);
+  const [highlightData, setHighlightData] = useState(null);
 
   const fetchMovie = async () => {
     try {
       const movieResult = await movieApi.getAllMovie();
       setMovieData(movieResult.data.movieDataList);
-      const movieSelectionResult = await movieSelectionApi.getAllMovieSelection();
-      const dummyMovieSelection = movieSelectionResult.data.movieDataList.map(
-        ({ id, ...keepAttrs }) => keepAttrs
-      );
-      setMovieSelectionData(dummyMovieSelection);
-      const highlightResult = await highlightApi.getHighlight();
-      if (highlightResult.data.highlightList.length !== 0) {
-        const dummyHighlight = highlightResult.data.highlightList.map(
-          ({ id, ...keepAttrs }) => keepAttrs
-        );
-        setHighlightData(dummyHighlight);
-      }
     } catch (err) {
       console.log(err);
     } finally {
       setIsMovieLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (movieData) {
+      const movieSelectionResult = movieData.filter((el) => {
+        if (el.movieSelections) {
+          return el.movieSelections.length > 0;
+        }
+      });
+      setMovieSelectionData(movieSelectionResult);
+      const highlightResult = movieData.filter((el) => {
+        if (el.highlights) {
+          return el.highlights.length > 0;
+        }
+      });
+      setHighlightData(highlightResult);
+    }
+  }, [movieData]);
 
   useEffect(() => {
     if (authUser) {
@@ -67,19 +70,28 @@ export default function MovieContextProvider({ children }) {
     }
   };
 
-  const handleCreateMovieSelection = (data) => {
-    if (movieSelectionData) {
-      setMovieSelectionData([...movieSelectionData, data]);
+  const handleCreateMovieSelection = (movieId, data) => {
+    if (movieData) {
+      const foundedIndex = movieData.findIndex((el) => el.id === movieId);
+      if (foundedIndex !== -1) {
+        const newMovieSelectionData = [...movieData];
+        console.log(
+          "newMovieSelectionData[foundedIndex]",
+          newMovieSelectionData[foundedIndex]
+        );
+        newMovieSelectionData[foundedIndex]["movieSelections"] = [data];
+        setMovieSelectionData(newMovieSelectionData);
+      }
     }
   };
 
   const handleUpdateMovieSelection = (movieId, data) => {
     if (movieSelectionData) {
-      const founedMovieId = movieSelectionData.findIndex((el) => el.movieId === movieId);
+      const foundedIndex = movieSelectionData.findIndex((el) => el.id === movieId);
 
-      if (founedMovieId !== -1) {
+      if (foundedIndex !== -1) {
         const newMovieSelectionData = [...movieSelectionData];
-        newMovieSelectionData[founedMovieId] = data;
+        newMovieSelectionData[foundedIndex]["movieSelections"] = [data];
         setMovieSelectionData(newMovieSelectionData);
       }
     }
@@ -87,26 +99,39 @@ export default function MovieContextProvider({ children }) {
 
   const handleDeleteMovieSelection = (movieId) => {
     if (movieSelectionData) {
-      const remainSelectionData = movieSelectionData.filter(
-        (el) => el.movieId !== movieId
-      );
-      setMovieSelectionData(remainSelectionData);
+      const foundedIndex = movieSelectionData.findIndex((el) => el.id === movieId);
+
+      if (foundedIndex !== -1) {
+        const newMovieSelectionData = [...movieSelectionData];
+        newMovieSelectionData[foundedIndex]["movieSelections"] = [];
+        setMovieSelectionData(newMovieSelectionData);
+      }
     }
   };
 
-  const handleCreateHighlight = (data) => {
-    if (highlightData) {
-      setHighlightData([...highlightData, data]);
+  const handleCreateHighlight = (movieId, data) => {
+    if (movieData) {
+      const foundedIndex = movieData.findIndex((el) => el.id === movieId);
+      if (foundedIndex !== -1) {
+        const newMovieHighlightData = [...movieData];
+        newMovieHighlightData[foundedIndex]["highlights"] = [data];
+        const filterHighlight = newMovieHighlightData.filter((el) => {
+          if (el.highlights) {
+            return el.highlights.length > 0;
+          }
+        });
+        setHighlightData(filterHighlight);
+      }
     }
   };
 
   const handleUpdateHighlight = (movieId, data) => {
     if (highlightData) {
-      const founedMovieId = highlightData.findIndex((el) => el.movieId === movieId);
+      const founedMovieId = highlightData.findIndex((el) => el.id === movieId);
 
       if (founedMovieId !== -1) {
         const newMovieHighlightData = [...highlightData];
-        newMovieHighlightData[founedMovieId] = data;
+        newMovieHighlightData[founedMovieId]["highlights"] = [data];
         setHighlightData(newMovieHighlightData);
       }
     }
@@ -114,7 +139,7 @@ export default function MovieContextProvider({ children }) {
 
   const handleDeleteHighlight = (movieId) => {
     if (highlightData) {
-      const remainHighlightData = highlightData.filter((el) => el.movieId !== movieId);
+      const remainHighlightData = highlightData.filter((el) => el.id !== movieId);
       setHighlightData(remainHighlightData);
     }
   };

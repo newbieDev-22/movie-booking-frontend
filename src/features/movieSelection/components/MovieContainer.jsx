@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import MovieCard from "../../movieSelection/components/MovieCard";
 import { useNavigate } from "react-router-dom";
-import { MovieSelectionStatus } from "../../../constants";
+import { MOVIESELECTION_TYPE_NAME_TO_ID } from "../../../constants";
 
 export default function MovieContainer({ filterMovieData, selectionStatus }) {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function MovieContainer({ filterMovieData, selectionStatus }) {
           role="button"
           key={el.id}
           onClick={() => {
-            if (selectionStatus === MovieSelectionStatus.CURRENTLY) {
+            if (selectionStatus === MOVIESELECTION_TYPE_NAME_TO_ID.CURRENTLY) {
               navigate(`/movie-booking/${el.id}`);
             }
           }}

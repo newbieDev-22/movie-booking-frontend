@@ -126,6 +126,7 @@ export default function TheaterCard({ theaterName, theaterId }) {
         const date = dayjs(new Date(selectDate)).utc().format("YYYY-MM-DD");
         await showtimeApi.deleteByDateAndTheater(date, theaterId);
 
+        console.log("prepareInputList", prepareInputList);
         const createShowtimePromises = prepareInputList.map((el) =>
           showtimeApi.createShowtime(el)
         );
@@ -139,64 +140,56 @@ export default function TheaterCard({ theaterName, theaterId }) {
   };
 
   return (
-    <div>
-      <div className="bg-[#282828] rounded-lg">
-        <div className="flex flex-col px-8 py-3">
-          <div className="flex justify-between py-6">
-            <button
-              className="text-2xl font-bold text-white"
-              onClick={handleAccodionOpen}
-            >
-              {theaterName}
-            </button>
-            <button
-              className={isOpenCard ? "" : "-rotate-90"}
-              onClick={handleAccodionOpen}
-            >
-              <DropdownAccordionIcon className={"fill-white"} />
-            </button>
-          </div>
-          {isOpenCard ? (
-            <>
-              <div className="grid grid-cols-4 gap-x-4 text-xl">
-                <select
-                  className="w-full rounded-lg text-center "
-                  onChange={(e) => {
-                    setSelectDate(new Date(e.target.value));
-                  }}
-                >
-                  <option disabled>Choose a date</option>
-                  {getNext7days.map((el, index) => (
-                    <option key={index} value={el.date}>
-                      {el.date}
-                    </option>
-                  ))}
-                </select>
-                <div className="col-start-3">
-                  <Button color="white" onClick={handleAddShowtime}>
-                    ADD SHOWTIME
-                  </Button>
-                </div>
-
-                <Button color="white" onClick={handleSumbit}>
-                  CONFIRM
+    <div className="bg-[#282828] rounded-lg">
+      <div className="flex flex-col px-8 py-3">
+        <div className="flex justify-between py-6">
+          <button className="text-2xl font-bold text-white" onClick={handleAccodionOpen}>
+            {theaterName}
+          </button>
+          <button className={isOpenCard ? "" : "-rotate-90"} onClick={handleAccodionOpen}>
+            <DropdownAccordionIcon className={"fill-white"} />
+          </button>
+        </div>
+        {isOpenCard ? (
+          <>
+            <div className="grid grid-cols-4 gap-x-4 text-xl">
+              <select
+                className="w-full rounded-lg text-center "
+                onChange={(e) => {
+                  setSelectDate(new Date(e.target.value));
+                }}
+              >
+                <option disabled>Choose a date</option>
+                {getNext7days.map((el, index) => (
+                  <option key={index} value={el.date}>
+                    {el.date}
+                  </option>
+                ))}
+              </select>
+              <div className="col-start-3">
+                <Button color="white" onClick={handleAddShowtime}>
+                  ADD SHOWTIME
                 </Button>
               </div>
-              <div className="grid grid-cols-6 gap-6 py-4">
-                {showtime?.map((el, index) => (
-                  <ShowtimeSlot
-                    key={index}
-                    index={index}
-                    handleDeleteShowtime={handleDeleteShowtime}
-                    handleAddMovie={handleAddMovie}
-                    handleAddTime={handleAddTime}
-                    data={el}
-                  />
-                ))}
-              </div>
-            </>
-          ) : null}
-        </div>
+
+              <Button color="white" onClick={handleSumbit}>
+                CONFIRM
+              </Button>
+            </div>
+            <div className="grid grid-cols-6 gap-6 py-4">
+              {showtime?.map((el, index) => (
+                <ShowtimeSlot
+                  key={index}
+                  index={index}
+                  handleDeleteShowtime={handleDeleteShowtime}
+                  handleAddMovie={handleAddMovie}
+                  handleAddTime={handleAddTime}
+                  data={el}
+                />
+              ))}
+            </div>
+          </>
+        ) : null}
       </div>
     </div>
   );

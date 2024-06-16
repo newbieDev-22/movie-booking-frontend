@@ -1,38 +1,34 @@
 import { useState, useEffect } from "react";
 import Carousal from "../../../components/Carousal";
-import { SWAP_GENRE_MAPPING } from "../../../constants";
 import useMovie from "../../../hooks/useMovie";
+import { GENRE_ID_TO_NAME_MAPPING } from "../../../constants";
 
 export default function HomeCarousal() {
-  const { movieData, highlightData } = useMovie();
+  const { highlightData } = useMovie();
   const [showHighlightData, setShowHighlightData] = useState([]);
-
   useEffect(() => {
-    const getHighlightId = highlightData?.map((el) => el.movieId);
-    const highlightMovie = movieData?.filter((el) => getHighlightId?.includes(el.id));
-    const combineHighlightData = highlightMovie?.map((el) => {
+    const combineHighlightData = highlightData?.map((el) => {
       const newData = {};
       newData.id = el.id;
       newData.movieName = el.movieName;
       newData.movieSynopsis = el.movieSynopsis;
       const genres = [];
       if (el.genreId1) {
-        genres.push(el.genreId1);
+        genres.push(GENRE_ID_TO_NAME_MAPPING[el.genreId1]);
       }
       if (el.genreId2) {
-        genres.push(el.genreId2);
+        genres.push(GENRE_ID_TO_NAME_MAPPING[el.genreId2]);
       }
       if (el.genreId3) {
-        genres.push(el.genreId3);
+        genres.push(GENRE_ID_TO_NAME_MAPPING[el.genreId3]);
       }
       newData.genres = genres;
-      const foundedHighlight = highlightData?.filter((item) => item.movieId === el.id);
-      newData.coverImagePath = foundedHighlight[0].coverImagePath;
-      newData.highlightWord = foundedHighlight[0].highlightWord;
+      newData.coverImagePath = el.highlights[0]?.coverImagePath;
+      newData.highlightWord = el.highlights[0]?.highlightWord;
       return newData;
     });
     setShowHighlightData(combineHighlightData);
-  }, [movieData, highlightData]);
+  }, [highlightData]);
 
   return (
     <Carousal autoSlide={true} autoSlideInterval={4000}>
@@ -46,7 +42,7 @@ export default function HomeCarousal() {
                     <div className="flex gap-4">
                       {el.genres.map((genre) => (
                         <span key={genre} className="text-[#DBD9DD] text-lg font-bold">
-                          {SWAP_GENRE_MAPPING[genre]}
+                          {genre}
                         </span>
                       ))}
                     </div>

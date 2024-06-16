@@ -1,19 +1,8 @@
 import { useEffect, useState, createContext, useMemo } from "react";
 import useShowtime from "../hooks/useShowtime";
-import { rowName } from "../constants";
+import { rowName, seatStatusData } from "../constants";
 import bookingApi from "../apis/booking";
 import useAuth from "../hooks/useAuth";
-
-const seatStatusData = [
-  { id: 1, isBooked: false, isSelect: false },
-  { id: 2, isBooked: false, isSelect: false },
-  { id: 3, isBooked: false, isSelect: false },
-  { id: 4, isBooked: false, isSelect: false },
-  { id: 5, isBooked: false, isSelect: false },
-  { id: 6, isBooked: false, isSelect: false },
-  { id: 7, isBooked: false, isSelect: false },
-  { id: 8, isBooked: false, isSelect: false },
-];
 
 const BookingContext = createContext();
 

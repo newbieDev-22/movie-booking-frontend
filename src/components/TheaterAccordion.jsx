@@ -27,9 +27,11 @@ export default function TheaterAccordion({ theaterName, data }) {
                   bg="isNonSelectDateBtn"
                   onClick={() => navigate(`/seat-selection/${el.id}`)}
                 >
-                  {`${dayjs(el?.startMovieTime).format("HH:mm")} - ${dayjs(
+                  {`${dayjs(el?.startMovieTime).utc().format("HH:mm")} - ${dayjs(
                     el?.endMovieTime
-                  ).format("HH:mm")}`}
+                  )
+                    .utc()
+                    .format("HH:mm")}`}
                 </Button>
               ))}
             </div>

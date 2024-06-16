@@ -3,7 +3,6 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import useMovie from "../../../hooks/useMovie";
 import MovieEditCard from "./MovieEditCard";
-import { SWAP_GENRE_MAPPING } from "../../../constants";
 import MovieFilter from "../../movieSelection/components/MovieFilter";
 
 export default function SearchMovie() {
@@ -30,9 +29,9 @@ export default function SearchMovie() {
   const handleFilterMovieData = (genre) => {
     const filter = movieData?.filter((el) => {
       if (
-        SWAP_GENRE_MAPPING[el.genreId1] === genre ||
-        SWAP_GENRE_MAPPING[el.genreId2] === genre ||
-        SWAP_GENRE_MAPPING[el.genreId3] === genre
+        el.genre1?.genreType === genre ||
+        el.genre2?.genreType === genre ||
+        el.genre3?.genreType === genre
       ) {
         return el;
       }

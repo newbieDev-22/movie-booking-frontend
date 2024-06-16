@@ -27,6 +27,7 @@ export default function EditMovieInfo({ data, onClose }) {
   delete initData.createdAt;
   delete initData.updatedAt;
   delete initData.movieImagePath;
+  initData.movieTrailerPath = initData.movieTrailerPath ? initData.movieTrailerPath : "";
 
   const { handleUpdateMovie } = useMovie();
   const fileEl = useRef();
@@ -149,7 +150,7 @@ export default function EditMovieInfo({ data, onClose }) {
               name="movieSynopsis"
               value={input.movieSynopsis}
               onChange={handleInputChange}
-              className="rounded-lg p-2 indent-2"
+              className="rounded-lg p-2 indent-2 w-full"
             ></textarea>
           </label>
 

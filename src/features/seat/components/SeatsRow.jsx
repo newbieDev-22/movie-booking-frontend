@@ -35,7 +35,9 @@ export default function SeatsRow({
   };
 
   useEffect(() => {
-    handleSetChairStatus(rowName, colStatus);
+    if (colStatus) {
+      handleSetChairStatus(rowName, colStatus);
+    }
   }, [colStatus]);
 
   return (
@@ -43,7 +45,7 @@ export default function SeatsRow({
       <div className="flex justify-center items-center ml-8">
         <div className="text-white"></div>
         <div className={`flex ${sizeMapping[size]} ${gapMapping[gap]} justify-center`}>
-          {colStatus.map((el) => (
+          {colStatus?.map((el) => (
             <Chair
               key={el.id}
               color={color}

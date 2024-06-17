@@ -26,14 +26,22 @@ export default function SeatSelectionPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const filterShowtime = showtimeData.filter((el) => el.id === +showtimeId);
-    setShowtime(filterShowtime[0]);
+    if (showtimeData) {
+      const filterShowtime = showtimeData.filter((el) => el.id === +showtimeId);
+      if (filterShowtime.length > 0) {
+        setShowtime(filterShowtime[0]);
+      }
+    }
   }, [showtimeData]);
 
   useEffect(() => {
-    const filterChair = chairStatusList.filter((el) => el.showtimeId === +showtimeId);
-    setChairStatus(filterChair[0].bookedSeat);
-  }, []);
+    if (showtimeData) {
+      const filterChair = chairStatusList.filter((el) => el.showtimeId === +showtimeId);
+      if (filterChair.length > 0) {
+        setChairStatus(filterChair[0].bookedSeat);
+      }
+    }
+  }, [chairStatusList]);
 
   const handleSetChairStatus = (rowName, rowDate) => {
     const mapData = chairStatus.map((el) => {
@@ -66,22 +74,24 @@ export default function SeatSelectionPage() {
     let normalChairCount = 0;
     let premiumChairCount = 0;
     const seatRowColList = [];
-    chairStatus.forEach((row) => {
-      row.rowData.forEach((col) => {
-        if (col.isSelect) {
-          if (row.rowName === "A" || row.rowName === "B") {
-            premiumChairCount += 1;
-          } else {
-            normalChairCount += 1;
+    if (chairStatus) {
+      chairStatus.forEach((row) => {
+        row.rowData.forEach((col) => {
+          if (col.isSelect) {
+            if (row.rowName === "A" || row.rowName === "B") {
+              premiumChairCount += 1;
+            } else {
+              normalChairCount += 1;
+            }
+            seatRowColList.push({ row: row.rowName, col: col.id });
           }
-          seatRowColList.push({ row: row.rowName, col: col.id });
-        }
+        });
       });
-    });
-    setNormalCount(normalChairCount);
-    setPremiumCount(premiumChairCount);
-    setSelectSeatRowCol(seatRowColList);
-  }, [chairStatus]);
+      setNormalCount(normalChairCount);
+      setPremiumCount(premiumChairCount);
+      setSelectSeatRowCol(seatRowColList);
+    }
+  }, [chairStatus, showtimeData, chairStatusList]);
 
   const changeSelectToBookedSeat = () => {
     chairStatus.forEach((row) => {

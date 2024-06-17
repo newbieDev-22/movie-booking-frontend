@@ -10,6 +10,7 @@ import showtimeApi from "../../../apis/showtime";
 import utc from "dayjs/plugin/utc";
 import useShowtime from "../../../hooks/useShowtime";
 import formatDateForShowtime from "../../../utils/date-format";
+import Spinner from "../../../components/Spinner";
 
 dayjs.extend(utc);
 
@@ -29,6 +30,7 @@ export default function TheaterCard({ theaterName, theaterId }) {
 
   const [isOpenCard, setIsOpenCard] = useState(false);
   const [showtime, setShowtime] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const mapShowtimeData = showtimeData?.map((el) => {
@@ -116,6 +118,7 @@ export default function TheaterCard({ theaterName, theaterId }) {
 
   const handleSumbit = async () => {
     try {
+      setIsLoading(true);
       const prepareInputList = [];
       for (let i = 0; i < showtime.length; i++) {
         const dummyInput = prepareShowtiomData(showtime[i], i);
@@ -130,16 +133,18 @@ export default function TheaterCard({ theaterName, theaterId }) {
           showtimeApi.createShowtime(el)
         );
         await Promise.all(createShowtimePromises);
-
         toast.success("Update successfully");
       }
     } catch (err) {
       toast.error(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="bg-[#282828] rounded-lg">
+      {isLoading && <Spinner transparent />}
       <div className="flex flex-col px-8 py-3">
         <div className="flex justify-between py-6">
           <button className="text-2xl font-bold text-white" onClick={handleAccodionOpen}>

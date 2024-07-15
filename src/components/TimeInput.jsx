@@ -1,10 +1,11 @@
-export default function TimeInput({ title, time, setTime }) {
+export default function TimeInput({ isBooking, title, time, setTime }) {
   return (
     <div className="flex flex-col gap-2 justify-center items-center">
       <label htmlFor={title} className="font-bold text-black text-base">
         {title}
       </label>
       <input
+        disabled={isBooking}
         type="time"
         id={title}
         className="bg-transparent border  border-gray-300 

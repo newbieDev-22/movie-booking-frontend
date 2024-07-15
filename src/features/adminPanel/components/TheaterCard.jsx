@@ -15,45 +15,18 @@ import Spinner from "../../../components/Spinner";
 dayjs.extend(utc);
 
 export default function TheaterCard({ theaterName, theaterId }) {
-  const { showtimeDataForAllThearter, showtimeData } = useShowtime();
+  const { showtimeData } = useShowtime();
   const getNext7days = formatDateForShowtime(getNext7DaysUsingToday(), "YYYY-MM-DD");
   getNext7days.shift();
   const [selectDate, setSelectDate] = useState(new Date(getNext7days[0].date));
-  const [isOpenCard, setIsOpenCard] = useState(false);
-  const [showtime, setShowtime] = useState(null);
-  const [newShowtime, setNewShowtime] = useState([]);
-
-  useEffect(() => {
-    if (showtimeDataForAllThearter && showtimeData) {
-      console.log("+==============================");
-      console.log("+", theaterName, "+");
-      const filterTheaterAndDate = showtimeDataForAllThearter.filter(
-        (el) =>
-          el?.theaterId === theaterId &&
-          el.date === dayjs(selectDate).format("YYYY-MM-DD")
-      );
-      console.log("filterTheaterAndDate", filterTheaterAndDate);
-      console.log("eachShowtime", filterTheaterAndDate[0].showtimeData);
-      setShowtime(filterTheaterAndDate[0].showtimeData);
-    }
-  }, [showtimeDataForAllThearter, selectDate]);
-
   const initShowtimeData = {
-    id: "",
     date: selectDate,
     startMovieTime: "",
     endMovieTime: "",
     theaterId: theaterId,
     movieId: "",
     movieName: "",
-    bookings: [],
   };
-  const datecheck = dayjs(selectDate).format("YYYY-MM-DD");
-  console.log(
-    "Dateeee",
-    datecheck,
-    dayjs(new Date(selectDate)).utc().format("YYYY-MM-DD")
-  );
 
   const [isOpenCard, setIsOpenCard] = useState(false);
   const [showtime, setShowtime] = useState(null);
@@ -77,10 +50,9 @@ export default function TheaterCard({ theaterName, theaterId }) {
     );
 
     setShowtime(filterDateData);
-  }, [showtimeData, selectDate, theaterId]);
+  }, [showtimeData, selectDate]);
 
-
-  const handleAccodionOpen = () => setIsOpenCard(!isOpenCard);
+  const handleAccordionOpen = () => setIsOpenCard(!isOpenCard);
 
   const handleAddShowtime = () => {
     if (showtime.length < 6) {
@@ -110,7 +82,7 @@ export default function TheaterCard({ theaterName, theaterId }) {
     setShowtime(tmp);
   };
 
-  const prepareShowtiomData = (input, index) => {
+  const prepareShowtimeData = (input, index) => {
     if (!input.movieId) {
       throw new Error("Miss Movie in some showtime");
     } else if (input.startMovieTime > input.endMovieTime) {
@@ -144,12 +116,12 @@ export default function TheaterCard({ theaterName, theaterId }) {
     return dummyInput;
   };
 
-  const handleSumbit = async () => {
+  const handleSubmit = async () => {
     try {
       setIsLoading(true);
       const prepareInputList = [];
       for (let i = 0; i < showtime.length; i++) {
-        const dummyInput = prepareShowtiomData(showtime[i], i);
+        const dummyInput = prepareShowtimeData(showtime[i], i);
         prepareInputList.push(dummyInput);
       }
 
@@ -164,6 +136,7 @@ export default function TheaterCard({ theaterName, theaterId }) {
         toast.success("Update successfully");
       }
     } catch (err) {
+      console.error(err);
       toast.error(err.message);
     } finally {
       setIsLoading(false);
@@ -175,10 +148,13 @@ export default function TheaterCard({ theaterName, theaterId }) {
       {isLoading && <Spinner transparent />}
       <div className="flex flex-col px-8 py-3">
         <div className="flex justify-between py-6">
-          <button className="text-2xl font-bold text-white" onClick={handleAccodionOpen}>
+          <button className="text-2xl font-bold text-white" onClick={handleAccordionOpen}>
             {theaterName}
           </button>
-          <button className={isOpenCard ? "" : "-rotate-90"} onClick={handleAccodionOpen}>
+          <button
+            className={isOpenCard ? "" : "-rotate-90"}
+            onClick={handleAccordionOpen}
+          >
             <DropdownAccordionIcon className={"fill-white"} />
           </button>
         </div>
@@ -204,7 +180,7 @@ export default function TheaterCard({ theaterName, theaterId }) {
                 </Button>
               </div>
 
-              <Button color="white" onClick={handleSumbit}>
+              <Button color="white" onClick={handleSubmit}>
                 CONFIRM
               </Button>
             </div>

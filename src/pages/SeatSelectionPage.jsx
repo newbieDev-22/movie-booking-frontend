@@ -32,7 +32,7 @@ export default function SeatSelectionPage() {
         setShowtime(filterShowtime[0]);
       }
     }
-  }, [showtimeData]);
+  }, [showtimeData, showtimeId]);
 
   useEffect(() => {
     if (showtimeData) {
@@ -139,7 +139,7 @@ export default function SeatSelectionPage() {
   return (
     <>
       {(isSeatSelectionLoading || isLoading) && <Spinner transparent />}
-      <div className="bg-[#121212] min-h-[calc(100vh-72px)] min-w-[1275px] py-4 px-4">
+      <div className="bg-[#121212] min-h-[calc(100vh - 72px)] min-w-[1275px] py-4 px-4">
         <SeatHeader
           movie={showtime?.movie?.movieName}
           theater={showtime?.theater?.theaterName}

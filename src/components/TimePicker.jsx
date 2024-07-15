@@ -7,7 +7,6 @@ export default function TimePicker({
   handleAddTime,
   startMovieTime,
   endMovieTime,
-  isBooking,
 }) {
   const [startTime, setStartTime] = useState(
     startMovieTime !== ""
@@ -19,36 +18,16 @@ export default function TimePicker({
   );
 
   useEffect(() => {
-    // handleAddTime(index, {
-    //   startTime: startTime,
-    //   endTime: endTime,
-    // });
-    setStartTime(
-      startMovieTime !== ""
-        ? dayjs(startMovieTime).utc().utcOffset(0).format("HH:mm")
-        : "09:00"
-    );
-    setEndTime(
-      endMovieTime !== ""
-        ? dayjs(endMovieTime).utc().utcOffset(0).format("HH:mm")
-        : "22:00"
-    );
-  }, [startMovieTime, endMovieTime]);
+    handleAddTime(index, {
+      startTime: startTime,
+      endTime: endTime,
+    });
+  }, [startTime, endTime]);
 
   return (
     <form className="bg-white grid grid-cols-2 gap-3 text-center p-2 rounded-xl">
-      <TimeInput
-        isBooking={isBooking}
-        title={"START"}
-        time={startTime}
-        setTime={setStartTime}
-      />
-      <TimeInput
-        isBooking={isBooking}
-        title={"END"}
-        time={endTime}
-        setTime={setEndTime}
-      />
+      <TimeInput title={"START"} time={startTime} setTime={setStartTime} />
+      <TimeInput title={"END"} time={endTime} setTime={setEndTime} />
     </form>
   );
 }

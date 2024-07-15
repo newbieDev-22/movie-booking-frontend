@@ -1,9 +1,8 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import Ticket from "./Ticket";
-import { PaymentTypeId } from "../constants";
 import PaymentFeature from "../features/payment/components/PaymentFeature";
-
+import { PAYMENT_TYPE_ID_MAP } from "../constants";
 
 export default function Table({ data, fetchHistory }) {
   const [isTicketOpen, setIsTicketOpen] = useState(false);

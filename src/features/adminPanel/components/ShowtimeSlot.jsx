@@ -16,19 +16,14 @@ export default function ShowtimeSlot({
   return (
     <>
       <div className="bg-[#0D0E11] flex flex-col pb-4 rounded-xl">
-        {data?.bookings?.length === 0 ? (
-          <div
-            className="flex justify-end pt-1"
-            onClick={() => handleDeleteShowtime(index)}
-          >
-            <CloseIcon color="white" className={"h-10"} />
-          </div>
-        ) : (
-          <div className="h-10"></div>
-        )}
+        <div
+          className="flex justify-end pt-1"
+          onClick={() => handleDeleteShowtime(index)}
+        >
+          <CloseIcon color="white" className={"h-10"} />
+        </div>
         <div className="flex flex-col px-4 gap-4 pb-2">
           <TimePicker
-            isBooking={data?.bookings?.length !== 0}
             data={data}
             index={index}
             handleAddTime={handleAddTime}
@@ -38,14 +33,10 @@ export default function ShowtimeSlot({
           <button
             className="bg-white flex justify-center items-center px-2 py-2 gap-2 rounded-xl 
        hover:scale-[105%] transition-all active:scale-100"
-            onClick={() => {
-              if (data.bookings.length === 0) {
-                setIsAddMovieOpen(true);
-              }
-            }}
+            onClick={() => setIsAddMovieOpen(true)}
           >
-            {data?.movie?.movieName ? (
-              <div className="font-bold text-xl">{data.movie.movieName}</div>
+            {data?.movieName ? (
+              <div className="font-bold text-xl">{data.movieName}</div>
             ) : (
               <>
                 <div className="bg-[#DC2026] rounded-full p-2">

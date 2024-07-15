@@ -3,8 +3,8 @@ import Button from "../../../components/Button";
 import { ChairIcon } from "../../../icons";
 import PaymentModal from "../../payment/components/PaymentModal";
 import Modal from "../../../components/Modal";
-import QRCodePopup from "../../payment/components/QRCodePopup";
 import { seatPrice } from "../../../constants";
+import PaymentFeature from "../../payment/components/PaymentFeature";
 
 export default function SeatSummary({
   movie,
@@ -15,7 +15,6 @@ export default function SeatSummary({
   handleSubmit,
 }) {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  const [paymentImage, setPaymentImage] = useState(null);
   const [bookingId, setBookingId] = useState(null);
   const [isQRCodePaymentOpen, setIsQRCodePaymentOpen] = useState(false);
   const totalPrice = seatPrice.NORMAL * normalCount + seatPrice.PREMIUM * premiumCount;
@@ -59,7 +58,7 @@ export default function SeatSummary({
         </div>
       </div>
       <Modal
-        title="Payment"
+        title="Booking Seat"
         open={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
         width={40}
@@ -74,7 +73,6 @@ export default function SeatSummary({
           onClick={async () => {
             const bookingData = await handleSubmit();
             if (bookingData) {
-              setPaymentImage(bookingData.qrCodeImagePath);
               setBookingId(bookingData.id);
               setIsPaymentOpen(false);
               setIsQRCodePaymentOpen(true);
@@ -83,12 +81,12 @@ export default function SeatSummary({
         />
       </Modal>
       <Modal
-        title="QRCode for payment"
+        title="Payment"
         open={isQRCodePaymentOpen}
         onClose={() => setIsQRCodePaymentOpen(false)}
         width={40}
       >
-        <QRCodePopup qrcodeImage={paymentImage} bookingId={bookingId} />
+        <PaymentFeature bookingId={bookingId} />
       </Modal>
     </div>
   );

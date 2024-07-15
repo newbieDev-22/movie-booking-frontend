@@ -10,6 +10,7 @@ import showtimeApi from "../../../apis/showtime";
 import utc from "dayjs/plugin/utc";
 import useShowtime from "../../../hooks/useShowtime";
 import formatDateForShowtime from "../../../utils/date-format";
+import Spinner from "../../../components/Spinner";
 
 dayjs.extend(utc);
 
@@ -54,25 +55,30 @@ export default function TheaterCard({ theaterName, theaterId }) {
     dayjs(new Date(selectDate)).utc().format("YYYY-MM-DD")
   );
 
-  // useEffect(() => {
-  //   const mapShowtimeData = showtimeData?.map((el) => {
-  //     const mapData = {};
-  //     mapData.date = el.date;
-  //     mapData.startMovieTime = el.startMovieTime;
-  //     mapData.endMovieTime = el.endMovieTime;
-  //     mapData.theaterId = el.theaterId;
-  //     mapData.movieId = el.movieId;
-  //     mapData.movieName = el.movie.movieName;
-  //     return mapData;
-  //   });
-  //   const filterTheaterData = mapShowtimeData?.filter((el) => el.theaterId === theaterId);
-  //   const filterDateData = filterTheaterData?.filter(
-  //     (el) =>
-  //       dayjs(el.date).format("YYYY-MM-DD") === dayjs(selectDate).format("YYYY-MM-DD")
-  //   );
+  const [isOpenCard, setIsOpenCard] = useState(false);
+  const [showtime, setShowtime] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  //   setShowtime(filterDateData);
-  // }, [showtimeData, selectDate]);
+  useEffect(() => {
+    const mapShowtimeData = showtimeData?.map((el) => {
+      const mapData = {};
+      mapData.date = el.date;
+      mapData.startMovieTime = el.startMovieTime;
+      mapData.endMovieTime = el.endMovieTime;
+      mapData.theaterId = el.theaterId;
+      mapData.movieId = el.movieId;
+      mapData.movieName = el.movie.movieName;
+      return mapData;
+    });
+    const filterTheaterData = mapShowtimeData?.filter((el) => el.theaterId === theaterId);
+    const filterDateData = filterTheaterData?.filter(
+      (el) =>
+        dayjs(el.date).format("YYYY-MM-DD") === dayjs(selectDate).format("YYYY-MM-DD")
+    );
+
+    setShowtime(filterDateData);
+  }, [showtimeData, selectDate, theaterId]);
+
 
   const handleAccodionOpen = () => setIsOpenCard(!isOpenCard);
 
@@ -140,6 +146,7 @@ export default function TheaterCard({ theaterName, theaterId }) {
 
   const handleSumbit = async () => {
     try {
+      setIsLoading(true);
       const prepareInputList = [];
       for (let i = 0; i < showtime.length; i++) {
         const dummyInput = prepareShowtiomData(showtime[i], i);
@@ -154,16 +161,18 @@ export default function TheaterCard({ theaterName, theaterId }) {
           showtimeApi.createShowtime(el)
         );
         await Promise.all(createShowtimePromises);
-
         toast.success("Update successfully");
       }
     } catch (err) {
       toast.error(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="bg-[#282828] rounded-lg">
+      {isLoading && <Spinner transparent />}
       <div className="flex flex-col px-8 py-3">
         <div className="flex justify-between py-6">
           <button className="text-2xl font-bold text-white" onClick={handleAccodionOpen}>

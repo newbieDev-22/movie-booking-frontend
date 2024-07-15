@@ -2,12 +2,10 @@ import { useEffect, useState, createContext, useMemo } from "react";
 import useShowtime from "../hooks/useShowtime";
 import { rowName, seatStatusData } from "../constants";
 import bookingApi from "../apis/booking";
-import useAuth from "../hooks/useAuth";
 
 const BookingContext = createContext();
 
 export default function BookingContextProvider({ children }) {
-  const { authUser } = useAuth();
   const { showtimeData } = useShowtime();
   const initShowtime = showtimeData?.map((el) => el.id);
   const [showtimeIdList, setShowtimeIdList] = useState(initShowtime);
@@ -48,11 +46,10 @@ export default function BookingContextProvider({ children }) {
       const bookedSeatEachShowtimeList = [];
       for (let i = 0; i < showtimeIdList.length; i++) {
         const bookedSeat = setBookedSeat(getBookedSeat[i].data.bookedSeats);
-
         bookedSeatEachShowtimeList.push({
           showtimeId: showtimeIdList[i],
           bookedSeat: bookedSeat,
-          theaterId: getBookedSeat[0].data.bookedSeats[0].theaterId,
+          theaterId: getBookedSeat[0]?.data?.bookedSeats[0]?.theaterId,
         });
       }
       setChairStatusList([...bookedSeatEachShowtimeList]);
@@ -64,10 +61,10 @@ export default function BookingContextProvider({ children }) {
   };
 
   useEffect(() => {
-    if (authUser && showtimeIdList) {
+    if (showtimeIdList) {
       fetchBooking();
     }
-  }, [authUser, showtimeIdList]);
+  }, [showtimeData, showtimeIdList]);
 
   useEffect(() => {
     setShowtimeIdList(showtimeData?.map((el) => el.id));

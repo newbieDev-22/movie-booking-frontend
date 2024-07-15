@@ -75,10 +75,6 @@ export default function MovieContextProvider({ children }) {
       const foundedIndex = movieData.findIndex((el) => el.id === movieId);
       if (foundedIndex !== -1) {
         const newMovieSelectionData = [...movieData];
-        console.log(
-          "newMovieSelectionData[foundedIndex]",
-          newMovieSelectionData[foundedIndex]
-        );
         newMovieSelectionData[foundedIndex]["movieSelections"] = [data];
         setMovieSelectionData(newMovieSelectionData);
       }

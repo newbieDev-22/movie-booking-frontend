@@ -27,7 +27,7 @@ export default function PaymentModal({
       </div>
       <div>
         <Button color="white" onClick={onClick}>
-          <div className="text-2xl font-bold">Pay</div>
+          <div className="text-2xl font-bold">Booking</div>
         </Button>
       </div>
     </div>

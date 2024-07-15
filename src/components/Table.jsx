@@ -1,8 +1,8 @@
 import { useState } from "react";
-import QRCodePopup from "../features/payment/components/QRCodePopup";
 import Modal from "./Modal";
 import Ticket from "./Ticket";
 import { PaymentTypeId } from "../constants";
+import PaymentFeature from "../features/payment/components/PaymentFeature";
 
 export default function Table({ data, fetchHistory }) {
   const [isTicketOpen, setIsTicketOpen] = useState(false);
@@ -41,16 +41,12 @@ export default function Table({ data, fetchHistory }) {
         <Ticket data={dummyData} qrcodeImage={tmp} />
       </Modal>
       <Modal
-        title="QRCode for payment"
+        title="Payment"
         open={isQRCodePaymentOpen}
         onClose={() => setIsQRCodePaymentOpen(false)}
         width={40}
       >
-        <QRCodePopup
-          qrcodeImage={tmp}
-          fetchHistory={fetchHistory}
-          bookingId={dummyData.id}
-        />
+        <PaymentFeature fetchHistory={fetchHistory} bookingId={dummyData.id} />
       </Modal>
     </>
   );

@@ -2,7 +2,7 @@ import QRcode from "../assets/qrcode_dummy.jpg";
 
 export default function Ticket({ data, qrcodeImage }) {
   return (
-    <div className="flex px-4 py-4">
+    <div className="flex px-4 py-4 h-56">
       <div className="bg-[#7E1616] pl-6 pr-8 py-3 rounded-l-md flex justify-center items-center flex-1">
         <div className="grid grid-cols-3 gap-x-2 gap-y-1 text-lg">
           <div className="text-[#ABABAF]">MOVIE</div>
@@ -18,7 +18,7 @@ export default function Ticket({ data, qrcodeImage }) {
         </div>
       </div>
       <div className="bg-white rounded-r-md border-l-2 border-black border-dashed w-48">
-        <img src={qrcodeImage || QRcode} alt="qrcode_payment" className="p- " />
+        <img src={qrcodeImage || QRcode} alt="qrcode_payment" className="p-2" />
       </div>
     </div>
   );

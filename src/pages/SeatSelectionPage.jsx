@@ -41,7 +41,7 @@ export default function SeatSelectionPage() {
         setChairStatus(filterChair[0].bookedSeat);
       }
     }
-  }, [chairStatusList]);
+  }, [chairStatusList, showtimeData, showtimeId]);
 
   const handleSetChairStatus = (rowName, rowDate) => {
     const mapData = chairStatus.map((el) => {

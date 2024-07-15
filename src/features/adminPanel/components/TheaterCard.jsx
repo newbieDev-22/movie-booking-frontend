@@ -50,7 +50,7 @@ export default function TheaterCard({ theaterName, theaterId }) {
     );
 
     setShowtime(filterDateData);
-  }, [showtimeData, selectDate]);
+  }, [showtimeData, selectDate, theaterId]);
 
   const handleAccodionOpen = () => setIsOpenCard(!isOpenCard);
 
